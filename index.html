@@ -665,18 +665,23 @@ async function translateSpeech(btn){
   if(box.style.display==='block'){box.style.display='none';btn.textContent='Translate to English';return;}
   if(box.dataset.done){box.style.display='block';btn.textContent='Hide translation';return;}
   var txt=btn.parentElement.querySelector('.txt');
-  if(!txt){var td=btn.closest('tr');if(td)txt=td.querySelector('.dt-text');}
   if(!txt)return;
-  var src=txt.textContent.replace(/["\u201c\u201d]/g,'').substring(0,1500);
+  var src=txt.textContent.replace(/["\u201c\u201d]/g,'');
   btn.textContent='Translating...';
   try{
-    var r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(src)+'&langpair=it|en');
-    var d=await r.json();
-    box.textContent=d.responseData.translatedText;
+    var chunks=[];
+    while(src.length>0){chunks.push(src.substring(0,450));src=src.substring(450);}
+    var results=[];
+    for(var i=0;i<chunks.length;i++){
+      var r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(chunks[i])+'&langpair=it|en');
+      var d=await r.json();
+      results.push(d.responseData.translatedText);
+    }
+    box.textContent=results.join(' ');
     box.style.display='block';
     box.dataset.done='1';
     btn.textContent='Hide translation';
-  }catch(e){btn.textContent='Translation failed';}
+  }catch(e){btn.textContent='Translation failed - try again';}
 }
 </script>
 </body>
