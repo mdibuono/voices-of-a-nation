@@ -208,6 +208,9 @@ tbody tr:hover{background:rgba(184,92,56,.02);}
 .dtable tbody tr.xp .dt-long{display:inline;}
 .dtable tbody tr.xp td.dt-text{white-space:normal;max-width:700px;}
 .dtable tbody tr.xp{background:rgba(201,168,76,.06) !important;}
+.dt-tr{display:block;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);cursor:pointer;margin-top:6px;font-style:normal;}
+.dt-tr:hover{color:var(--terra);}
+.dt-translated{display:block;margin-top:6px;font-style:normal;font-size:.78rem;color:var(--text);background:var(--lighter);padding:8px 10px;border-radius:6px;line-height:1.6;}
 .dt-expand{font-size:.7rem;color:var(--terra);cursor:pointer;text-transform:uppercase;letter-spacing:.5px;font-weight:600;font-style:normal;display:inline-block;margin-left:6px;}
 code{font-family:'DM Sans',monospace;}
 
@@ -660,6 +663,25 @@ const PW='discorsi1900';
 function go(){if(document.getElementById('pw').value===PW){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');sessionStorage.setItem('a','1');}else{document.getElementById('err').textContent='Wrong password';}}
 if(sessionStorage.getItem('a')==='1'){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');}
 function show(id){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.sb nav a').forEach(a=>a.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.getElementById('n-'+id).classList.add('on');document.getElementById('hero').style.display=id==='overview'?'':'none';window.scrollTo(0,0);}
+document.querySelectorAll('.dt-text').forEach(function(td){
+  var b=document.createElement('span');b.className='dt-tr';b.textContent='translate';
+  b.onclick=function(){translateCell(this);};
+  td.appendChild(b);
+});
+async function translateCell(btn){
+  var td=btn.parentElement;
+  if(btn.dataset.done){var t=td.querySelector('.dt-translated');if(t){t.style.display=t.style.display==='none'?'block':'none';btn.textContent=t.style.display==='none'?'translate':'hide translation';}return;}
+  var src=td.childNodes[0].textContent.trim();
+  if(td.querySelector('.dt-short'))src=td.querySelector('.dt-full')?td.querySelector('.dt-full').textContent:td.querySelector('.dt-short').textContent;
+  btn.textContent='translating...';
+  try{
+    var chunks=[];var s=src;while(s.length>0){chunks.push(s.substring(0,450));s=s.substring(450);}
+    var results=[];
+    for(var i=0;i<chunks.length;i++){var r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(chunks[i])+'&langpair=it|en');var d=await r.json();results.push(d.responseData.translatedText);}
+    var div=document.createElement('span');div.className='dt-translated';div.textContent=results.join(' ');
+    td.insertBefore(div,btn);btn.textContent='hide translation';btn.dataset.done='1';
+  }catch(e){btn.textContent='failed';}
+}
 async function translateSpeech(btn){
   var box=btn.nextElementSibling;
   if(box.style.display==='block'){box.style.display='none';btn.textContent='Translate to English';return;}
