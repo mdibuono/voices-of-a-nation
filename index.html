@@ -217,13 +217,23 @@ code{font-family:'DM Sans',monospace;}
 /* ── FOOTER ── */
 .ft{padding:40px 72px;font-size:.82rem;color:var(--muted);border-top:1px solid var(--light);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 
+.mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;width:44px;height:44px;border-radius:10px;background:var(--navy);border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.2);}
+.mob-btn span{display:block;width:20px;height:2px;background:#fff;margin:4px auto;border-radius:2px;transition:.25s;}
+.mob-btn.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+.mob-btn.open span:nth-child(2){opacity:0;}
+.mob-btn.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99;}
+.sb-overlay.open{display:block;}
+
 @media(max-width:900px){
-  .sb{display:none;}
+  .sb{transform:translateX(-100%);transition:transform .3s ease;z-index:150;}
+  .sb.open{transform:translateX(0);}
+  .mob-btn{display:flex;}
   .mn{margin-left:0;}
-  .hero{padding:48px 28px 40px;}
+  .hero{padding:68px 24px 40px;}
   .hero h1{font-size:2.2rem;}
-  .pg{padding:36px 24px;}
-  .ft{padding:28px 24px;}
+  .pg{padding:48px 20px;}
+  .ft{padding:28px 20px;}
 }
 </style>
 </head>
@@ -241,6 +251,10 @@ code{font-family:'DM Sans',monospace;}
 </div>
 
 <div id="content" class="hidden">
+
+<!-- Mobile menu button -->
+<button class="mob-btn" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+<div class="sb-overlay" onclick="toggleMenu()"></div>
 
 <!-- ═══ SIDEBAR ═══ -->
 <div class="sb">
@@ -662,7 +676,8 @@ code{font-family:'DM Sans',monospace;}
 const PW='discorsi1900';
 function go(){if(document.getElementById('pw').value===PW){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');sessionStorage.setItem('a','1');}else{document.getElementById('err').textContent='Wrong password';}}
 if(sessionStorage.getItem('a')==='1'){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');}
-function show(id){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.sb nav a').forEach(a=>a.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.getElementById('n-'+id).classList.add('on');document.getElementById('hero').style.display=id==='overview'?'':'none';window.scrollTo(0,0);}
+function toggleMenu(){document.querySelector('.sb').classList.toggle('open');document.querySelector('.mob-btn').classList.toggle('open');document.querySelector('.sb-overlay').classList.toggle('open');}
+function show(id){if(window.innerWidth<=900){toggleMenu();}document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.sb nav a').forEach(a=>a.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.getElementById('n-'+id).classList.add('on');document.getElementById('hero').style.display=id==='overview'?'':'none';window.scrollTo(0,0);}
 document.querySelectorAll('.dt-text').forEach(function(td){
   var b=document.createElement('span');b.className='dt-tr';b.textContent='translate';
   b.onclick=function(){translateCell(this);};
