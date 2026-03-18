@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voices of a Nation</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf7f2;--card:#fff;--text:#2b2520;--muted:#8a7e72;--light:#e8e0d4;--lighter:#f2ede6;
+  --terra:#b85c38;--terra-l:#d4836b;--terra-d:#8c3e20;
+  --navy:#1e2d3d;--navy-l:#2c4158;
+  --gold:#c9a84c;--gold-l:#e0c56a;
+  --sage:#6b8f71;--sage-l:#8eb693;
+  --clay:#c4956a;--republic:#3a6f94;
+  --sardinia:#5d7f65;--kingdom:#b85c38;
+  --r:12px;--sw:300px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:16px;-webkit-font-smoothing:antialiased;}
+
+/* ── GATE ── */
+#gate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;}
+#gate .bg{position:absolute;inset:0;background:linear-gradient(155deg,var(--navy) 0%,#1a2838 50%,#2a2520 100%);}
+#gate .bg::before{content:'';position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(184,92,56,.2),transparent 65%);top:-200px;right:-100px;animation:drift 20s ease-in-out infinite alternate;}
+#gate .bg::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.08),transparent 65%);bottom:-100px;left:-100px;animation:drift 15s ease-in-out infinite alternate-reverse;}
+@keyframes drift{0%{transform:translate(0,0)}100%{transform:translate(60px,40px)}}
+#gate .inner{position:relative;z-index:1;text-align:center;}
+#gate.hidden{display:none;}
+#gate h2{font-family:'DM Serif Display',serif;color:#fff;font-size:3.2rem;font-weight:400;line-height:1.2;}
+#gate .sub{color:rgba(255,255,255,.5);font-size:1rem;margin:12px 0 40px;letter-spacing:.3px;}
+#gate .row{display:flex;gap:10px;justify-content:center;}
+#gate input{padding:16px 22px;font-size:1rem;border:none;border-radius:10px;width:280px;font-family:inherit;background:rgba(255,255,255,.95);}
+#gate input:focus{outline:2px solid var(--gold);}
+#gate button{padding:16px 32px;font-size:1rem;border:none;border-radius:10px;background:var(--terra);color:#fff;cursor:pointer;font-family:inherit;font-weight:600;transition:.25s;}
+#gate button:hover{background:var(--terra-l);transform:translateY(-1px);}
+#gate .err{color:var(--gold-l);font-size:.88rem;margin-top:16px;min-height:22px;}
+#content.hidden{display:none;}
+
+/* ── SIDEBAR ── */
+.sb{position:fixed;left:0;top:0;bottom:0;width:var(--sw);background:var(--navy);display:flex;flex-direction:column;z-index:100;border-right:1px solid rgba(255,255,255,.05);}
+.sb .logo{padding:30px 24px 24px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sb .logo h1{font-family:'DM Serif Display',serif;font-size:1.8rem;font-weight:400;color:#fff;line-height:1.25;}
+.sb .logo p{font-size:.74rem;color:rgba(255,255,255,.45);margin-top:10px;line-height:1.5;}
+.sb nav{padding:22px 0;flex:1;}
+.sb nav a{display:block;padding:12px 24px;color:rgba(255,255,255,.5);text-decoration:none;font-size:.88rem;font-weight:500;transition:.2s;border-left:3px solid transparent;}
+.sb nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.04);}
+.sb nav a.on{color:#fff;background:rgba(255,255,255,.08);border-left-color:var(--gold);}
+.sb nav .sep{height:1px;background:rgba(255,255,255,.06);margin:10px 20px;}
+
+/* ── MAIN ── */
+.mn{margin-left:var(--sw);min-height:100vh;}
+
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;padding:80px 72px 64px;color:#fff;}
+.hero .bg{position:absolute;inset:0;background:linear-gradient(155deg,var(--navy) 0%,#1a2838 50%,#2a2520 100%);}
+.hero .bg::before{content:'';position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(184,92,56,.2),transparent 55%);top:-250px;right:-80px;animation:drift 25s ease-in-out infinite alternate;}
+.hero .bg::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(245,240,230,.04),transparent 55%);bottom:-150px;left:15%;animation:drift 18s ease-in-out infinite alternate-reverse;}
+.hero .bg .orb3{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.08),transparent 55%);top:60%;left:55%;transform:translate(-50%,-50%);animation:drift 22s ease-in-out infinite alternate;}
+.hero .cnt{position:relative;z-index:1;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:4rem;font-weight:400;line-height:1.1;letter-spacing:-.5px;}
+.hero .tag{font-size:1.25rem;color:rgba(255,255,255,.55);margin-top:24px;line-height:1.85;font-weight:300;}
+.hero .by{font-size:.82rem;color:rgba(255,255,255,.3);margin-top:28px;letter-spacing:.3px;}
+.hero-stats{display:flex;gap:48px;margin-top:44px;flex-wrap:wrap;}
+.hs .n{font-family:'DM Serif Display',serif;font-size:2.6rem;color:var(--gold);}
+.hs .l{font-size:.74rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.7px;margin-top:2px;}
+
+/* ── PAGE ── */
+.pg{display:none;padding:56px 72px 80px;}
+.pg.on{display:block;}
+.pg .wrap{}
+.pg .full{max-width:none;}
+.pg h2{font-family:'DM Serif Display',serif;font-size:2.6rem;font-weight:400;color:var(--navy);margin-bottom:10px;}
+.pg .lead{font-size:1.15rem;color:var(--muted);margin-bottom:40px;line-height:1.85;}
+h3{font-size:1rem;font-weight:700;color:var(--navy);margin:48px 0 20px;text-transform:uppercase;letter-spacing:1px;}
+p{margin-bottom:16px;font-size:1.08rem;line-height:1.8;}
+a{color:var(--terra);text-decoration:none;border-bottom:1px solid transparent;transition:.15s;}
+a:hover{border-bottom-color:var(--terra);}
+
+/* ── CARDS ── */
+.card{background:var(--card);border-radius:var(--r);padding:28px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.05);transition:.2s;}
+.card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07);transform:translateY(-2px);}
+.card h4{font-size:.92rem;font-weight:700;margin-bottom:8px;color:var(--terra);}
+.card p{font-size:.92rem;color:var(--muted);margin-bottom:0;line-height:1.7;}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:20px 0;}
+.cg3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+
+/* ── STATS ── */
+.sr{display:flex;gap:16px;margin:24px 0;flex-wrap:wrap;}
+.sb2{flex:1;min-width:140px;background:var(--card);border-radius:var(--r);padding:24px;text-align:center;border:1px solid rgba(0,0,0,.05);box-shadow:0 1px 4px rgba(0,0,0,.03);}
+.sb2 .n{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--terra);}
+.sb2 .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:4px;}
+
+/* ── TABLES ── */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.92rem;}
+th{text-align:left;padding:12px 16px;border-bottom:2px solid var(--light);font-size:.74rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700;}
+td{padding:12px 16px;border-bottom:1px solid var(--lighter);}
+tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:rgba(184,92,56,.02);}
+
+/* ── BAR CHART ── */
+.br{display:flex;align-items:center;margin:8px 0;}
+.br .bl{width:56px;text-align:right;padding-right:14px;color:var(--muted);font-weight:600;font-size:.88rem;}
+.br .bt{flex:1;background:var(--lighter);height:34px;border-radius:8px;overflow:hidden;position:relative;}
+.br .bf{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--terra),var(--terra-l));transition:width 1s ease-out;}
+.br .bv{position:absolute;right:12px;top:7px;font-size:.82rem;font-weight:700;color:#fff;}
+
+/* ── SPEECH ── */
+.speech{background:var(--card);border-left:5px solid var(--gold);padding:32px 36px;border-radius:0 var(--r) var(--r) 0;margin:24px 0;box-shadow:0 2px 12px rgba(0,0,0,.04);}
+.speech .meta{font-size:.74rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.speech .spk{font-family:'DM Serif Display',serif;color:var(--navy);font-size:1.2rem;}
+.speech .txt{font-style:italic;color:#4a4440;line-height:1.9;margin-top:14px;font-size:.98rem;}
+.speech .note{font-size:.8rem;color:var(--muted);font-style:normal;margin-top:10px;}
+
+/* ── PDF GALLERY ── */
+.pdf-gallery{display:flex;gap:16px;overflow-x:auto;padding:8px 0 16px;scroll-snap-type:x mandatory;}
+.pdf-gallery .pg-img{flex-shrink:0;scroll-snap-align:start;width:420px;background:var(--card);border-radius:var(--r);padding:10px;box-shadow:0 3px 16px rgba(0,0,0,.08);border:1px solid var(--light);transition:.2s;}
+.pdf-gallery .pg-img:hover{transform:scale(1.02);box-shadow:0 6px 24px rgba(0,0,0,.12);}
+.pdf-gallery img{width:100%;border-radius:8px;display:block;}
+.pdf-gallery .cap{font-size:.72rem;color:var(--muted);text-align:center;margin-top:8px;}
+
+/* ── PIPELINE ── */
+.pipe{position:relative;padding-left:36px;margin:20px 0;}
+.pipe::before{content:'';position:absolute;left:14px;top:8px;bottom:8px;width:2px;background:var(--light);}
+.pipe .step{position:relative;margin-bottom:20px;padding-left:24px;}
+.pipe .step::before{content:'';position:absolute;left:-28px;top:8px;width:16px;height:16px;border-radius:50%;border:3px solid var(--terra);background:var(--bg);}
+.pipe .step h4{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.pipe .step p{font-size:.92rem;color:var(--muted);margin:0;}
+.pipe .step:nth-child(2)::before{border-color:var(--gold);}
+.pipe .step:nth-child(3)::before{border-color:var(--navy);}
+.pipe .step:nth-child(4)::before{border-color:var(--sage);}
+.pipe .step:nth-child(5)::before{border-color:var(--republic);}
+
+/* ── MATCH STEPS ── */
+.ms{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:20px 0;}
+.ms .s{background:var(--card);border-radius:var(--r);padding:24px 20px;border:1px solid rgba(0,0,0,.05);box-shadow:0 1px 4px rgba(0,0,0,.03);transition:.2s;}
+.ms .s:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.07);}
+.ms .s .num{display:inline-block;width:32px;height:32px;line-height:32px;text-align:center;border-radius:8px;font-weight:700;color:#fff;font-size:.85rem;margin-bottom:10px;}
+.ms .s h4{font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:6px;text-transform:none;letter-spacing:0;}
+.ms .s p{font-size:.85rem;color:var(--muted);margin:0;line-height:1.6;}
+
+/* ── DONUT ── */
+.donut-wrap{display:flex;gap:40px;align-items:center;flex-wrap:wrap;margin:28px 0;}
+.dl{font-size:.92rem;line-height:2.2;}
+.dl .row{display:flex;align-items:center;gap:10px;}
+.dl .dot{width:14px;height:14px;border-radius:4px;flex-shrink:0;}
+.dl .pct{font-weight:700;min-width:36px;color:var(--navy);}
+
+/* ── ACCURACY ── */
+.ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:20px 0;}
+.ac{background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);}
+.ac h4{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.ac .val{font-family:'DM Serif Display',serif;font-size:1.8rem;}
+.ac .sub{font-size:.82rem;color:var(--muted);margin-top:2px;}
+.ab{height:8px;background:var(--lighter);border-radius:5px;margin:10px 0;overflow:hidden;}
+.ab div{height:100%;border-radius:5px;}
+.ac .det{font-size:.78rem;color:var(--muted);margin-top:4px;}
+
+/* ── TIMELINE ── */
+.tl-eras{display:flex;border-radius:10px;overflow:hidden;margin-bottom:40px;font-weight:600;}
+.tl-era{padding:16px 0;color:#fff;text-align:center;font-size:.82rem;}
+.tl-era small{display:block;font-weight:400;opacity:.6;font-size:.7rem;margin-top:3px;}
+.tl-era-s{background:var(--sardinia);flex:0 0 14%;}
+.tl-era-k{background:var(--kingdom);flex:0 0 66%;}
+.tl-era-r{background:var(--republic);flex:0 0 20%;}
+
+.tl-sec{margin-bottom:28px;border-left:4px solid var(--light);padding-left:0;border-radius:4px;}
+.tl-sec.ts{border-color:var(--sardinia);}
+.tl-sec.tk{border-color:var(--kingdom);}
+.tl-sec.tr{border-color:var(--republic);}
+.tl-sh{font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;padding:10px 18px;color:#fff;display:block;margin-bottom:0;}
+.tl-sh.s{background:var(--sardinia);}
+.tl-sh.k{background:var(--kingdom);}
+.tl-sh.r{background:var(--republic);}
+
+.tl-leg{margin-left:0;margin-bottom:0;border-left:3px solid var(--lighter);padding:12px 0 12px 24px;margin-left:20px;}
+.tl-leg:last-child{border-left-color:transparent;}
+.tl-ll{font-size:.76rem;font-weight:700;color:var(--terra);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;padding:5px 14px;background:rgba(184,92,56,.07);border-radius:6px;display:inline-block;}
+.tl-ll.f{color:var(--muted);background:rgba(0,0,0,.03);}
+
+.tl-ev{display:flex;gap:12px;margin:5px 0;font-size:.9rem;align-items:baseline;padding:3px 0;}
+.tl-ev .y{font-weight:700;color:var(--navy);min-width:68px;font-size:.85rem;}
+.tl-ev.fd{opacity:.35;}
+.tl-ev.hl .y{color:var(--terra);}
+.tl-ev.hl .d{font-weight:500;}
+.tl-ev .tag{display:inline-block;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:4px;margin-left:6px;vertical-align:middle;}
+.tl-ev .tag.law{background:rgba(201,168,76,.15);color:var(--gold);}
+.tl-ev .tag.shock{background:rgba(184,92,56,.1);color:var(--terra);}
+.tl-ev .tag.war{background:rgba(30,45,61,.1);color:var(--navy);}
+
+/* ── DATA TABLE ── */
+.dtable-wrap{overflow-x:auto;border:1px solid var(--light);border-radius:var(--r);background:var(--card);box-shadow:0 2px 8px rgba(0,0,0,.04);margin:16px 0;}
+.dtable{width:max-content;min-width:100%;border-collapse:collapse;font-size:.8rem;line-height:1.5;}
+.dtable th{position:sticky;top:0;background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.6px;font-weight:600;white-space:nowrap;border:none;}
+.dtable td{padding:8px 14px;border-bottom:1px solid var(--lighter);white-space:nowrap;max-width:180px;overflow:hidden;text-overflow:ellipsis;vertical-align:top;}
+.dtable td.dt-text{max-width:360px;white-space:normal;font-style:italic;color:#555;font-size:.78rem;line-height:1.6;}
+.dtable tbody tr:hover{background:rgba(184,92,56,.03);}
+.dtable tbody tr:nth-child(even){background:rgba(0,0,0,.015);}
+.dtable tbody tr:nth-child(even):hover{background:rgba(184,92,56,.03);}
+.dtable tbody tr{cursor:pointer;}
+.dt-long{display:none;}
+.dtable tbody tr.xp .dt-preview{display:none;}
+.dtable tbody tr.xp .dt-long{display:inline;}
+.dtable tbody tr.xp td.dt-text{white-space:normal;max-width:700px;}
+.dtable tbody tr.xp{background:rgba(201,168,76,.06) !important;}
+.dt-expand{font-size:.7rem;color:var(--terra);cursor:pointer;text-transform:uppercase;letter-spacing:.5px;font-weight:600;font-style:normal;display:inline-block;margin-left:6px;}
+code{font-family:'DM Sans',monospace;}
+
+/* ── FOOTER ── */
+.ft{padding:40px 72px;font-size:.82rem;color:var(--muted);border-top:1px solid var(--light);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+
+@media(max-width:900px){
+  .sb{display:none;}
+  .mn{margin-left:0;}
+  .hero{padding:48px 28px 40px;}
+  .hero h1{font-size:2.2rem;}
+  .pg{padding:36px 24px;}
+  .ft{padding:28px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ GATE ═══ -->
+<div id="gate">
+<div class="bg"></div>
+<div class="inner">
+<h2>Voices of a Nation</h2>
+<p class="sub">Half a million speeches from the Italian Parliament, 1900&ndash;1924</p>
+<div class="row"><input type="password" id="pw" placeholder="Password" onkeydown="if(event.key==='Enter')go()"><button onclick="go()">Enter</button></div>
+<div class="err" id="err"></div>
+</div>
+</div>
+
+<div id="content" class="hidden">
+
+<!-- ═══ SIDEBAR ═══ -->
+<div class="sb">
+<div class="logo"><h1>Voices of a Nation</h1><p>Half a million speeches from the Italian Parliament, 1900&ndash;1924</p></div>
+<nav>
+<a href="#" onclick="show('overview')" class="on" id="n-overview">Overview</a>
+<a href="#" onclick="show('timeline')" id="n-timeline">Historical Timeline</a>
+<div class="sep"></div>
+<a href="#" onclick="show('corpus')" id="n-corpus">The Corpus</a>
+<a href="#" onclick="show('pipeline')" id="n-pipeline">How It Was Built</a>
+<a href="#" onclick="show('matching')" id="n-matching">Linking Speeches</a>
+<div class="sep"></div>
+<a href="#" onclick="show('sample')" id="n-sample">Sample Data</a>
+<a href="#" onclick="show('accuracy')" id="n-accuracy">Quality &amp; Accuracy</a>
+<a href="#" onclick="show('sources')" id="n-sources">Sources</a>
+</nav>
+</div>
+
+<div class="mn">
+
+<!-- ═══ HERO ═══ -->
+<div class="hero" id="hero">
+<div class="bg"><div class="orb3"></div></div>
+<div class="cnt">
+<h1>Every word spoken in Italy&rsquo;s Parliament for 24&nbsp;years</h1>
+<p class="tag">A complete digital archive of parliamentary debates from one of the most turbulent periods in Italian history &mdash; from the assassination of King&nbsp;Umberto&nbsp;I to the rise of Fascism.</p>
+<p class="by">Produced by Maurizia Di Buono &amp; Sergio Galletta &middot; ETH Z&uuml;rich</p>
+<div class="hero-stats">
+<div class="hs"><div class="n">462,555</div><div class="l">Speeches</div></div>
+<div class="hs"><div class="n">3,423</div><div class="l">Deputies</div></div>
+<div class="hs"><div class="n">6</div><div class="l">Legislatures</div></div>
+<div class="hs"><div class="n">1900&ndash;24</div><div class="l">Time span</div></div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<div class="pg on" id="p-overview"><div class="wrap">
+
+<h2>What is this?</h2>
+<p class="lead">We digitised, cleaned, and structured over 460,000 individual speeches from the official stenographic records of the Italian Chamber of Deputies &mdash; and linked each one to the person who spoke it.</p>
+
+<p>Between 1900 and 1924, Italy&rsquo;s parliament debated war and peace, labour rights, colonial ambitions, universal suffrage, and political violence. These are the actual words of the people who shaped modern Italy &mdash; socialists, liberals, nationalists, and fascists arguing on the floor of the Chamber.</p>
+
+<h3>Voices from the archive</h3>
+
+<div class="speech">
+<div class="meta">6 August 1900 &middot; Legislature 21 &middot; On the assassination of King Umberto I</div>
+<div class="spk">Filippo Turati</div>
+<div class="txt">&ldquo;Onorevoli colleghi, siamo qui per protestare, concordi insieme con voi, contro un fatto che ha sollevato la coscienza pubblica, che solleva la nostra. L'omicidio politico, nelle presenti condizioni dei paesi civili, colpisca un Re, un Presidente di Repubblica, un qualsiasi legittimo rappresentante d'interessi collettivi, od anche un semplice portabandiera d'un ideale novatore, &egrave; anche pi&ugrave; altamente riprovevole, perch&eacute; rispecchia un concetto antiquato, barbarico della evoluzione sociale; esso suppone che la distruzione di uno, o di pi&ugrave; uomini, muti qualcosa alla sostanza di un assetto politico o sociale. Associandoci al vostro cordoglio, noi qui rinnoviamo l'augurio, che dal delitto d'un forsennato nessun pregiudizio debba patire la libert&agrave; del paese.&rdquo;</div>
+<div class="note">The socialist leader condemned the anarchist assassination of the king while warning against any crackdown on civil liberties. Deputies on the right shouted &ldquo;Basta! basta!&rdquo;</div>
+</div>
+
+<div class="speech">
+<div class="meta">16 November 1922 &middot; Legislature 26 &middot; First speech as Prime Minister</div>
+<div class="spk">Benito Mussolini</div>
+<div class="txt">&ldquo;Potevo sprangare il Parlamento e costituire un Governo esclusivamente di fascisti. Potevo: ma non ho, almeno in questo primo tempo, voluto. Ho costituito un Governo di coalizione, non gi&agrave; coll'intento di avere una maggioranza parlamentare, della quale posso oggi fare benissimo a meno, ma per raccogliere in aiuto della Nazione boccheggiante quanti, al di sopra delle sfumature dei partiti, la stessa Nazione vogliono salvare.&rdquo;</div>
+<div class="note">The infamous &ldquo;bivouac speech&rdquo;. Days after the March on Rome, Mussolini openly threatened to shut down parliament. The Chamber voted him full powers. Italian democracy had two years left.</div>
+</div>
+
+<h3>What the original documents look like</h3>
+<p>The raw material is thousands of scanned pages from the printed stenographic reports &mdash; century-old documents that were read by OCR software and carefully cleaned.</p>
+<div class="pdf-gallery">
+<div class="pg-img"><img src="page_1.png" alt="Page 1"><div class="cap">Page 1</div></div>
+<div class="pg-img"><img src="page_2.png" alt="Page 2"><div class="cap">Page 2</div></div>
+<div class="pg-img"><img src="page_3.png" alt="Page 3"><div class="cap">Page 3</div></div>
+<div class="pg-img"><img src="page_4.png" alt="Page 4"><div class="cap">Page 4</div></div>
+<div class="pg-img"><img src="page_5.png" alt="Page 5"><div class="cap">Page 5</div></div>
+<div class="pg-img"><img src="page_6.png" alt="Page 6"><div class="cap">Page 6</div></div>
+<div class="pg-img"><img src="page_7.png" alt="Page 7"><div class="cap">Page 7</div></div>
+<div class="pg-img"><img src="page_8.png" alt="Page 8"><div class="cap">Page 8</div></div>
+<div class="pg-img"><img src="page_9.png" alt="Page 9"><div class="cap">Page 9</div></div>
+<div class="pg-img"><img src="page_10.png" alt="Page 10"><div class="cap">Page 10</div></div>
+<div class="pg-img"><img src="page_11.png" alt="Page 11"><div class="cap">Page 11</div></div>
+<div class="pg-img"><img src="page_12.png" alt="Page 12"><div class="cap">Page 12</div></div>
+</div>
+<p style="font-size:.85rem;color:var(--muted);margin-top:6px;">Session 15, Legislature 21 (6 August 1900) &mdash; the session where Turati spoke on the assassination of King Umberto I. All 12 pages.</p>
+
+<h3>What we know about each speech</h3>
+<p>Every speech is linked to rich personal information about the person who gave it.</p>
+<div class="cg">
+<div class="card"><h4>Who spoke</h4><p>Full name, gender, and institutional role &mdash; minister, president of the chamber, secretary, rapporteur...</p></div>
+<div class="card"><h4>Where they came from</h4><p>Place of birth, mapped to today&rsquo;s Italian municipalities, provinces, and regions</p></div>
+<div class="card"><h4>When they were born</h4><p>Date of birth &mdash; enabling generational analysis across different cohorts of deputies</p></div>
+<div class="card"><h4>Their politics</h4><p>Party affiliation, political group, and the electoral constituency they represented</p></div>
+<div class="card"><h4>Government service</h4><p>Whether they served in government, in which cabinet, what role, and exact dates</p></div>
+<div class="card"><h4>The speech itself</h4><p>Full text, date, session number, legislature, and who was presiding that day</p></div>
+</div>
+
+</div></div>
+
+<!-- ═══════════════ TIMELINE ═══════════════ -->
+<div class="pg" id="p-timeline"><div class="wrap">
+<h2>Historical Timeline</h2>
+<p class="lead">The speeches span an era of profound transformation &mdash; from restricted suffrage through world war to the collapse of democracy.</p>
+
+<div class="tl-eras">
+<div class="tl-era tl-era-s">Kingdom of Sardinia<small>1720&ndash;1861</small></div>
+<div class="tl-era tl-era-k">Kingdom of Italy<small>1861&ndash;1946</small></div>
+<div class="tl-era tl-era-r">Italian Republic<small>1946&ndash;present</small></div>
+</div>
+
+<div class="tl-sec ts"><div class="tl-sh s">Kingdom of Sardinia</div>
+<div class="tl-leg"><div class="tl-ll f">Before our period</div>
+<div class="tl-ev fd"><span class="y">1848</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Statute_of_Albertino" target="_blank">Statuto Albertino</a></strong> &mdash; first constitution, creates the Chamber of Deputies<span class="tag law">Law</span></span></div>
+<div class="tl-ev fd"><span class="y">1848&ndash;49</span><span class="d"><a href="https://en.wikipedia.org/wiki/First_Italian_War_of_Independence" target="_blank">First War of Independence</a> against Austria<span class="tag war">War</span></span></div>
+<div class="tl-ev fd"><span class="y">1859&ndash;61</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Italian_unification" target="_blank">Unification</a></strong> &mdash; Garibaldi&rsquo;s Expedition of the Thousand, Kingdom of Italy proclaimed</span></div>
+</div></div>
+
+<div class="tl-sec tk"><div class="tl-sh k">Kingdom of Italy</div>
+<div class="tl-leg"><div class="tl-ll f">Pre-study period (1861&ndash;1900)</div>
+<div class="tl-ev fd"><span class="y">1861&ndash;70</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Brigandage_in_southern_Italy" target="_blank">Great Brigandage</a></strong> &mdash; violent insurgency and counter-insurgency in the South<span class="tag shock">Shock</span></span></div>
+<div class="tl-ev fd"><span class="y">1865</span><span class="d"><a href="https://en.wikipedia.org/wiki/Administrative_unification_of_Italy" target="_blank">Administrative unification law</a>: Piedmontese codes extended to entire kingdom<span class="tag law">Law</span></span></div>
+<div class="tl-ev fd"><span class="y">1870</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Capture_of_Rome" target="_blank">Capture of Rome</a></strong> (Breccia di Porta Pia). Rome becomes capital</span></div>
+<div class="tl-ev fd"><span class="y">1877</span><span class="d"><strong><a href="https://it.wikipedia.org/wiki/Legge_Coppino" target="_blank">Coppino Law</a></strong> &mdash; compulsory elementary education (first 2 years)<span class="tag law">Law</span></span></div>
+<div class="tl-ev fd"><span class="y">1882</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Italian_electoral_law_of_1882" target="_blank">Electoral reform</a></strong> &mdash; electorate from 2% to 7%. Literacy requirement lowered<span class="tag law">Law</span><span class="tag shock">Shock</span></span></div>
+<div class="tl-ev fd"><span class="y">1887</span><span class="d"><a href="https://en.wikipedia.org/wiki/Tariff_of_1887_(Italy)" target="_blank">Protectionist tariffs</a> &mdash; grain tariff raises food prices, hits the South<span class="tag law">Law</span></span></div>
+<div class="tl-ev fd"><span class="y">1893&ndash;94</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Fasci_Siciliani" target="_blank">Fasci Siciliani</a></strong> uprising &mdash; popular revolt in Sicily, suppressed by military<span class="tag shock">Shock</span></span></div>
+<div class="tl-ev fd"><span class="y">1898</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Bava_Beccaris_massacre" target="_blank">Fatti di Milano</a></strong> &mdash; bread riots, army fires on crowd. Martial law<span class="tag shock">Shock</span></span></div>
+</div>
+
+<div class="tl-leg"><div class="tl-ll">Legislature 21 &middot; 1900&ndash;1904</div>
+<div class="tl-ev hl"><span class="y">1900</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Assassination_of_Umberto_I" target="_blank">King Umberto I assassinated</a></strong> by anarchist Gaetano Bresci. Victor Emmanuel III becomes king<span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1901</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Giovanni_Giolitti" target="_blank">Giolitti era begins.</a></strong> <a href="https://it.wikipedia.org/wiki/Federterra" target="_blank">Federterra</a> (agricultural workers&rsquo; union) founded</span></div>
+<div class="tl-ev hl"><span class="y">1902</span><span class="d"><strong>Child and women&rsquo;s labour law</strong> &mdash; bans child labour under 12, limits women to 11h/day<span class="tag law">Law</span></span></div>
+<div class="tl-ev hl"><span class="y">1902</span><span class="d"><strong>Compulsory maternity fund</strong> established<span class="tag law">Law</span></span></div>
+<div class="tl-ev hl"><span class="y">1904</span><span class="d"><strong><a href="https://it.wikipedia.org/wiki/Legge_Orlando" target="_blank">Orlando Law</a></strong> &mdash; extends compulsory education to age 12<span class="tag law">Law</span></span></div>
+</div>
+
+<div class="tl-leg"><div class="tl-ll">Legislature 22 &middot; 1904&ndash;1909</div>
+<div class="tl-ev hl"><span class="y">1904</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/1904_Italian_general_strike" target="_blank">First Italian general strike</a></strong><span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1905</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Ferrovie_dello_Stato_Italiane" target="_blank">Railway nationalisation law</a></strong> &mdash; private railways taken over by the state<span class="tag law">Law</span></span></div>
+<div class="tl-ev hl"><span class="y">1906</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Italian_General_Confederation_of_Labour" target="_blank">CGL founded</a></strong> &mdash; Confederazione Generale del Lavoro (national trade union)</span></div>
+<div class="tl-ev hl"><span class="y">1906</span><span class="d"><strong>Compulsory weekly rest day law</strong><span class="tag law">Law</span></span></div>
+<div class="tl-ev hl"><span class="y">1908</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/1908_Messina_earthquake" target="_blank">Messina earthquake</a></strong> &mdash; 80,000 dead, massive parliamentary response<span class="tag shock">Shock</span></span></div>
+</div>
+
+<div class="tl-leg"><div class="tl-ll">Legislature 23 &middot; 1909&ndash;1913</div>
+<div class="tl-ev hl"><span class="y">1910</span><span class="d"><strong><a href="https://it.wikipedia.org/wiki/Istituto_Nazionale_delle_Assicurazioni" target="_blank">State life insurance monopoly</a></strong> (INA founded)<span class="tag law">Law</span></span></div>
+<div class="tl-ev hl"><span class="y">1911</span><span class="d"><strong><a href="https://it.wikipedia.org/wiki/Legge_Daneo-Credaro" target="_blank">Daneo&ndash;Credaro Law</a></strong> &mdash; elementary schools transferred to the state<span class="tag law">Law</span></span></div>
+<div class="tl-ev hl"><span class="y">1911&ndash;12</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Italo-Turkish_War" target="_blank">Italo-Turkish War</a></strong> &mdash; conquest of Libya, fuels nationalism<span class="tag war">War</span></span></div>
+<div class="tl-ev hl"><span class="y">1912</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Italian_electoral_law_of_1912" target="_blank">Universal male suffrage law</a></strong> &mdash; electorate from 3.3M to 8.65M. Literacy requirement dropped for men over 30<span class="tag law">Law</span><span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1913</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Gentiloni_Pact" target="_blank">Gentiloni Pact</a></strong> &mdash; Catholics re-enter politics via electoral alliance with Giolitti</span></div>
+</div>
+
+<div class="tl-leg"><div class="tl-ll">Legislature 24 &middot; 1913&ndash;1919</div>
+<div class="tl-ev hl"><span class="y">1913</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/1913_Italian_general_election" target="_blank">First election under new suffrage</a></strong> &mdash; dramatic shift in electorate composition<span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1914</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Red_Week_(Italy)" target="_blank">&ldquo;Red Week&rdquo;</a></strong> (Settimana Rossa) &mdash; insurrectionary general strike<span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1915</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Italy_in_World_War_I" target="_blank">Italy enters World War I</a></strong> (Treaty of London with the Entente)<span class="tag war">War</span></span></div>
+<div class="tl-ev hl"><span class="y">1917</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Battle_of_Caporetto" target="_blank">Defeat at Caporetto</a></strong> &mdash; 300,000 Italian prisoners, national crisis<span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1918</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Battle_of_Vittorio_Veneto" target="_blank">Victory at Vittorio Veneto.</a></strong> Armistice. 650,000 soldiers killed in total<span class="tag war">War</span></span></div>
+</div>
+
+<div class="tl-leg"><div class="tl-ll">Legislature 25 &middot; 1919&ndash;1921</div>
+<div class="tl-ev hl"><span class="y">1919</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/1919_Italian_general_election" target="_blank">Proportional representation</a></strong> replaces single-member districts<span class="tag law">Law</span><span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1919</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Italian_People%27s_Party_(1919)" target="_blank">PPI founded</a></strong> &mdash; first Catholic mass party. PSI becomes largest party</span></div>
+<div class="tl-ev hl"><span class="y">1919</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Eight-hour_day" target="_blank">8-hour working day law</a></strong><span class="tag law">Law</span></span></div>
+<div class="tl-ev hl"><span class="y">1919&ndash;20</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Biennio_Rosso" target="_blank">&ldquo;Biennio Rosso&rdquo;</a></strong> &mdash; two years of strikes, factory occupations, land seizures<span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1919</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Italian_Fasces_of_Combat" target="_blank">Fasci di Combattimento</a></strong> founded by Mussolini in Milan</span></div>
+<div class="tl-ev hl"><span class="y">1920</span><span class="d"><strong>Giolitti&rsquo;s fiscal reform</strong> &mdash; nominative share registration, capital gains taxation<span class="tag law">Law</span></span></div>
+</div>
+
+<div class="tl-leg"><div class="tl-ll">Legislature 26 &middot; 1921&ndash;1924</div>
+<div class="tl-ev hl"><span class="y">1921</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/National_Fascist_Party" target="_blank">PNF founded</a></strong> (Partito Nazionale Fascista). Fascists win 35 seats</span></div>
+<div class="tl-ev hl"><span class="y">1921&ndash;22</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Squadrismo" target="_blank">Squadrismo</a></strong> &mdash; fascist paramilitary violence against socialists, unions, cooperatives<span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1922</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/March_on_Rome" target="_blank">March on Rome</a></strong> (28 October) &mdash; Mussolini appointed Prime Minister by the King<span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1923</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Gentile_reform" target="_blank">Gentile Reform</a></strong> &mdash; sweeping education reform, compulsory schooling to 14<span class="tag law">Law</span></span></div>
+<div class="tl-ev hl"><span class="y">1923</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Acerbo_Law" target="_blank">Acerbo Law</a></strong> &mdash; majority bonus electoral system (2/3 of seats to plurality winner)<span class="tag law">Law</span><span class="tag shock">Shock</span></span></div>
+<div class="tl-ev hl"><span class="y">1924</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Giacomo_Matteotti#Kidnapping_and_murder" target="_blank">Matteotti murdered</a></strong> after denouncing electoral fraud. Opposition walks out (<a href="https://en.wikipedia.org/wiki/Aventine_Secession_(20th_century)" target="_blank">&ldquo;Aventine Secession&rdquo;</a>)<span class="tag shock">Shock</span></span></div>
+</div>
+
+<div class="tl-leg"><div class="tl-ll f">After our period</div>
+<div class="tl-ev fd"><span class="y">1925&ndash;26</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Leggi_fascistissime" target="_blank">Fascist &ldquo;leggi fascistissime&rdquo;</a></strong> &mdash; dismantle parliament, ban opposition parties<span class="tag law">Law</span></span></div>
+<div class="tl-ev fd"><span class="y">1929</span><span class="d"><strong><a href="https://en.wikipedia.org/wiki/Lateran_Treaty" target="_blank">Lateran Treaty</a></strong> &mdash; reconciliation with the Vatican<span class="tag law">Law</span></span></div>
+<div class="tl-ev fd"><span class="y">1935&ndash;36</span><span class="d"><a href="https://en.wikipedia.org/wiki/Second_Italo-Ethiopian_War" target="_blank">Invasion of Ethiopia</a>, League of Nations sanctions<span class="tag war">War</span></span></div>
+<div class="tl-ev fd"><span class="y">1940&ndash;43</span><span class="d"><a href="https://en.wikipedia.org/wiki/Military_history_of_Italy_during_World_War_II" target="_blank">World War II</a>. Fall of Fascism (1943), Allied invasion<span class="tag war">War</span></span></div>
+</div></div>
+
+<div class="tl-sec tr"><div class="tl-sh r">Italian Republic</div>
+<div class="tl-leg"><div class="tl-ll f">Post-monarchy</div>
+<div class="tl-ev fd"><span class="y">1946</span><span class="d"><strong>Republic proclaimed</strong> after referendum. Women vote for the first time<span class="tag shock">Shock</span></span></div>
+<div class="tl-ev fd"><span class="y">1948</span><span class="d"><strong>Republican Constitution</strong> enters into force<span class="tag law">Law</span></span></div>
+</div></div>
+</div></div>
+
+<!-- ═══════════════ CORPUS ═══════════════ -->
+<div class="pg" id="p-corpus"><div class="wrap">
+<h2>The Corpus</h2>
+<p class="lead">462,555 speeches from 6 legislatures, each linked to the deputy who spoke them.</p>
+<table>
+<thead><tr><th>Legislature</th><th>Period</th><th>Speeches</th><th>Deputies</th><th>Govt roles</th></tr></thead>
+<tbody>
+<tr><td>21</td><td>1900&ndash;1904</td><td>80,036</td><td>579</td><td>117</td></tr>
+<tr><td>22</td><td>1904&ndash;1909</td><td>102,528</td><td>596</td><td>159</td></tr>
+<tr><td>23</td><td>1909&ndash;1913</td><td>98,551</td><td>600</td><td>116</td></tr>
+<tr><td>24</td><td>1913&ndash;1919</td><td>85,586</td><td>539</td><td>292</td></tr>
+<tr><td>25</td><td>1919&ndash;1921</td><td>40,804</td><td>519</td><td>143</td></tr>
+<tr><td>26</td><td>1921&ndash;1924</td><td>55,050</td><td>590</td><td>408</td></tr>
+<tr style="font-weight:700;background:rgba(184,92,56,.04)"><td></td><td>Total</td><td>462,555</td><td>3,423</td><td>1,235</td></tr>
+</tbody>
+</table>
+
+<h3>Personal information for each deputy</h3>
+<div class="cg">
+<div class="card"><h4>Identity</h4><p>Full name, gender, unique identifier linked to the official Camera dei Deputati database and Wikidata</p></div>
+<div class="card"><h4>Birth</h4><p>Date and place of birth, mapped to today&rsquo;s municipalities, provinces, and regions</p></div>
+<div class="card"><h4>Politics</h4><p>Party, electoral constituency and location</p></div>
+<div class="card"><h4>Government</h4><p>Cabinet, role (minister, undersecretary...), exact dates of service</p></div>
+</div>
+
+<h3>Data coverage by legislature</h3>
+<table>
+<thead><tr><th></th><th>Leg 21</th><th>Leg 22</th><th>Leg 23</th><th>Leg 24</th><th>Leg 25</th><th>Leg 26</th></tr></thead>
+<tbody>
+<tr><td>Date of birth</td><td>98%</td><td>94%</td><td>97%</td><td>96%</td><td>98%</td><td>92%</td></tr>
+<tr><td>Place of birth</td><td>99%</td><td>94%</td><td>94%</td><td>97%</td><td>98%</td><td>91%</td></tr>
+<tr><td>Party affiliation</td><td>27%</td><td>88%</td><td>86%</td><td>95%</td><td>100%</td><td>95%</td></tr>
+<tr><td>Province &amp; region</td><td>94%</td><td>91%</td><td>92%</td><td>93%</td><td>95%</td><td>94%</td></tr>
+</tbody>
+</table>
+<p style="font-size:.85rem;color:var(--muted)">Legislature 21 has low party coverage because the Wikipedia source for that period lacks structured data.</p>
+</div></div>
+
+<!-- ═══════════════ PIPELINE ═══════════════ -->
+<div class="pg" id="p-pipeline"><div class="wrap">
+<h2>How It Was Built</h2>
+<p class="lead">From century-old printed pages to a structured digital corpus, in five stages.</p>
+<div class="pipe">
+<div class="step"><h4>Original documents</h4><p>The starting point is the official <em>Atti Parlamentari</em>: scanned PDF copies of the original printed stenographic reports from the Italian Parliament&rsquo;s historical archive. One PDF per parliamentary session, with double-column layouts, complex formatting, and inconsistent headers.</p></div>
+<div class="step"><h4>PDF to images</h4><p>Each PDF page is converted into an individual image. Filenames encode the legislature, session number, and date (e.g. <code style="font-size:.82rem;background:var(--lighter);padding:1px 6px;border-radius:3px;">leg_r24_sed001_19131128_p0001.png</code>). When automatic date extraction fails, dates are corrected manually.</p></div>
+<div class="step"><h4>AI-powered text extraction</h4><p>An AI language model reads each page image and extracts structured speech data: who is speaking, their institutional role, and the full text of what they said. Standard text extraction tools couldn&rsquo;t handle the historical double-column layout and embedded speaker transitions, so we used a custom approach with a large language model.</p></div>
+<div class="step"><h4>Post-processing &amp; cleaning</h4><p>Automated checks catch extraction errors. Written responses (marked &ldquo;RISPOSTA SCRITTA&rdquo;) are matched to their actual author by detecting the signature at the end of the text. Sessions with parsing failures are re-processed. Speeches are then cleaned, merged, and deduplicated across a 7-phase pipeline.</p></div>
+<div class="step"><h4>Deputy database &amp; linking</h4><p>Personal information about each deputy is assembled from 5 independent sources (official Camera database, Wikipedia, Wikidata, storia.camera.it, and ISTAT geographic data). Each speech is then matched to its speaker &mdash; handling name variants, compound surnames, and people who share the same last name. Details in <a href="#" onclick="show('matching')">Linking Speeches</a>.</p></div>
+</div>
+
+<h3>Cleaning pipeline (7 phases)</h3>
+<table>
+<thead><tr><th>Phase</th><th>What it does</th><th>Impact</th></tr></thead>
+<tbody>
+<tr><td>1&ndash;2</td><td>Extract names from responses, merge overlaps, resolve &ldquo;President&rdquo; to actual name</td><td>103,890 presidencies resolved</td></tr>
+<tr><td>3</td><td>Recover missing names from original PDFs + OCR correction</td><td>~40,000 additional fixes</td></tr>
+<tr><td>4</td><td>Fuzzy matching: normalise accents, hyphens; compound surnames</td><td>72% &rarr; 85% match</td></tr>
+<tr><td>5</td><td>Link government roles (cabinet, position, dates)</td><td>102,847 speeches enriched</td></tr>
+<tr><td>6&ndash;7</td><td>Additional cleaning + homonym-safe re-matching</td><td>Final: 85.2% (all correct)</td></tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- ═══════════════ MATCHING ═══════════════ -->
+<div class="pg" id="p-matching"><div class="wrap">
+<h2>Linking Speeches to People</h2>
+<p class="lead">Names can be misspelled by OCR, some deputies share the same surname, and some speakers aren&rsquo;t even deputies. Four steps handle this, and if any step is ambiguous, the speech stays unmatched &mdash; never assigned to the wrong person.</p>
+
+<div class="ms">
+<div class="s"><div class="num" style="background:var(--terra)">1</div><h4>Full name</h4><p>&ldquo;Sonnino Sidney&rdquo; &rarr; matches by surname + first name, resolving shared surnames.</p></div>
+<div class="s"><div class="num" style="background:var(--gold)">2</div><h4>Unique surname</h4><p>&ldquo;Giolitti&rdquo; &rarr; only one in that legislature. Safe match.</p></div>
+<div class="s"><div class="num" style="background:var(--navy)">3</div><h4>Compound surname</h4><p>&ldquo;Di Scalea&rdquo; matches &ldquo;Lanza di Scalea&rdquo; via separate lookup.</p></div>
+<div class="s"><div class="num" style="background:var(--sage)">4</div><h4>Fuzzy</h4><p>Normalise accents, hyphens, OCR variants. Always homonym-safe.</p></div>
+</div>
+
+<div class="sr">
+<div class="sb2"><div class="n">85.2%</div><div class="l">Match rate</div></div>
+<div class="sb2"><div class="n">394,007</div><div class="l">Matched</div></div>
+<div class="sb2"><div class="n">68,548</div><div class="l">Unmatched</div></div>
+<div class="sb2"><div class="n" style="color:var(--sage)">0</div><div class="l">False matches</div></div>
+</div>
+
+<h3>Match rate by legislature</h3>
+<div style="max-width:560px">
+<div class="br"><span class="bl">Leg 21</span><div class="bt"><div class="bf" style="width:87.6%"></div><span class="bv">87.6%</span></div></div>
+<div class="br"><span class="bl">Leg 22</span><div class="bt"><div class="bf" style="width:87.1%"></div><span class="bv">87.1%</span></div></div>
+<div class="br"><span class="bl">Leg 23</span><div class="bt"><div class="bf" style="width:84.1%"></div><span class="bv">84.1%</span></div></div>
+<div class="br"><span class="bl">Leg 24</span><div class="bt"><div class="bf" style="width:84.2%"></div><span class="bv">84.2%</span></div></div>
+<div class="br"><span class="bl">Leg 25</span><div class="bt"><div class="bf" style="width:82.3%"></div><span class="bv">82.3%</span></div></div>
+<div class="br"><span class="bl">Leg 26</span><div class="bt"><div class="bf" style="width:83.6%"></div><span class="bv">83.6%</span></div></div>
+</div>
+
+<h3>Why 14.8% remain unmatched</h3>
+<div class="donut-wrap">
+<svg viewBox="0 0 160 160" width="155" height="155">
+<circle cx="80" cy="80" r="56" fill="none" stroke="var(--lighter)" stroke-width="24"/>
+<circle cx="80" cy="80" r="56" fill="none" stroke="var(--terra)" stroke-width="24" stroke-dasharray="134 218" stroke-dashoffset="0" transform="rotate(-90 80 80)"/>
+<circle cx="80" cy="80" r="56" fill="none" stroke="var(--navy)" stroke-width="24" stroke-dasharray="74 278" stroke-dashoffset="-134" transform="rotate(-90 80 80)"/>
+<circle cx="80" cy="80" r="56" fill="none" stroke="var(--gold)" stroke-width="24" stroke-dasharray="56 296" stroke-dashoffset="-208" transform="rotate(-90 80 80)"/>
+<circle cx="80" cy="80" r="56" fill="none" stroke="var(--sage)" stroke-width="24" stroke-dasharray="42 310" stroke-dashoffset="-264" transform="rotate(-90 80 80)"/>
+<circle cx="80" cy="80" r="56" fill="none" stroke="var(--republic)" stroke-width="24" stroke-dasharray="25 327" stroke-dashoffset="-306" transform="rotate(-90 80 80)"/>
+<circle cx="80" cy="80" r="56" fill="none" stroke="var(--clay)" stroke-width="24" stroke-dasharray="21 331" stroke-dashoffset="-331" transform="rotate(-90 80 80)"/>
+</svg>
+<div class="dl">
+<div class="row"><div class="dot" style="background:var(--terra)"></div><span class="pct">38%</span>President without name</div>
+<div class="row"><div class="dot" style="background:var(--navy)"></div><span class="pct">21%</span>Not in deputy database</div>
+<div class="row"><div class="dot" style="background:var(--gold)"></div><span class="pct">16%</span>Partial or compound name</div>
+<div class="row"><div class="dot" style="background:var(--sage)"></div><span class="pct">12%</span>Unsigned written response</div>
+<div class="row"><div class="dot" style="background:var(--republic)"></div><span class="pct">7%</span>Ambiguous shared surname</div>
+<div class="row"><div class="dot" style="background:var(--clay)"></div><span class="pct">6%</span>Other</div>
+</div>
+</div>
+</div></div>
+
+<!-- ═══════════════ SAMPLE ═══════════════ -->
+<div class="pg" id="p-sample"><div class="wrap">
+<h2>Sample Data</h2>
+<p class="lead">This is what the dataset actually looks like. Each row is one speech. The full dataset contains 38 columns &mdash; here are the most relevant ones.</p>
+
+<p style="font-size:.92rem;color:var(--muted);margin-bottom:20px;">Showing <strong>17 rows</strong> out of 462,555. Scroll right &rarr;</p>
+
+<div class="dtable-wrap">
+<table class="dtable">
+<thead><tr>
+<th>cognome</th><th>nome</th><th>date</th><th>leg</th><th>appartenenza</th><th>date of birth</th><th>place of birth</th><th>provincia</th><th>regione</th><th>genere</th><th>governo</th><th>ruolo</th><th>discorso</th>
+</tr></thead>
+<tbody>
+<tr onclick="this.classList.toggle('xp')"><td>Giolitti</td><td>Giovanni</td><td>7 Jul 1900</td><td>21</td><td>Partito Liberale Italiano</td><td>27 Oct 1842</td><td>Mondov&igrave;</td><td>Cuneo</td><td>Piemonte</td><td>male</td><td></td><td></td><td class="dt-text"><span class="dt-preview">Chiedo di parlare per una dichiarazione di voto. Le dichiarazioni fatte dall'onorevole presidente del Consiglio sono tali, che io debbo dichiarare francamente di esserne stato soddisfatto... <span class="dt-expand">[read full speech]</span></span><span class="dt-long">Chiedo di parlare per una dichiarazione di voto. Le dichiarazioni fatte dall'onorevole presidente del Consiglio sono tali, che io debbo dichiarare francamente di esserne stato soddisfatto. Le sue dichiarazioni constano di due parti: l'una riguarda il programma generale del Governo, l'altra riguarda la questione della China. Per quanto riguarda il programma generale del Governo riconosco, che non sarebbe serio oggi, di fronte ad un Ministero che &egrave; da poco tempo al potere, pretendere da lui un programma completo e particolareggiato. E riconosco anzi, che la discussione di un programma &egrave; assai pi&ugrave; efficace quando si fa sopra progetti precisi e concreti, che non quando si svolge intorno a dichiarazioni pi&ugrave; o meno indeterminate. Io ho la convinzione, che il presidente del Consiglio ha compreso la gravit&agrave; delle condizioni in cui il nostro paese si trova per il malcontento largamente diffuso, malcontento il quale nelle ultime elezioni generali si &egrave; manifestato niente meno che con un terzo dei votanti sul complesso dei voti dati in tutta l'Italia. Queste elezioni generali hanno rivelato uno stato di cose gravissimo, al quale si deve provvedere senza ritardo e in modo veramente efficace. Ed ho sentito con piacere anche dall'estrema destra della Camera partire una voce, la quale riconosce che si &egrave; errato in passato dal partito conservatore, e che se quel partito vuole avere un'influenza in paese deve mutare strada. Per parte mia dichiaro, che chiunque accetter&agrave; un programma largamente liberale, sar&agrave; per me il benvenuto; e dichiaro del pari, che non intendo fare alcuna questione di persone rispetto ai ministri che oggi governano il paese. E vengo all'altra questione del contegno che deve tenere l'Italia di fronte ai gravissimi avvenimenti che si svolgono in China. Ma prima di tutto consentitemi di constatare quale grande, quale immenso servizio ha reso la Camera all'Italia quando col suo risoluto contegno rese impossibile la occupazione di San Mun voluta dal Ministero Pelloux. Pensate alle condizioni in cui saremmo se quella spedizione fosse stata fatta! Noi ci troveremmo ora soli di fronte all'insurrezione di una grossa parte dell'Impero chinese poich&eacute; a San Mun nessuna Potenza europea aveva interesse ad intervenire, e ci troveremmo perci&ograve; in questo doloroso dilemma: o una fuga vergognosa, o una grande spedizione militare, che sarebbe la nostra rovina. (Vivissime approvazioni a sinistra e a destra). <span class="dt-expand">[collapse]</span></span></td></tr>
+<tr><td>Pantaleoni</td><td>Maffeo</td><td>20 Mar 1901</td><td>21</td><td>Partito Radicale Italiano</td><td>2 Jul 1857</td><td>Frascati</td><td>Roma</td><td>Lazio</td><td>male</td><td></td><td></td><td class="dt-text">Egregio amico, mi vuoi lasciare parlare o vuoi parlare tu? (Si ride). Ora l'onorevole Sonnino questo problema ha avvertito e ricerca per esso una soluzione. L'esistenza di questo problema prende vari nomi e preferibilmente quello di decadenza del parlamentarismo. Egli crede di doverlo risolvere rendendo pi&ugrave; forte il potere esecutivo.</td></tr>
+<tr><td>Biancheri</td><td>Giuseppe</td><td>14 May 1902</td><td>21</td><td>Destra</td><td>2 Dec 1821</td><td>Ventimiglia</td><td>Imperia</td><td>Liguria</td><td>male</td><td></td><td></td><td class="dt-text">Ha facolt&agrave; di parlare l'onorevole relatore.</td></tr>
+<tr><td>Garavetti</td><td>Filippo</td><td>10 May 1902</td><td>21</td><td></td><td>26 Aug 1846</td><td>Sassari</td><td>Sassari</td><td>Sardegna</td><td>male</td><td></td><td></td><td class="dt-text">Non ho che a ringraziare l'onorevole sotto-segretario di Stato della risposta che mi ha dato; mi limito a pregarlo che d'accordo col collega dei lavori pubblici provveda a coadiuvare l'approdo a Santo Stefano.</td></tr>
+<tr><td>Turati</td><td>Filippo</td><td>8 Jun 1903</td><td>21</td><td>Partito Socialista Italiano</td><td>26 Nov 1857</td><td>Canzo</td><td>Como</td><td>Lombardia</td><td>male</td><td></td><td></td><td class="dt-text">Brevissime parole per non ritardare pi&ugrave; la fine di questa gi&agrave; lunga discussione. Abbiamo notato a questo capitolo un piccolo aumento di cifra; ma soprattutto abbiamo notato come l'aumento sia troppo piccolo e l'intero stanziamento sia senza dubbio inadeguato alle nuove spese che si rendono necessarie.</td></tr>
+<tr><td>Bissolati Bergamaschi</td><td>Leonida</td><td>9 Feb 1904</td><td>21</td><td></td><td>20 Feb 1857</td><td>Cremona</td><td>Cremona</td><td>Lombardia</td><td>male</td><td></td><td></td><td class="dt-text">Va bene; dunque l'onorevole Orlando risponde che non pu&ograve; rispondere; naturale! Ora, appunto perch&eacute; l'onorevole Orlando risponde che non pu&ograve; rispondere, appunto perch&eacute; l'onorevole Nasi, di fronte a questa accusa che &egrave; gravissima, chiede che la luce sia fatta, per questo credo che il dibattito non possa dirsi chiuso.</td></tr>
+<tr><td>Bertetti</td><td>Michele</td><td>30 Nov 1906</td><td>22</td><td>Ministeriale</td><td>29 Sep 1842</td><td>Volpiano</td><td>Torino</td><td>Piemonte</td><td>male</td><td>III Governo Giolitti</td><td>Sottosegretario: Min. Poste e Telegrafi</td><td class="dt-text">Ieri avevo cominciato a rispondere alla interrogazione dell'onorevole nostro collega Gallino e gli avevo gi&agrave; dichiarato che le sue apprensioni circa questa minacciata soppressione del passaggio della Valigia delle Indie sul territorio italiano, a mio avviso, non avevano nessun fondamento.</td></tr>
+<tr><td>Marcora</td><td>Giuseppe</td><td>4 Jun 1909</td><td>23</td><td>Radicale</td><td>14 Oct 1841</td><td>Milano</td><td>Milano</td><td>Lombardia</td><td>male</td><td></td><td></td><td class="dt-text">L'onorevole Ciccotti ha facolt&agrave; di dichiarare se sia soddisfatto.</td></tr>
+<tr><td>Romanin Jacour</td><td>Leone</td><td>22 Jun 1910</td><td>23</td><td>Ministeriale</td><td>17 Jan 1847</td><td>Padova</td><td>Padova</td><td>Veneto</td><td>male</td><td></td><td></td><td class="dt-text">Va bene, va bene; per l'articolo 2 sono 400,000 lire all'anno...</td></tr>
+<tr><td>Marcora</td><td>Giuseppe</td><td>3 Mar 1916</td><td>24</td><td>Radicale</td><td>14 Oct 1841</td><td>Milano</td><td>Milano</td><td>Lombardia</td><td>male</td><td></td><td></td><td class="dt-text">Ieri l'altro l'onorevole Bissolati propose di inviare un saluto alla Camera ed all'esercito francese; e la proposta fu accolta, fra unanimi applausi, da vivissime approvazioni.</td></tr>
+<tr><td>Modigliani</td><td>Giuseppe Emanuele</td><td>14 Feb 1918</td><td>24</td><td>Socialista ufficiale</td><td>28 Oct 1872</td><td>Livorno</td><td>Livorno</td><td>Toscana</td><td>male</td><td></td><td></td><td class="dt-text">Orbene, onorevole Agnelli, quando la denunzia &egrave; del genere di quella di cui si discute in questo momento, con delle glosse che puzzano di guardina di questura e ripugnano ad ogni elementare senso di onest&agrave;, mi pare si abbia il diritto di pretendere che la commissione parlamentare faccia una cosa appropriata.</td></tr>
+<tr><td>Foscari</td><td>Piero</td><td>9 Sep 1919</td><td>24</td><td>Nazionalista</td><td>25 Aug 1865</td><td>Venezia</td><td>Venezia</td><td>Veneto</td><td>male</td><td></td><td></td><td class="dt-text">Ma io qualche volta ci sono stato!</td></tr>
+<tr><td>Orlando</td><td>Vittorio Emanuele</td><td>4 Dec 1919</td><td>25</td><td>Liberale</td><td>19 May 1860</td><td>Palermo</td><td>Palermo</td><td>Sicilia</td><td>male</td><td></td><td></td><td class="dt-text">Le interrogazioni test&eacute; lette saranno inscritte nell'ordine del giorno, trasmettendosi ai ministri competenti quelle per le quali si chiede la risposta scritta.</td></tr>
+<tr><td>Matteotti</td><td>Giacomo</td><td>30 Nov 1920</td><td>25</td><td>Socialista ufficiale</td><td>22 May 1885</td><td>Fratta Polesine</td><td>Rovigo</td><td>Veneto</td><td>male</td><td></td><td></td><td class="dt-text">Seconda difficolt&agrave;: la busta. Ogni comune ha la sua busta, ma noi abbiamo pensato ad un altro meccanismo. Invece di avere una busta per comune, ci sia una busta comune per tutti i marinai. Questa busta, che verrebbe trasmessa dalla Direzione generale della marina mercantile alle capitanerie, risolverebbe molte difficolt&agrave;.</td></tr>
+<tr><td>Caroti</td><td>Arturo</td><td>8 Mar 1921</td><td>25</td><td>Socialista ufficiale</td><td>5 Apr 1875</td><td>Firenze</td><td>Firenze</td><td>Toscana</td><td>male</td><td></td><td></td><td class="dt-text">Perch&eacute; corse fra il Governo ed i fasci, un do ut des: datemi nelle mani D'Annunzio, ed io vi dar&ograve; i socialisti! Fiume era la Patria; essi dicevano. Lasciaron la Patria per la classe; perch&eacute; la Patria &egrave; la Patria borghese, &egrave; la classe borghese! La prova di questo fatto &egrave; che tra fascisti e legionari fiumani non vi fu mai intesa possibile.</td></tr>
+<tr><td>Mussolini</td><td>Benito</td><td>22 Jul 1921</td><td>26</td><td>Fascista</td><td>29 Jul 1883</td><td>Predappio</td><td>Forl&igrave;-Cesena</td><td>Emilia-Romagna</td><td>male</td><td></td><td></td><td class="dt-text">Domando all'onorevole presidente del Consiglio se non creda di dare altre informazioni, sia pure di ordine governativo, sui fatti di Sarzana.</td></tr>
+<tr><td>Federzoni</td><td>Luigi</td><td>29 May 1922</td><td>26</td><td>Nazionalista</td><td>27 Sep 1878</td><td>Bologna</td><td>Bologna</td><td>Emilia-Romagna</td><td>male</td><td>I Governo Mussolini</td><td>Ministro: Min. delle Colonie</td><td class="dt-text">Non essendo presente l'onorevole interrogante s'intendono ritirate le interrogazioni dell'onorevole Monici, al ministro dell'interno, sulle ragioni del ritardato soccorso finanziario alle popolazioni colpite dal nubifragio del settembre 1921 nel Lazio.</td></tr>
+<tr><td>Anile</td><td>Antonino</td><td>15 Jun 1922</td><td>26</td><td>Popolare</td><td>20 Nov 1869</td><td>Pizzo</td><td>Vibo Valentia</td><td>Calabria</td><td>male</td><td>II Governo Facta</td><td>Ministro: Min. Istruzione Pubblica</td><td class="dt-text">Quello che avviene qui rivela sempre pi&ugrave; la necessit&agrave;, che noi abbiamo, di giungere ad una autonomia universitaria, non solo amministrativa, ma, col tempo, anche didattica. Questo continuo mettere a raffronto le Universit&agrave; minori con le Universit&agrave; maggiori non giova a nessuno.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p style="margin-top:20px;font-size:.88rem;color:var(--muted);">The full dataset has 38 columns including additional identifiers (<code>id_parlamentare</code>, <code>person</code> Wikidata QID), geographic details (<code>collegio</code>, <code>collegio_link</code>), titles (<code>titolo1</code>, <code>titolo2</code>), and government dates (<code>start_governo</code>, <code>end_governo</code>). Empty cells indicate missing data.</p>
+</div></div>
+
+<!-- ═══════════════ ACCURACY ═══════════════ -->
+<div class="pg" id="p-accuracy"><div class="wrap">
+<h2>Quality &amp; Accuracy</h2>
+<p class="lead">Human annotators verified a random sample of sessions against the original printed documents, checking six dimensions of quality.</p>
+
+<div class="sr">
+<div class="sb2"><div class="n">129 <span style="font-size:1rem;color:var(--muted);font-family:'DM Sans',sans-serif">/ 2,559</span></div><div class="l">Sessions verified (5.0%)</div></div>
+<div class="sb2"><div class="n">2,767 <span style="font-size:1rem;color:var(--muted);font-family:'DM Sans',sans-serif">/ 462,555</span></div><div class="l">Speeches checked (0.6%)</div></div>
+</div>
+
+<div class="ag">
+<div class="ac"><h4>Present in PDF</h4><div class="val" style="color:var(--sage)">100%</div><div class="sub">Every sampled speech found in the source</div><div class="ab"><div style="width:100%;background:var(--sage)"></div></div></div>
+<div class="ac"><h4>Correct speaker</h4><div class="val" style="color:var(--navy)">95.9%</div><div class="sub">Right person identified as speaker</div><div class="ab"><div style="width:95.9%;background:var(--navy)"></div></div><div class="det">L22: 97.9% &middot; L23: 95.0% &middot; L25: 98.7% &middot; L26: 92.3%</div></div>
+<div class="ac"><h4>Exact text match</h4><div class="val" style="color:var(--terra)">94.5%</div><div class="sub">Text matches original word for word</div><div class="ab"><div style="width:94.5%;background:var(--terra)"></div></div><div class="det">L22: 98.8% &middot; L23: 95.3% &middot; L25: 91.9% &middot; L26: 92.2%</div></div>
+<div class="ac"><h4>Text completeness</h4><div class="val" style="color:var(--gold)">91.2%</div><div class="sub">Full speech captured, not truncated</div><div class="ab"><div style="width:91.2%;background:var(--gold)"></div></div><div class="det">L22: 93.5% &middot; L23: 89.1% &middot; L25: 90.0% &middot; L26: 92.4%</div></div>
+<div class="ac"><h4>Signature present</h4><div class="val" style="color:var(--republic)">86.9%</div><div class="sub">Written responses retain signatory</div><div class="ab"><div style="width:86.9%;background:var(--republic)"></div></div></div>
+<div class="ac"><h4>Missing rate</h4><div class="val" style="color:var(--terra)">5.3%</div><div class="sub">Speeches in PDF but absent digitally</div><div class="ab"><div style="width:5.3%;background:var(--terra)"></div></div><div class="det">L22: 4.2% &middot; L23: 7.0% &middot; L25: 7.3% &middot; L26: 4.2%</div></div>
+</div>
+</div></div>
+
+<!-- ═══════════════ SOURCES ═══════════════ -->
+<div class="pg" id="p-sources"><div class="wrap">
+<h2>Sources</h2>
+<p class="lead">Where the data comes from.</p>
+<div class="card"><h4>Primary source</h4><p><strong>Atti Parlamentari &mdash; Resoconti Stenografici</strong><br>Official verbatim transcripts of the Chamber of Deputies, Kingdom of Italy. Digitised from the <a href="https://storia.camera.it/lavori/resoconti-stenografici" target="_blank">historical archive at storia.camera.it</a>. Original PDF scans freely available.</p></div>
+<div class="card"><h4>Deputy information</h4>
+<table>
+<thead><tr><th>Source</th><th>What it provides</th></tr></thead>
+<tbody>
+<tr><td>Camera dei Deputati (RDF)</td><td>Official records: name, constituency, titles, gender</td></tr>
+<tr><td>Camera dei Deputati (SPARQL)</td><td>Government roles, positions, dates</td></tr>
+<tr><td>Wikipedia</td><td>Party affiliation, constituency</td></tr>
+<tr><td>Wikidata</td><td>Biographical data, cross-database links</td></tr>
+<tr><td>storia.camera.it</td><td>Historical deputy lists</td></tr>
+<tr><td>ISTAT</td><td>Maps historical place names to modern regions</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+
+<!-- FOOTER -->
+<div class="ft">
+<span>Produced by Maurizia Di Buono &amp; Sergio Galletta &middot; ETH Z&uuml;rich</span>
+<span>2024&ndash;2026</span>
+</div>
+
+</div><!-- mn -->
+</div><!-- content -->
+
+<script>
+const PW='discorsi1900';
+function go(){if(document.getElementById('pw').value===PW){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');sessionStorage.setItem('a','1');}else{document.getElementById('err').textContent='Wrong password';}}
+if(sessionStorage.getItem('a')==='1'){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');}
+function show(id){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.sb nav a').forEach(a=>a.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.getElementById('n-'+id).classList.add('on');document.getElementById('hero').style.display=id==='overview'?'':'none';window.scrollTo(0,0);}
+</script>
+</body>
+</html>
