@@ -113,6 +113,9 @@ tbody tr:hover{background:rgba(184,92,56,.02);}
 .speech .spk{font-family:'DM Serif Display',serif;color:var(--navy);font-size:1.2rem;}
 .speech .txt{font-style:italic;color:#4a4440;line-height:1.9;margin-top:14px;font-size:.98rem;}
 .speech .note{font-size:.8rem;color:var(--muted);font-style:normal;margin-top:10px;}
+.tr-btn{display:inline-block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);cursor:pointer;padding:4px 10px;border:1px solid var(--light);border-radius:5px;margin-top:8px;transition:.2s;background:var(--bg);}
+.tr-btn:hover{color:var(--terra);border-color:var(--terra);}
+.tr-result{margin-top:10px;padding:14px;background:var(--lighter);border-radius:8px;font-style:normal;font-size:.9rem;color:var(--text);line-height:1.75;display:none;}
 
 /* ── PDF GALLERY ── */
 .pdf-gallery{display:flex;gap:16px;overflow-x:auto;padding:8px 0 16px;scroll-snap-type:x mandatory;}
@@ -253,9 +256,6 @@ code{font-family:'DM Sans',monospace;}
 <div class="sep"></div>
 <a href="#" onclick="show('contact')" id="n-contact">Contact</a>
 </nav>
-<div style="padding:16px 24px;border-top:1px solid rgba(255,255,255,.08);">
-<div id="google_translate_element" style="font-size:.8rem;"></div>
-</div>
 </div>
 
 <div class="mn">
@@ -291,6 +291,8 @@ code{font-family:'DM Sans',monospace;}
 <div class="spk">Filippo Turati</div>
 <div class="txt">&ldquo;Onorevoli colleghi, siamo qui per protestare, concordi insieme con voi, contro un fatto che ha sollevato la coscienza pubblica, che solleva la nostra. L'omicidio politico, nelle presenti condizioni dei paesi civili, colpisca un Re, un Presidente di Repubblica, un qualsiasi legittimo rappresentante d'interessi collettivi, od anche un semplice portabandiera d'un ideale novatore, &egrave; anche pi&ugrave; altamente riprovevole, perch&eacute; rispecchia un concetto antiquato, barbarico della evoluzione sociale; esso suppone che la distruzione di uno, o di pi&ugrave; uomini, muti qualcosa alla sostanza di un assetto politico o sociale. Associandoci al vostro cordoglio, noi qui rinnoviamo l'augurio, che dal delitto d'un forsennato nessun pregiudizio debba patire la libert&agrave; del paese.&rdquo;</div>
 <div class="note">The socialist leader condemned the anarchist assassination of the king while warning against any crackdown on civil liberties. Deputies on the right shouted &ldquo;Basta! basta!&rdquo;</div>
+<span class="tr-btn" onclick="translateSpeech(this)">Translate to English</span>
+<div class="tr-result"></div>
 </div>
 
 <div class="speech">
@@ -298,6 +300,8 @@ code{font-family:'DM Sans',monospace;}
 <div class="spk">Benito Mussolini</div>
 <div class="txt">&ldquo;Potevo sprangare il Parlamento e costituire un Governo esclusivamente di fascisti. Potevo: ma non ho, almeno in questo primo tempo, voluto. Ho costituito un Governo di coalizione, non gi&agrave; coll'intento di avere una maggioranza parlamentare, della quale posso oggi fare benissimo a meno, ma per raccogliere in aiuto della Nazione boccheggiante quanti, al di sopra delle sfumature dei partiti, la stessa Nazione vogliono salvare.&rdquo;</div>
 <div class="note">The infamous &ldquo;bivouac speech&rdquo;. Days after the March on Rome, Mussolini openly threatened to shut down parliament. The Chamber voted him full powers. Italian democracy had two years left.</div>
+<span class="tr-btn" onclick="translateSpeech(this)">Translate to English</span>
+<div class="tr-result"></div>
 </div>
 
 <h3>What the original documents look like</h3>
@@ -656,8 +660,24 @@ const PW='discorsi1900';
 function go(){if(document.getElementById('pw').value===PW){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');sessionStorage.setItem('a','1');}else{document.getElementById('err').textContent='Wrong password';}}
 if(sessionStorage.getItem('a')==='1'){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');}
 function show(id){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.sb nav a').forEach(a=>a.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.getElementById('n-'+id).classList.add('on');document.getElementById('hero').style.display=id==='overview'?'':'none';window.scrollTo(0,0);}
+async function translateSpeech(btn){
+  var box=btn.nextElementSibling;
+  if(box.style.display==='block'){box.style.display='none';btn.textContent='Translate to English';return;}
+  if(box.dataset.done){box.style.display='block';btn.textContent='Hide translation';return;}
+  var txt=btn.parentElement.querySelector('.txt');
+  if(!txt){var td=btn.closest('tr');if(td)txt=td.querySelector('.dt-text');}
+  if(!txt)return;
+  var src=txt.textContent.replace(/["\u201c\u201d]/g,'').substring(0,1500);
+  btn.textContent='Translating...';
+  try{
+    var r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(src)+'&langpair=it|en');
+    var d=await r.json();
+    box.textContent=d.responseData.translatedText;
+    box.style.display='block';
+    box.dataset.done='1';
+    btn.textContent='Hide translation';
+  }catch(e){btn.textContent='Translation failed';}
+}
 </script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'en,it,de,fr,es',layout:google.translate.TranslateElement.InlineLayout.SIMPLE,autoDisplay:false},'google_translate_element');}</script>
 </body>
 </html>
