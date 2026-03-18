@@ -253,6 +253,9 @@ code{font-family:'DM Sans',monospace;}
 <div class="sep"></div>
 <a href="#" onclick="show('contact')" id="n-contact">Contact</a>
 </nav>
+<div style="padding:16px 24px;border-top:1px solid rgba(255,255,255,.08);">
+<div id="google_translate_element" style="font-size:.8rem;"></div>
+</div>
 </div>
 
 <div class="mn">
@@ -654,5 +657,7 @@ function go(){if(document.getElementById('pw').value===PW){document.getElementBy
 if(sessionStorage.getItem('a')==='1'){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');}
 function show(id){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.sb nav a').forEach(a=>a.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.getElementById('n-'+id).classList.add('on');document.getElementById('hero').style.display=id==='overview'?'':'none';window.scrollTo(0,0);}
 </script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'en,it,de,fr,es',layout:google.translate.TranslateElement.InlineLayout.SIMPLE,autoDisplay:false},'google_translate_element');}</script>
 </body>
 </html>
