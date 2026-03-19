@@ -215,6 +215,8 @@ tbody tr:hover{background:rgba(184,92,56,.02);}
 code{font-family:'DM Sans',monospace;}
 
 /* ── FOOTER ── */
+.chart-box{background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;max-width:800px;}
+.chart-box canvas{max-height:350px;}
 .ft{padding:40px 72px;font-size:.82rem;color:var(--muted);border-top:1px solid var(--light);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 
 .mob-btn{display:none;position:fixed;top:14px;right:14px;z-index:200;width:44px;height:44px;border-radius:10px;background:var(--navy);border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.2);}
@@ -511,31 +513,31 @@ code{font-family:'DM Sans',monospace;}
 
 <h3>A generation takes over</h3>
 <p>The average age of deputies speaking in parliament drops by <strong>13 years</strong> between 1918 and 1923. After WWI, a wave of young men &mdash; many of them veterans &mdash; enter the Chamber. They bring radicalism, impatience, and a willingness to break the rules. Mussolini is 38 when he becomes Prime Minister.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-age" height="260"></canvas></div>
+<div class="chart-box"><canvas id="chart-age"></canvas></div>
 
 <h3>The rise and fall of &ldquo;patria&rdquo;</h3>
 <p>How often do deputies invoke <em>patria</em> (fatherland), <em>libert&agrave;</em> (liberty), <em>nazione</em> (nation), or <em>popolo</em> (the people)? The language of national identity <strong>triples</strong> during WWI, then collapses. &ldquo;Libert&agrave;&rdquo; surges in 1919 as democracy expands &mdash; and spikes again in 1923, this time in desperation.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-identity" height="300"></canvas></div>
+<div class="chart-box"><canvas id="chart-identity"></canvas></div>
 
 <h3>When they talked about women&rsquo;s right to vote</h3>
 <p>Women couldn&rsquo;t vote until 1946. But they were discussed. The debate spiked in <strong>1912</strong> (when universal <em>male</em> suffrage passed &mdash; women were explicitly excluded) and again in <strong>1919&ndash;20</strong> after women had worked in factories during the war. Then silence.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-women" height="240"></canvas></div>
+<div class="chart-box"><canvas id="chart-women"></canvas></div>
 
 <h3>The emotional temperature of the chamber</h3>
 <p>The stenographers wrote down every reaction: <em>(Applausi)</em>, <em>(Interruzioni)</em>, <em>(Rumori)</em>, <em>(Si ride)</em>. We extracted them all. Applause <strong>surges tenfold</strong> after 1918. Interruptions peak during the Biennio Rosso. Parliament becomes a stage &mdash; then a battlefield.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-reactions" height="300"></canvas></div>
+<div class="chart-box"><canvas id="chart-reactions"></canvas></div>
 
 <h3>The most interrupted deputies</h3>
 <p>Some speakers couldn&rsquo;t finish a sentence without provoking uproar. Normalized by number of speeches (to avoid counting deputies who simply spoke more), the chart shows the <strong>interruption rate</strong>: how many times they were met with uproar, protests, or interruptions per 100 speeches. Only deputies with 50+ speeches shown.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-interrupted" height="300"></canvas></div>
+<div class="chart-box"><canvas id="chart-interrupted"></canvas></div>
 
 <h3>The death of debate</h3>
 <p>Average number of speakers per session. Democracy means many voices. As Fascism rises after 1922, the number of people willing to speak collapses.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-speakers" height="260"></canvas></div>
+<div class="chart-box"><canvas id="chart-speakers"></canvas></div>
 
 <h3>What they obsessed about</h3>
 <p>Topics in parliamentary speech, year by year. <strong>Fascism</strong> appears from nothing in 1920 and grows every year. <strong>War</strong> swallows everything from 1915 to 1918.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-topics" height="320"></canvas></div>
+<div class="chart-box"><canvas id="chart-topics"></canvas></div>
 
 <h3>Where did speakers come from?</h3>
 <p>Regions are colored by total number of deputies born there (darker = more). Circles show individual provinces &mdash; bigger circle means more deputies. Hover for details.</p>
