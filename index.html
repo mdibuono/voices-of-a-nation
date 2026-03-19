@@ -215,6 +215,9 @@ tbody tr:hover{background:rgba(184,92,56,.02);}
 code{font-family:'DM Sans',monospace;}
 
 /* ── FOOTER ── */
+.viz-cat{font-family:'DM Serif Display',serif;font-size:1.5rem;font-weight:400;color:var(--navy);margin:56px 0 12px;padding-top:32px;border-top:2px solid var(--light);}
+.viz-cat:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+.viz-cat-desc{font-size:.95rem;color:var(--muted);margin-bottom:28px;}
 .chart-box{background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;max-width:900px;}
 .chart-box canvas{max-height:400px;}
 .ft{padding:40px 72px;font-size:.82rem;color:var(--muted);border-top:1px solid var(--light);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
@@ -507,8 +510,11 @@ code{font-family:'DM Sans',monospace;}
 
 <!-- ═══════════════ THE BIG PICTURE ═══════════════ -->
 <div class="pg" id="p-visualize"><div class="wrap">
-<h2>The Big Picture</h2>
-<p class="lead">The structural patterns in 24 years of parliamentary debate. Data covers sessions from 1900 to 1923.</p>
+<h2>Visualizations</h2>
+<p class="lead">The vital signs of a democracy being born, stressed, and killed. Sessions from 1900 to 1923.</p>
+
+<div class="viz-cat">What They Talked About</div>
+<p class="viz-cat-desc">The topics, words, and obsessions of 24 years of debate.</p>
 
 <h3>What they obsessed about</h3>
 <p>The share of speeches mentioning key topics, year by year. The lines trace the obsessions of an era: <strong>war</strong> swallows everything from 1915 to 1918, <strong>fascism</strong> appears from nothing in 1920, <strong>suffrage</strong> spikes in 1912 and 1919.</p>
@@ -518,6 +524,9 @@ code{font-family:'DM Sans',monospace;}
 <p>How often do deputies invoke <em>patria</em> (fatherland), <em>libert&agrave;</em> (liberty), <em>nazione</em> (nation), or <em>popolo</em> (the people)? The language of national identity <strong>triples</strong> during WWI, then collapses. &ldquo;Libert&agrave;&rdquo; surges in 1919 as democracy expands &mdash; and again in 1923, this time in desperation.</p>
 <div class="chart-box"><canvas id="chart-identity"></canvas></div>
 
+<div class="viz-cat">How They Talked</div>
+<p class="viz-cat-desc">The emotions, conflicts, and silences in parliamentary debate.</p>
+
 <h3>The emotional temperature</h3>
 <p>The stenographers wrote down every audience reaction: <em>(Applausi)</em>, <em>(Interruzioni)</em>, <em>(Rumori)</em>, <em>(Si ride)</em>. Applause <strong>surges tenfold</strong> after 1918. Interruptions peak during the Biennio Rosso (1919&ndash;20). Parliament becomes a stage, then a battlefield.</p>
 <div class="chart-box"><canvas id="chart-reactions"></canvas></div>
@@ -525,6 +534,9 @@ code{font-family:'DM Sans',monospace;}
 <h3>The mood of parliament</h3>
 <p>We track three emotional registers across all speeches: <strong>anger</strong> (vergogna, scandalo, violenza, menzogna...), <strong>hope</strong> (progresso, giustizia, riforma, civiltà...), and <strong>fear</strong> (pericolo, minaccia, anarchia, rivoluzione...). Fear overtakes hope after 1919.</p>
 <div class="chart-box"><canvas id="chart-sentiment"></canvas></div>
+
+<div class="viz-cat">Who They Were</div>
+<p class="viz-cat-desc">Age, origins, and the divides that shaped Italy.</p>
 
 <h3>A generation takes over</h3>
 <p>The average age of speakers drops <strong>13 years</strong> between 1918 and 1923. After WWI, young veterans flood the Chamber with radicalism and impatience. Mussolini is 38 when he becomes Prime Minister.</p>
@@ -549,7 +561,8 @@ code{font-family:'DM Sans',monospace;}
 </div>
 </div>
 
-<h3 style="margin-top:56px;padding-top:32px;border-top:1px solid var(--light);">Dualities: left vs right, south vs north</h3>
+<div class="viz-cat">Dualities</div>
+<p class="viz-cat-desc">Left vs right. South vs North. The parliament mirrored Italy&rsquo;s deepest divides.</p>
 
 <h3>Who was angrier?</h3>
 <p>Anger words (vergogna, scandalo, violenza, menzogna...) by political alignment. The <strong>left is consistently angrier</strong>. But watch the right after 1920: Fascism&rsquo;s anger catches up.</p>
@@ -567,7 +580,8 @@ code{font-family:'DM Sans',monospace;}
 <p>Interruption rate per 100 speeches (min 50). The provocateurs were not the most famous.</p>
 <div class="chart-box"><canvas id="chart-interrupted"></canvas></div>
 
-<h3 style="margin-top:56px;padding-top:32px;border-top:1px solid var(--light);">Women in a men&rsquo;s parliament</h3>
+<div class="viz-cat">Women in a Men&rsquo;s Parliament</div>
+<p class="viz-cat-desc">They couldn&rsquo;t vote, couldn&rsquo;t run for office, and were barely mentioned. But when they were, it tells us everything.</p>
 
 <h3>When they talked about women</h3>
 <p>Share of speeches mentioning women. Peaks in <strong>1912</strong> (excluded from universal suffrage) and <strong>1919&ndash;20</strong> (after wartime factory work). Then silence.</p>
@@ -577,7 +591,8 @@ code{font-family:'DM Sans',monospace;}
 <p>Speeches mentioning women&rsquo;s right to vote. At most 51 in a single year. The left discussed women <strong>twice as much</strong> as the right.</p>
 <div class="chart-box"><canvas id="chart-women-vote"></canvas></div>
 
-<h3 style="margin-top:56px;padding-top:32px;border-top:1px solid var(--light);">Curiosities</h3>
+<div class="viz-cat">Curiosities</div>
+<p class="viz-cat-desc">The unexpected things you find in half a million speeches.</p>
 
 <h3>The longest speech</h3>
 <p><strong>13,125 words</strong> by Ettore Reina (1 August 1920) &mdash; nearly a novella, in one session during the Biennio Rosso.</p>
@@ -1016,8 +1031,8 @@ fetch('data.json').then(r=>r.json()).then(D=>{
     });
   });
 
-  // YEARLY SPEECHES
-  new Chart(document.getElementById('chart-yearly'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>D.yearly_speeches[y]),backgroundColor:years.map(y=>y>=1915&&y<=1918?'rgba(146,43,43,.6)':y>=1922?'rgba(26,56,40,.7)':'rgba(184,92,56,.5)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  // YEARLY SPEECHES (only if canvas exists)
+  if(document.getElementById('chart-yearly'))new Chart(document.getElementById('chart-yearly'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>D.yearly_speeches[y]),backgroundColor:years.map(y=>y>=1915&&y<=1918?'rgba(146,43,43,.6)':y>=1922?'rgba(26,56,40,.7)':'rgba(184,92,56,.5)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
 
 });
 
