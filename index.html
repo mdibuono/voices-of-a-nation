@@ -1049,16 +1049,31 @@ Promise.all([
   renderExplore(true);
 });
 
-function filterExplore(topic,btn){
+async function filterExplore(topic,btn){
   document.querySelectorAll('.tp-btn').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
-  if(topic==='all'){exploreFiltered=exploreData;}
-  else{
-    var pat=new RegExp(topicsFilter[topic],'i');
-    exploreFiltered=exploreData.filter(function(r){return pat.test(r[4])||pat.test(r[5]);});
+  if(topic==='all'){exploreFiltered=exploreData;applyFilter(topic);return;}
+  var pat=new RegExp(topicsFilter[topic],'i');
+  exploreFiltered=exploreData.filter(function(r){return pat.test(r[4])||pat.test(r[5]);});
+  // Auto-load chunks until we have results or run out
+  while(exploreFiltered.length<20&&exploreChunksLoaded<exploreTotalChunks){
+    document.getElementById('explore-count').textContent='Searching for '+topic+'...';
+    try{
+      var resp=await fetch('explore_chunk_'+exploreChunksLoaded+'.json');
+      var chunk=await resp.json();
+      exploreData=exploreData.concat(chunk);
+      exploreChunksLoaded++;
+      exploreFiltered=exploreData.filter(function(r){return pat.test(r[4])||pat.test(r[5]);});
+      var remaining=exploreTotalChunks-exploreChunksLoaded;
+      var lbtn=document.getElementById('explore-load-more');
+      if(remaining>0){lbtn.textContent='Load 5,000 more speeches';document.getElementById('explore-load-status').textContent=remaining+' more batch'+(remaining>1?'es':'')+' available';}
+      else{lbtn.style.display='none';document.getElementById('explore-load-status').textContent='All speeches loaded.';}
+    }catch(e){break;}
   }
+  applyFilter(topic);
+}
+function applyFilter(topic){
   var msg=exploreFiltered.length.toLocaleString()+' speeches'+(topic!=='all'?' about '+topic:'');
-  if(exploreFiltered.length===0&&exploreChunksLoaded<exploreTotalChunks){msg+=' found so far. Try loading more speeches below.';}
   document.getElementById('explore-count').textContent=msg;
   renderExplore(true);
 }
