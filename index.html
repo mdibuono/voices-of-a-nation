@@ -1082,7 +1082,7 @@ async function filterExplore(topic,btn){
       var remaining=exploreTotalChunks-exploreChunksLoaded;
       var lbtn=document.getElementById('explore-load-more');
       if(remaining>0){lbtn.textContent='Load 5,000 more speeches';document.getElementById('explore-load-status').textContent=remaining+' more batch'+(remaining>1?'es':'')+' available';}
-      else{lbtn.style.display='none';document.getElementById('explore-load-status').textContent='All speeches loaded.';}
+      else{lbtn.style.display='none';document.getElementById('explore-load-status').textContent='All speeches from the 5% sample have been loaded.';}
     }catch(e){break;}
   }
   applyFilter(topic);
