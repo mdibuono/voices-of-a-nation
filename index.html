@@ -198,7 +198,7 @@ tbody tr:hover{background:rgba(184,92,56,.02);}
 .dtable{width:max-content;min-width:100%;border-collapse:collapse;font-size:.8rem;line-height:1.5;}
 .dtable th{position:sticky;top:0;background:#1a3828;color:#fff;padding:10px 14px;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.6px;font-weight:600;white-space:nowrap;border:none;}
 .dtable td{padding:8px 14px;border-bottom:1px solid var(--lighter);white-space:nowrap;max-width:180px;overflow:hidden;text-overflow:ellipsis;vertical-align:top;}
-.dtable td.dt-text{max-width:360px;white-space:normal;font-style:italic;color:#555;font-size:.78rem;line-height:1.6;}
+.dtable td.dt-text{max-width:250px;white-space:normal;font-style:italic;color:#555;font-size:.78rem;line-height:1.6;}
 .dtable tbody tr:hover{background:rgba(184,92,56,.03);}
 .dtable tbody tr:nth-child(even){background:rgba(0,0,0,.015);}
 .dtable tbody tr:nth-child(even):hover{background:rgba(184,92,56,.03);}
@@ -617,11 +617,25 @@ code{font-family:'DM Sans',monospace;}
 <div class="viz-cat">Curiosities</div>
 <p class="viz-cat-desc">The unexpected things you find in half a million speeches.</p>
 
+<h3>Who spoke the most words?</h3>
+<p>Excluding the Chamber president (who speaks procedurally), <strong>Filippo Turati</strong> spoke nearly <strong>one million words</strong> in parliament &mdash; the equivalent of 10 novels. Giolitti: 700,000. Nitti: 480,000.</p>
+<div class="chart-box"><canvas id="chart-wordcount"></canvas></div>
+
+<h3>Who gets mentioned most?</h3>
+<p>Not who speaks, but who gets <em>talked about</em>. Turati is mentioned in 5,000 speeches by other deputies. Garibaldi &mdash; dead since 1882 &mdash; is still invoked 1,010 times. Even Bismarck shows up 161 times.</p>
+<div class="chart-box"><canvas id="chart-mentioned"></canvas></div>
+
 <h3>The longest speech</h3>
 <p><strong>13,125 words</strong> by Ettore Reina (1 August 1920) &mdash; nearly a novella, in one session during the Biennio Rosso.</p>
 
 <h3>The shortest</h3>
 <p>&ldquo;<em>Ma io qualche volta ci sono stato!</em>&rdquo; &mdash; Piero Foscari, 34 characters, 9 September 1919.</p>
+
+<h3>Half of all speeches are under 30 words</h3>
+<p>48.6% of interventions are under 200 characters. Most parliamentary speech isn&rsquo;t grand oratory &mdash; it&rsquo;s procedural: &ldquo;Ai voti!&rdquo;, &ldquo;Ha facolt&agrave; di parlare&rdquo;, &ldquo;La seduta &egrave; tolta.&rdquo; The long speeches &mdash; over 5,000 characters &mdash; are only 3.6% of the total, but they contain the real debates.</p>
+
+<h3>They still spoke Latin</h3>
+<p>Italian deputies in 1900&ndash;1923 used Latin phrases routinely: <em>a priori</em> (803 times), <em>modus vivendi</em> (209), <em>sine qua non</em> (115), <em>de jure</em> (109), <em>ad hoc</em> (100). The classical education of the Italian elite was alive and well.</p>
 
 </div><!-- end curiosities -->
 </div></div>
@@ -639,7 +653,7 @@ code{font-family:'DM Sans',monospace;}
 <div id="explore-table-wrap" style="overflow:auto;border:1px solid var(--light);border-radius:var(--r);background:var(--card);max-height:70vh;">
 <table class="dtable" id="explore-table">
 <thead><tr>
-<th>surname</th><th>first name</th><th>date</th><th>leg</th><th>speech</th><th>party</th><th>place of birth</th><th>province</th><th>region</th>
+<th>surname</th><th>first name</th><th>date</th><th>leg</th><th>speech</th><th>party</th><th>born</th><th>birthplace</th><th>province</th><th>region</th>
 </tr></thead>
 <tbody id="explore-tbody"></tbody>
 </table>
@@ -1023,7 +1037,7 @@ fetch('data.json').then(r=>r.json()).then(D=>{
 
   // WOMEN VOTE
   var ws=D.womens_suffrage||{};
-  new Chart(document.getElementById('chart-women-vote'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>ws[y]||0),backgroundColor:years.map(y=>(y==1912||y==1919||y==1920)?'rgba(146,43,43,.7)':'rgba(184,92,56,.3)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  new Chart(document.getElementById('chart-women-vote'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>ws[y]||ws[String(y)]||0),backgroundColor:years.map(y=>(y==1912||y==1919||y==1920)?'rgba(146,43,43,.7)':'rgba(184,92,56,.3)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
 
   // CURIOSITIES - age duplicate
   if(document.getElementById('chart-age2')){
@@ -1034,6 +1048,18 @@ fetch('data.json').then(r=>r.json()).then(D=>{
   if(document.getElementById('chart-speakers2')){
     var sp2=Object.keys(D.speakers_per_session).map(Number).sort();
     new Chart(document.getElementById('chart-speakers2'),{type:'line',data:{labels:sp2,datasets:[{data:sp2.map(y=>D.speakers_per_session[y]),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:'#1a3828',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Speakers per session',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  }
+
+  // WORD COUNT
+  if(document.getElementById('chart-wordcount')&&D.curiosities){
+    var mw=D.curiosities.most_words||[];
+    new Chart(document.getElementById('chart-wordcount'),{type:'bar',data:{labels:mw.map(x=>x.name),datasets:[{data:mw.map(x=>x.words),backgroundColor:'rgba(26,56,40,.55)',borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{var p=mw[c.dataIndex];return p.words.toLocaleString()+' words in '+p.speeches+' speeches';}}}},scales:{x:{title:{display:true,text:'Total words spoken',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
+  }
+  // MOST MENTIONED
+  if(document.getElementById('chart-mentioned')&&D.curiosities){
+    var mm=D.curiosities.most_mentioned||{};
+    var mml=Object.entries(mm).sort((a,b)=>b[1]-a[1]);
+    new Chart(document.getElementById('chart-mentioned'),{type:'bar',data:{labels:mml.map(x=>x[0]),datasets:[{data:mml.map(x=>x[1]),backgroundColor:mml.map(x=>['Garibaldi','Mazzini','Cavour','Napoleone','Bismarck'].includes(x[0])?'rgba(184,92,56,.5)':'rgba(26,56,40,.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x+' mentions by other deputies'}}},scales:{x:{title:{display:true,text:'Mentions in other deputies\' speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
   }
 
   }catch(e){console.error('Chart error:',e);}
@@ -1162,8 +1188,9 @@ function renderExplore(reset){
     function titleCase(s){if(!s)return '';return s.replace(/\w\S*/g,function(t){return t.charAt(0).toUpperCase()+t.substr(1).toLowerCase();});}
     var pob=r[7];if(pob===pob.toUpperCase()&&pob.length>2)pob=titleCase(pob);
     var preview=r[4].substring(0,120)+(r[4].length>120?' <span style="color:var(--terra);font-size:.72rem;font-style:normal">[click to read]</span>':'');
-    var photo=deputyPhotos&&deputyPhotos[r[0]]?'<img src="'+deputyPhotos[r[0]]+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:6px;" onerror="this.style.display=\'none\'">':'';
-    tr.innerHTML='<td>'+photo+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer" onclick="expandSpeech(this)" data-full="'+full.replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">'+preview+'</td><td>'+plink+'</td><td>'+pob+'</td><td>'+r[8]+'</td><td>'+r[9]+'</td>';
+    var photo=deputyPhotos&&deputyPhotos[r[0]]?'<img src="'+deputyPhotos[r[0]]+'" style="width:26px;height:26px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:5px;" onerror="this.style.display=\'none\'">':'';
+    var dob=r[10]||'';
+    tr.innerHTML='<td>'+photo+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer;max-width:250px;" onclick="expandSpeech(this)" data-full="'+full.replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">'+preview+'</td><td>'+plink+'</td><td style="font-size:.75rem">'+dob+'</td><td>'+pob+'</td><td>'+r[8]+'</td><td>'+r[9]+'</td>';
     tbody.appendChild(tr);
   }
   exploreShown=end;
