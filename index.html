@@ -592,7 +592,7 @@ code{font-family:'DM Sans',monospace;}
 <!-- ═══════════════ EXPLORE THE DATA ═══════════════ -->
 <div class="pg" id="p-explore"><div class="wrap">
 <h2>Explore the Data</h2>
-<p class="lead">50,000 speeches randomly sampled from the corpus. Filter by topic, read the originals.</p>
+<p class="lead">A 5% random sample from the corpus &mdash; 22,751 speeches. Filter by topic, read the originals.</p>
 
 <div style="margin-bottom:20px;">
 <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;" id="explore-topics"></div>
@@ -1019,7 +1019,7 @@ Promise.all([
   fetch('topics_filter.json').then(r=>r.json())
 ]).then(function(res){
   exploreData=res[0];exploreFiltered=exploreData;partyLinks=res[1];topicsFilter=res[2];
-  document.getElementById('explore-count').textContent=exploreData.length.toLocaleString()+' speeches loaded. Select a topic or scroll to browse.';
+  document.getElementById('explore-count').textContent=exploreData.length.toLocaleString()+' speeches (5% sample). Select a topic or scroll to browse.';
 
   // Topic buttons
   var box=document.getElementById('explore-topics');
@@ -1059,7 +1059,8 @@ function renderExplore(reset){
     var tr=document.createElement('tr');
     var party=r[5];
     var plink=partyLinks&&partyLinks[party]?'<a href="'+partyLinks[party]+'" target="_blank" style="font-size:.78rem">'+party+'</a>':party;
-    tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer" onclick="this.textContent=this.dataset.full||this.textContent" data-full="'+r[4].replace(/"/g,'&quot;')+'">'+r[4].substring(0,120)+(r[4].length>120?'...':'')+'</td><td>'+plink+'</td><td>'+r[6]+'</td><td>'+r[7]+'</td><td>'+r[8]+'</td>';
+    var full=r[5]||r[4];
+    tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer" onclick="this.textContent=this.dataset.full||this.textContent" data-full="'+full.replace(/"/g,'&quot;')+'">'+r[4].substring(0,120)+(r[4].length>120?'...':'')+'</td><td>'+plink+'</td><td>'+r[7]+'</td><td>'+r[8]+'</td><td>'+r[9]+'</td>';
     tbody.appendChild(tr);
   }
   exploreShown=end;
