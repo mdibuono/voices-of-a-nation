@@ -890,11 +890,13 @@ function show(id){
   window.location.hash=id;
   window.scrollTo(0,0);
 }
-// Restore page from URL hash
-(function(){
+// Restore page from URL hash on load and on hash change
+function restoreHash(){
   var h=window.location.hash.replace('#','');
   if(h&&document.getElementById('p-'+h)){show(h);}
-})();
+}
+restoreHash();
+window.addEventListener('hashchange', restoreHash);
 document.querySelectorAll('.dt-text').forEach(function(td){
   var b=document.createElement('span');b.className='dt-tr';b.textContent='translate';
   b.onclick=function(){translateCell(this);};
@@ -970,49 +972,47 @@ fetch('data.json').then(r=>r.json()).then(D=>{
   var tc={War:'#922b2b',Labour:'#5a7a56',Suffrage:'#c9a84c',Socialism:'#b85c38',Fascism:'#1a3828',Colonies:'#3a6f94'};
   var cs='background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;';
 
-  // ALL CHARTS wrapped in try/catch so maps always render
-  try{
 
   // AGE
   var ay=Object.keys(D.speaker_age).map(Number).sort();
-  new Chart(document.getElementById('chart-age'),{type:'line',data:{labels:ay,datasets:[{data:ay.map(y=>D.speaker_age[y]),borderColor:'var(--terra)',backgroundColor:'rgba(184,92,56,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:ay.map(y=>y>=1920?'#922b2b':'#b85c38'),tension:.3}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' years old'}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Average age of speakers',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'},min:44,max:62}}}});
+  try{new Chart(document.getElementById('chart-age'),{type:'line',data:{labels:ay,datasets:[{data:ay.map(y=>D.speaker_age[y]),borderColor:'var(--terra)',backgroundColor:'rgba(184,92,56,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:ay.map(y=>y>=1920?'#922b2b':'#b85c38'),tension:.3}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' years old'}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Average age of speakers',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'},min:44,max:62}}}});}catch(e){console.error("Chart fail:",e);}
 
   // IDENTITY WORDS
   var iw=D.identity_words||{};
   var iwn=['patria','libertà','nazione','popolo'];
   var iwc=['#922b2b','#5a7a56','#1a3828','#c9a84c'];
-  new Chart(document.getElementById('chart-identity'),{type:'line',data:{labels:years,datasets:iwn.map((w,i)=>({label:w,data:years.map(y=>(iw[w]||{})[y]||0),borderColor:iwc[i],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11,style:'italic'}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  try{new Chart(document.getElementById('chart-identity'),{type:'line',data:{labels:years,datasets:iwn.map((w,i)=>({label:w,data:years.map(y=>(iw[w]||{})[y]||0),borderColor:iwc[i],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11,style:'italic'}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});}catch(e){console.error("Chart fail:",e);}
 
   // WOMEN'S SUFFRAGE
   var ws=D.womens_suffrage||{};
-  new Chart(document.getElementById('chart-women'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>ws[y]||0),backgroundColor:years.map(y=>(y==1912||y==1919||y==1920)?'rgba(146,43,43,.7)':'rgba(184,92,56,.35)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' speeches'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches mentioning women\'s suffrage',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  try{new Chart(document.getElementById('chart-women'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>ws[y]||0),backgroundColor:years.map(y=>(y==1912||y==1919||y==1920)?'rgba(146,43,43,.7)':'rgba(184,92,56,.35)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' speeches'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches mentioning women\'s suffrage',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});}catch(e){console.error("Chart fail:",e);}
 
   // MOST INTERRUPTED (rate)
   var mi=D.most_interrupted||[];
-  new Chart(document.getElementById('chart-interrupted'),{type:'bar',data:{labels:mi.map(x=>x.name),datasets:[{data:mi.map(x=>x.rate),backgroundColor:mi.map(x=>x.party.includes('Social')?'rgba(146,43,43,.65)':x.party.includes('Liberal')?'rgba(90,122,86,.6)':'rgba(140,120,90,.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{var p=mi[c.dataIndex];return p.rate+'% ('+p.count+' in '+p.total+' speeches)'+(p.party?' — '+p.party:'');}}}},scales:{x:{title:{display:true,text:'Interruptions per 100 speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
+  try{new Chart(document.getElementById('chart-interrupted'),{type:'bar',data:{labels:mi.map(x=>x.name),datasets:[{data:mi.map(x=>x.rate),backgroundColor:mi.map(x=>x.party.includes('Social')?'rgba(146,43,43,.65)':x.party.includes('Liberal')?'rgba(90,122,86,.6)':'rgba(140,120,90,.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{var p=mi[c.dataIndex];return p.rate+'% ('+p.count+' in '+p.total+' speeches)'+(p.party?' — '+p.party:'');}}}},scales:{x:{title:{display:true,text:'Interruptions per 100 speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});}catch(e){console.error("Chart fail:",e);}
 
   // REACTIONS
   var rnames=['Applause','Interruptions','Uproar','Laughter','Comments'];
   var rcols=['#922b2b','#1a3828','#b85c38','#c9a84c','#8a7e72'];
-  new Chart(document.getElementById('chart-reactions'),{type:'line',data:{labels:years,datasets:rnames.map((r,i)=>({label:r,data:years.map(y=>(D.reactions[r]||{})[y]||0),borderColor:rcols[i],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1)+'%'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches provoking this reaction',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  try{new Chart(document.getElementById('chart-reactions'),{type:'line',data:{labels:years,datasets:rnames.map((r,i)=>({label:r,data:years.map(y=>(D.reactions[r]||{})[y]||0),borderColor:rcols[i],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1)+'%'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches provoking this reaction',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});}catch(e){console.error("Chart fail:",e);}
 
   // SPEAKERS PER SESSION
   var spy=Object.keys(D.speakers_per_session).map(Number).sort();
-  new Chart(document.getElementById('chart-speakers'),{type:'line',data:{labels:spy,datasets:[{data:spy.map(y=>D.speakers_per_session[y]),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:'#1a3828',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' speakers/session'}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Average unique speakers per session',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  try{new Chart(document.getElementById('chart-speakers'),{type:'line',data:{labels:spy,datasets:[{data:spy.map(y=>D.speakers_per_session[y]),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:'#1a3828',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' speakers/session'}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Average unique speakers per session',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});}catch(e){console.error("Chart fail:",e);}
 
   // TOPICS
   var topicNames=['War','Labour','Socialism','Fascism','Suffrage','Colonies'];
-  new Chart(document.getElementById('chart-topics'),{type:'line',data:{labels:years,datasets:topicNames.map(t=>({label:t,data:years.map(y=>D.topics[t][y]||0),borderColor:tc[t],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1)+'%'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches mentioning topic',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  try{new Chart(document.getElementById('chart-topics'),{type:'line',data:{labels:years,datasets:topicNames.map(t=>({label:t,data:years.map(y=>D.topics[t][y]||0),borderColor:tc[t],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1)+'%'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches mentioning topic',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});}catch(e){console.error("Chart fail:",e);}
 
   // SENTIMENT
   var sn=D.sentiments||{};
   var snk=['anger','hope','fear'];var snc=['#922b2b','#5a7a56','#c9a84c'];var snl=['Anger','Hope','Fear'];
-  new Chart(document.getElementById('chart-sentiment'),{type:'line',data:{labels:years,datasets:snk.map((k,i)=>({label:snl[i],data:years.map(y=>(sn[k]||{})[y]||0),borderColor:snc[i],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  try{new Chart(document.getElementById('chart-sentiment'),{type:'line',data:{labels:years,datasets:snk.map((k,i)=>({label:snl[i],data:years.map(y=>(sn[k]||{})[y]||0),borderColor:snc[i],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});}catch(e){console.error("Chart fail:",e);}
 
   // LEFT vs RIGHT ANGER
   var la=D.left_vs_right_anger||{};
   var lay=Object.keys(la.left||{}).map(Number).sort();
-  new Chart(document.getElementById('chart-lr-anger'),{type:'line',data:{labels:lay,datasets:[
+  try{new Chart(document.getElementById('chart-lr-anger'),{type:'line',data:{labels:lay,datasets:[}catch(e){console.error("Chart fail:",e);}
     {label:'Left',data:lay.map(y=>(la.left||{})[y]||0),borderColor:'#922b2b',backgroundColor:'rgba(146,43,43,.08)',fill:true,borderWidth:2.5,pointRadius:0,tension:.3},
     {label:'Right',data:lay.map(y=>(la.right||{})[y]||0),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:2.5,pointRadius:0,tension:.3}
   ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches with anger words',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
@@ -1020,47 +1020,45 @@ fetch('data.json').then(r=>r.json()).then(D=>{
   // SOUTH vs NORTH TOPICS
   var snt=D.south_north_topics||{};
   var sntk=Object.keys(snt);
-  new Chart(document.getElementById('chart-sn-topics'),{type:'bar',data:{labels:sntk.map(k=>k.charAt(0).toUpperCase()+k.slice(1)),datasets:[
+  try{new Chart(document.getElementById('chart-sn-topics'),{type:'bar',data:{labels:sntk.map(k=>k.charAt(0).toUpperCase()+k.slice(1)),datasets:[}catch(e){console.error("Chart fail:",e);}
     {label:'South',data:sntk.map(k=>snt[k].south),backgroundColor:'rgba(184,92,56,.6)',borderRadius:4},
     {label:'North',data:sntk.map(k=>snt[k].north),backgroundColor:'rgba(26,56,40,.5)',borderRadius:4}
   ]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
 
   // ANGRIEST DEPUTIES
   var ag=D.angriest_deputies||[];
-  new Chart(document.getElementById('chart-angriest'),{type:'bar',data:{labels:ag.map(x=>x.name),datasets:[{data:ag.map(x=>x.rate),backgroundColor:ag.map(x=>x.party.includes('Social')?'rgba(146,43,43,.6)':x.party.includes('Fascis')?'rgba(26,56,40,.7)':'rgba(140,120,90,.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{var p=ag[c.dataIndex];return p.rate+'% ('+p.count+'/'+p.total+') — '+p.party;}}}},scales:{x:{title:{display:true,text:'Anger words per 100 speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
+  try{new Chart(document.getElementById('chart-angriest'),{type:'bar',data:{labels:ag.map(x=>x.name),datasets:[{data:ag.map(x=>x.rate),backgroundColor:ag.map(x=>x.party.includes('Social')?'rgba(146,43,43,.6)':x.party.includes('Fascis')?'rgba(26,56,40,.7)':'rgba(140,120,90,.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{var p=ag[c.dataIndex];return p.rate+'% ('+p.count+'/'+p.total+') — '+p.party;}}}},scales:{x:{title:{display:true,text:'Anger words per 100 speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});}catch(e){console.error("Chart fail:",e);}
 
   // WOMEN OVER TIME
   var wot=D.women_over_time||{};
-  new Chart(document.getElementById('chart-women'),{type:'line',data:{labels:years,datasets:[{data:years.map(y=>wot[y]||0),borderColor:'#922b2b',backgroundColor:'rgba(146,43,43,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#922b2b',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches mentioning women',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  try{new Chart(document.getElementById('chart-women'),{type:'line',data:{labels:years,datasets:[{data:years.map(y=>wot[y]||0),borderColor:'#922b2b',backgroundColor:'rgba(146,43,43,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#922b2b',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches mentioning women',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});}catch(e){console.error("Chart fail:",e);}
 
   // WOMEN VOTE
   var ws=D.womens_suffrage||{};
-  new Chart(document.getElementById('chart-women-vote'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>ws[y]||ws[String(y)]||0),backgroundColor:years.map(y=>(y==1912||y==1919||y==1920)?'rgba(146,43,43,.7)':'rgba(184,92,56,.3)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  try{new Chart(document.getElementById('chart-women-vote'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>ws[y]||ws[String(y)]||0),backgroundColor:years.map(y=>(y==1912||y==1919||y==1920)?'rgba(146,43,43,.7)':'rgba(184,92,56,.3)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});}catch(e){console.error("Chart fail:",e);}
 
   // CURIOSITIES - age duplicate
   if(document.getElementById('chart-age2')){
     var ay2=Object.keys(D.speaker_age).map(Number).sort();
-    new Chart(document.getElementById('chart-age2'),{type:'line',data:{labels:ay2,datasets:[{data:ay2.map(y=>D.speaker_age[y]),borderColor:'var(--terra)',backgroundColor:'rgba(184,92,56,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:ay2.map(y=>y>=1920?'#922b2b':'#b85c38'),tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Average age',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'},min:44,max:62}}}});
+    try{new Chart(document.getElementById('chart-age2'),{type:'line',data:{labels:ay2,datasets:[{data:ay2.map(y=>D.speaker_age[y]),borderColor:'var(--terra)',backgroundColor:'rgba(184,92,56,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:ay2.map(y=>y>=1920?'#922b2b':'#b85c38'),tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Average age',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'},min:44,max:62}}}});}catch(e){console.error("Chart fail:",e);}
   }
   // CURIOSITIES - speakers duplicate
   if(document.getElementById('chart-speakers2')){
     var sp2=Object.keys(D.speakers_per_session).map(Number).sort();
-    new Chart(document.getElementById('chart-speakers2'),{type:'line',data:{labels:sp2,datasets:[{data:sp2.map(y=>D.speakers_per_session[y]),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:'#1a3828',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Speakers per session',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+    try{new Chart(document.getElementById('chart-speakers2'),{type:'line',data:{labels:sp2,datasets:[{data:sp2.map(y=>D.speakers_per_session[y]),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:'#1a3828',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Speakers per session',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});}catch(e){console.error("Chart fail:",e);}
   }
 
   // WORD COUNT
   if(document.getElementById('chart-wordcount')&&D.curiosities){
     var mw=D.curiosities.most_words||[];
-    new Chart(document.getElementById('chart-wordcount'),{type:'bar',data:{labels:mw.map(x=>x.name),datasets:[{data:mw.map(x=>x.words),backgroundColor:'rgba(26,56,40,.55)',borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{var p=mw[c.dataIndex];return p.words.toLocaleString()+' words in '+p.speeches+' speeches';}}}},scales:{x:{title:{display:true,text:'Total words spoken',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
+    try{new Chart(document.getElementById('chart-wordcount'),{type:'bar',data:{labels:mw.map(x=>x.name),datasets:[{data:mw.map(x=>x.words),backgroundColor:'rgba(26,56,40,.55)',borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{var p=mw[c.dataIndex];return p.words.toLocaleString()+' words in '+p.speeches+' speeches';}}}},scales:{x:{title:{display:true,text:'Total words spoken',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});}catch(e){console.error("Chart fail:",e);}
   }
   // MOST MENTIONED
   if(document.getElementById('chart-mentioned')&&D.curiosities){
     var mm=D.curiosities.most_mentioned||{};
     var mml=Object.entries(mm).sort((a,b)=>b[1]-a[1]);
-    new Chart(document.getElementById('chart-mentioned'),{type:'bar',data:{labels:mml.map(x=>x[0]),datasets:[{data:mml.map(x=>x[1]),backgroundColor:mml.map(x=>['Garibaldi','Mazzini','Cavour','Napoleone','Bismarck'].includes(x[0])?'rgba(184,92,56,.5)':'rgba(26,56,40,.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x+' mentions by other deputies'}}},scales:{x:{title:{display:true,text:'Mentions in other deputies\' speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
+    try{new Chart(document.getElementById('chart-mentioned'),{type:'bar',data:{labels:mml.map(x=>x[0]),datasets:[{data:mml.map(x=>x[1]),backgroundColor:mml.map(x=>['Garibaldi','Mazzini','Cavour','Napoleone','Bismarck'].includes(x[0])?'rgba(184,92,56,.5)':'rgba(26,56,40,.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x+' mentions by other deputies'}}},scales:{x:{title:{display:true,text:'Mentions in other deputies\' speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});}catch(e){console.error("Chart fail:",e);}
   }
-
-  }catch(e){console.error('Chart error:',e);}
 
   // MAPS with province circles
   Promise.all([fetch('italy_regions.json').then(r=>r.json()),fetch('province_circles.json').then(r=>r.json())]).then(function(res){
