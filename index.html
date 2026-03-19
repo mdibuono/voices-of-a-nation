@@ -266,13 +266,10 @@ code{font-family:'DM Sans',monospace;}
 <a href="#" onclick="show('timeline')" id="n-timeline">Historical Timeline</a>
 <div class="sep"></div>
 <a href="#" onclick="show('corpus')" id="n-corpus">The Corpus</a>
-<a href="#" onclick="show('sample')" id="n-sample">Sample Data</a>
+<a href="#" onclick="show('sample')" id="n-sample">Dataset Preview</a>
 <div class="sep"></div>
-<a href="#" onclick="show('visualize')" id="n-visualize">The Big Picture</a>
-<a href="#" onclick="show('dualities')" id="n-dualities">Dualities</a>
-<a href="#" onclick="show('women')" id="n-women">Women</a>
-<a href="#" onclick="show('curiosities')" id="n-curiosities">Curiosities</a>
-<a href="#" onclick="show('topics')" id="n-topics">Explore by Topic</a>
+<a href="#" onclick="show('visualize')" id="n-visualize">Visualizations</a>
+<a href="#" onclick="show('explore')" id="n-explore">Explore the Data</a>
 <a href="#" onclick="show('research')" id="n-research">The Research</a>
 <div class="sep"></div>
 <a href="#" onclick="show('pipeline')" id="n-pipeline">How It Was Built</a>
@@ -553,77 +550,65 @@ code{font-family:'DM Sans',monospace;}
 </div>
 </div>
 
-</div></div>
+</div>
 
-<!-- ═══════════════ DUALITIES ═══════════════ -->
-<div class="pg" id="p-dualities"><div class="wrap">
-<h2>Dualities</h2>
-<p class="lead">Left versus right. South versus North. The parliament was a mirror of Italy&rsquo;s deepest divides.</p>
+<h3 style="margin-top:56px;padding-top:32px;border-top:1px solid var(--light);">Dualities: left vs right, south vs north</h3>
 
-<h3>Who was angrier: left or right?</h3>
-<p>The percentage of speeches containing anger words (vergogna, scandalo, violenza, menzogna, assassino...) by political alignment. The <strong>left is consistently angrier</strong> &mdash; they are the opposition for most of this period. But watch the right after 1920: as Fascism rises, their anger catches up.</p>
+<h3>Who was angrier?</h3>
+<p>Anger words (vergogna, scandalo, violenza, menzogna...) by political alignment. The <strong>left is consistently angrier</strong>. But watch the right after 1920: Fascism&rsquo;s anger catches up.</p>
 <div class="chart-box"><canvas id="chart-lr-anger"></canvas></div>
 
-<h3>What did the South talk about that the North didn&rsquo;t?</h3>
-<p>Comparing the share of speeches mentioning key topics between deputies born in the South vs the North. The South talks about itself &mdash; the &ldquo;questione meridionale&rdquo; &mdash; <strong>three times more</strong> than the North does. On war and labour, they are surprisingly similar.</p>
+<h3>What did the South talk about?</h3>
+<p>South vs North deputies on key topics. The South talks about the &ldquo;questione meridionale&rdquo; <strong>three times more</strong>. On war and labour, surprisingly similar.</p>
 <div class="chart-box"><canvas id="chart-sn-topics"></canvas></div>
 
-<h3>The most interrupted</h3>
-<p>Interruption rate (uproar + protests + interruptions per 100 speeches). Only deputies with 50+ speeches. The most provocative speakers were <strong>not the most famous</strong> &mdash; they were the ones who touched nerves.</p>
-<div class="chart-box"><canvas id="chart-interrupted"></canvas></div>
-
 <h3>The angriest deputies</h3>
-<p>Who used the most anger words per speech? Normalized by total speeches (min 100). Socialists dominate &mdash; they are fighting a system they want to overthrow.</p>
+<p>Anger words per 100 speeches (min 100 speeches). Socialists dominate.</p>
 <div class="chart-box"><canvas id="chart-angriest"></canvas></div>
 
-</div></div>
+<h3>The most interrupted</h3>
+<p>Interruption rate per 100 speeches (min 50). The provocateurs were not the most famous.</p>
+<div class="chart-box"><canvas id="chart-interrupted"></canvas></div>
 
-<!-- ═══════════════ WOMEN ═══════════════ -->
-<div class="pg" id="p-women"><div class="wrap">
-<h2>Women</h2>
-<p class="lead">Women couldn&rsquo;t vote, couldn&rsquo;t run for office, and were barely mentioned. But when they were, it tells us everything about who these men were.</p>
+<h3 style="margin-top:56px;padding-top:32px;border-top:1px solid var(--light);">Women in a men&rsquo;s parliament</h3>
 
-<h3>When parliament talked about women</h3>
-<p>The share of speeches mentioning women (donna, donne, femminile, maternit&agrave;...) over time. It peaks in <strong>1912</strong> when universal <em>male</em> suffrage passed &mdash; women were explicitly excluded. And again in <strong>1919&ndash;20</strong> after they had kept factories running during the war. Then silence.</p>
+<h3>When they talked about women</h3>
+<p>Share of speeches mentioning women. Peaks in <strong>1912</strong> (excluded from universal suffrage) and <strong>1919&ndash;20</strong> (after wartime factory work). Then silence.</p>
 <div class="chart-box"><canvas id="chart-women"></canvas></div>
 
-<h3>Women&rsquo;s suffrage: the debate that never happened</h3>
-<p>Speeches specifically mentioning women&rsquo;s right to vote. The numbers are tiny &mdash; at most 51 speeches in a single year (1919). The bar chart makes the silence visible.</p>
+<h3>The suffrage debate that never happened</h3>
+<p>Speeches mentioning women&rsquo;s right to vote. At most 51 in a single year. The left discussed women <strong>twice as much</strong> as the right.</p>
 <div class="chart-box"><canvas id="chart-women-vote"></canvas></div>
 
-<h3>Who talked about women?</h3>
-<p>The <strong>left discussed women twice as much</strong> as the right (2.0% vs 0.9% of speeches). When deputies mentioned women, the most common context was <strong>work</strong> (1,551 speeches), followed by <strong>education</strong> (782), <strong>voting rights</strong> (650), and <strong>family</strong> (647). Maternit&agrave; appeared in 266 speeches.</p>
-
-</div></div>
-
-<!-- ═══════════════ CURIOSITIES ═══════════════ -->
-<div class="pg" id="p-curiosities"><div class="wrap">
-<h2>Curiosities</h2>
-<p class="lead">The unexpected things you find when you read half a million speeches.</p>
-
-<h3>A generation takes over</h3>
-<p>The average age of speakers drops <strong>13 years</strong> between 1918 and 1923. Young WWI veterans flood the Chamber. Mussolini is 38 when he becomes Prime Minister.</p>
-<div class="chart-box"><canvas id="chart-age2"></canvas></div>
-
-<h3>The death of debate</h3>
-<p>Average speakers per session. The peak (95 speakers) comes during wartime, when everyone wants to be heard. After 1922, silence.</p>
-<div class="chart-box"><canvas id="chart-speakers2"></canvas></div>
+<h3 style="margin-top:56px;padding-top:32px;border-top:1px solid var(--light);">Curiosities</h3>
 
 <h3>The longest speech</h3>
-<p>The longest single intervention in the corpus: <strong>13,125 words</strong> by Ettore Reina on 1 August 1920 &mdash; nearly the length of a novella, delivered in a single session during the Biennio Rosso.</p>
+<p><strong>13,125 words</strong> by Ettore Reina (1 August 1920) &mdash; nearly a novella, in one session during the Biennio Rosso.</p>
 
-<h3>The least said</h3>
-<p>The shortest recorded intervention: &ldquo;<em>Ma io qualche volta ci sono stato!</em>&rdquo; (34 characters) &mdash; Piero Foscari, 9 September 1919. Sometimes one line says more than a thousand words.</p>
+<h3>The shortest</h3>
+<p>&ldquo;<em>Ma io qualche volta ci sono stato!</em>&rdquo; &mdash; Piero Foscari, 34 characters, 9 September 1919.</p>
 
 </div></div>
 
-<!-- ═══════════════ TOPICS ═══════════════ -->
-<div class="pg" id="p-topics"><div class="wrap">
-<h2>Explore by Topic</h2>
-<p class="lead">Select a topic to read what deputies actually said about it. These are real excerpts from the stenographic record.</p>
+<!-- ═══════════════ EXPLORE THE DATA ═══════════════ -->
+<div class="pg" id="p-explore"><div class="wrap">
+<h2>Explore the Data</h2>
+<p class="lead">50,000 speeches randomly sampled from the corpus. Filter by topic, read the originals.</p>
 
-<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;" id="topic-btns"></div>
-<div id="topic-results"></div>
+<div style="margin-bottom:20px;">
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;" id="explore-topics"></div>
+<p style="font-size:.82rem;color:var(--muted);" id="explore-count">Loading 50,000 speeches...</p>
+</div>
+
+<div id="explore-table-wrap" style="overflow:auto;border:1px solid var(--light);border-radius:var(--r);background:var(--card);max-height:70vh;">
+<table class="dtable" id="explore-table">
+<thead><tr>
+<th>surname</th><th>first name</th><th>date</th><th>leg</th><th>speech</th><th>party</th><th>place of birth</th><th>province</th><th>region</th>
+</tr></thead>
+<tbody id="explore-tbody"></tbody>
+</table>
+</div>
+<p style="font-size:.8rem;color:var(--muted);margin-top:8px;">Showing first 200 rows. Scroll down to load more.</p>
 </div></div>
 
 <!-- ═══════════════ RESEARCH ═══════════════ -->
@@ -1062,27 +1047,75 @@ fetch('data.json').then(r=>r.json()).then(D=>{
   // YEARLY SPEECHES
   new Chart(document.getElementById('chart-yearly'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>D.yearly_speeches[y]),backgroundColor:years.map(y=>y>=1915&&y<=1918?'rgba(146,43,43,.6)':y>=1922?'rgba(26,56,40,.7)':'rgba(184,92,56,.5)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
 
-  // Topic explorer
-  var btnBox=document.getElementById('topic-btns');
-  var resBox=document.getElementById('topic-results');
-  Object.keys(D.topic_samples).forEach(function(topic){
-    var b=document.createElement('button');
-    b.textContent=topic;
-    b.style.cssText='padding:10px 20px;border:1px solid var(--light);border-radius:8px;background:var(--card);cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:500;transition:.2s;';
-    b.onmouseover=function(){this.style.borderColor='var(--terra)';this.style.color='var(--terra)';};
-    b.onmouseout=function(){if(!this.classList.contains('sel')){this.style.borderColor='var(--light)';this.style.color='var(--text)';}};
-    b.onclick=function(){
-      document.querySelectorAll('#topic-btns button').forEach(function(x){x.classList.remove('sel');x.style.borderColor='var(--light)';x.style.color='var(--text)';x.style.background='var(--card)';});
-      this.classList.add('sel');this.style.borderColor='var(--terra)';this.style.color='#fff';this.style.background='var(--terra)';
-      var html='<p style="font-size:.85rem;color:var(--muted);margin-bottom:16px;">Showing 5 speeches mentioning <strong>'+topic+'</strong></p>';
-      D.topic_samples[topic].forEach(function(s){
-        html+='<div class="speech"><div class="meta">'+s.date+' &middot; Legislature '+s.leg+(s.party?' &middot; '+s.party:'')+'</div><div class="spk">'+s.speaker+'</div><div class="txt">&ldquo;'+s.text+'&rdquo;</div></div>';
-      });
-      resBox.innerHTML=html;
-    };
-    btnBox.appendChild(b);
-  });
 });
+
+// EXPLORE THE DATA - 50k speeches with topic filter and virtual scroll
+var exploreData=null,exploreFiltered=null,exploreShown=0,partyLinks=null,topicsFilter=null;
+
+Promise.all([
+  fetch('explore_data.json').then(r=>r.json()),
+  fetch('party_links.json').then(r=>r.json()),
+  fetch('topics_filter.json').then(r=>r.json())
+]).then(function(res){
+  exploreData=res[0];exploreFiltered=exploreData;partyLinks=res[1];topicsFilter=res[2];
+  document.getElementById('explore-count').textContent=exploreData.length.toLocaleString()+' speeches loaded. Select a topic or scroll to browse.';
+
+  // Topic buttons
+  var box=document.getElementById('explore-topics');
+  var allBtn=document.createElement('button');
+  allBtn.textContent='All ('+exploreData.length.toLocaleString()+')';
+  allBtn.className='tp-btn active';allBtn.dataset.topic='all';
+  allBtn.onclick=function(){filterExplore('all',this);};
+  box.appendChild(allBtn);
+
+  Object.keys(topicsFilter).forEach(function(t){
+    var b=document.createElement('button');b.className='tp-btn';b.textContent=t;b.dataset.topic=t;
+    b.onclick=function(){filterExplore(t,this);};
+    box.appendChild(b);
+  });
+  renderExplore(true);
+});
+
+function filterExplore(topic,btn){
+  document.querySelectorAll('.tp-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  if(topic==='all'){exploreFiltered=exploreData;}
+  else{
+    var pat=new RegExp(topicsFilter[topic],'i');
+    exploreFiltered=exploreData.filter(function(r){return pat.test(r[4]);});
+  }
+  document.getElementById('explore-count').textContent=exploreFiltered.length.toLocaleString()+' speeches'+(topic!=='all'?' about '+topic:'');
+  renderExplore(true);
+}
+
+function renderExplore(reset){
+  if(reset)exploreShown=0;
+  var tbody=document.getElementById('explore-tbody');
+  if(reset)tbody.innerHTML='';
+  var end=Math.min(exploreShown+200,exploreFiltered.length);
+  for(var i=exploreShown;i<end;i++){
+    var r=exploreFiltered[i];
+    var tr=document.createElement('tr');
+    var party=r[5];
+    var plink=partyLinks&&partyLinks[party]?'<a href="'+partyLinks[party]+'" target="_blank" style="font-size:.78rem">'+party+'</a>':party;
+    tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer" onclick="this.textContent=this.dataset.full||this.textContent" data-full="'+r[4].replace(/"/g,'&quot;')+'">'+r[4].substring(0,120)+(r[4].length>120?'...':'')+'</td><td>'+plink+'</td><td>'+r[6]+'</td><td>'+r[7]+'</td><td>'+r[8]+'</td>';
+    tbody.appendChild(tr);
+  }
+  exploreShown=end;
+}
+
+// Infinite scroll for explore table
+var ew=document.getElementById('explore-table-wrap');
+if(ew)ew.onscroll=function(){
+  if(this.scrollTop+this.clientHeight>=this.scrollHeight-200&&exploreShown<exploreFiltered.length){
+    renderExplore(false);
+  }
+};
 </script>
+<style>
+.tp-btn{padding:8px 16px;border:1px solid var(--light);border-radius:8px;background:var(--card);cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:500;transition:.2s;}
+.tp-btn:hover{border-color:var(--terra);color:var(--terra);}
+.tp-btn.active{background:var(--terra);color:#fff;border-color:var(--terra);}
+</style>
 </body>
 </html>
