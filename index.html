@@ -492,7 +492,7 @@ code{font-family:'DM Sans',monospace;}
 <!-- ═══════════════ VISUALIZE ═══════════════ -->
 <div class="pg" id="p-visualize"><div class="wrap">
 <h2>Visualize the Data</h2>
-<p class="lead">These are not just numbers &mdash; they are the vital signs of a democracy being born, stressed, and killed.</p>
+<p class="lead">These are not just numbers &mdash; they are the vital signs of a democracy being born, stressed, and killed. Data covers parliamentary sessions from 1900 to 1923.</p>
 
 <h3>A generation takes over</h3>
 <p>The average age of deputies speaking in parliament drops by <strong>13 years</strong> between 1918 and 1923. After WWI, a wave of young men &mdash; many of them veterans &mdash; enter the Chamber. They bring radicalism, impatience, and a willingness to break the rules. Mussolini is 38 when he becomes Prime Minister.</p>
@@ -511,7 +511,7 @@ code{font-family:'DM Sans',monospace;}
 <div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-reactions" height="300"></canvas></div>
 
 <h3>The most interrupted deputies</h3>
-<p>Some speakers couldn&rsquo;t finish a sentence without provoking uproar. The most interrupted man in parliament? <strong>Filippo Turati</strong>, the socialist leader &mdash; interrupted 348 times in 24 years.</p>
+<p>Some speakers couldn&rsquo;t finish a sentence without provoking uproar. Normalized by number of speeches (to avoid counting deputies who simply spoke more), the chart shows the <strong>interruption rate</strong>: how many times they were met with uproar, protests, or interruptions per 100 speeches. Only deputies with 50+ speeches shown.</p>
 <div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-interrupted" height="300"></canvas></div>
 
 <h3>The death of debate</h3>
@@ -523,7 +523,22 @@ code{font-family:'DM Sans',monospace;}
 <div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-topics" height="320"></canvas></div>
 
 <h3>Where did they come from?</h3>
-<p>Deputies by province of birth (absolute count, not per capita). <span style="color:var(--terra)">Southern provinces</span> in terracotta, <span style="color:var(--sage)">Northern/Central</span> in green.</p>
+<p>Deputies&rsquo; birthplaces mapped across Italy. Left: absolute numbers. Right: per 100,000 inhabitants (1901 census), showing which provinces punched above their weight. Hover over a region for details.</p>
+
+<div style="display:flex;gap:20px;flex-wrap:wrap;margin:20px 0;">
+<div style="flex:1;min-width:300px;background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);text-align:center;">
+<p style="font-weight:700;font-size:.85rem;color:var(--navy);margin-bottom:12px;">Absolute count</p>
+<svg id="map-abs" viewBox="0 0 400 520" style="max-width:100%;height:auto;"></svg>
+</div>
+<div style="flex:1;min-width:300px;background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);text-align:center;">
+<p style="font-weight:700;font-size:.85rem;color:var(--navy);margin-bottom:12px;">Per 100,000 inhabitants</p>
+<svg id="map-pc" viewBox="0 0 400 520" style="max-width:100%;height:auto;"></svg>
+</div>
+</div>
+<p style="font-size:.85rem;color:var(--muted)">Napoli leads in absolute numbers (35 deputies), but Potenza has the highest per-capita rate (4.9 per 100k) &mdash; the deep South is over-represented relative to its population.</p>
+
+<h3>By province (bar chart)</h3>
+<p>Top 25 provinces of birth. <span style="color:var(--terra)">Southern</span> in terracotta, <span style="color:var(--sage)">Northern/Central</span> in green.</p>
 <div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-provinces" height="500"></canvas></div>
 
 </div></div>
@@ -838,9 +853,9 @@ fetch('data.json').then(r=>r.json()).then(D=>{
   var ws=D.womens_suffrage||{};
   new Chart(document.getElementById('chart-women'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>ws[y]||0),backgroundColor:years.map(y=>(y==1912||y==1919||y==1920)?'rgba(146,43,43,.7)':'rgba(184,92,56,.35)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' speeches'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches mentioning women\'s suffrage',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
 
-  // MOST INTERRUPTED
+  // MOST INTERRUPTED (rate)
   var mi=D.most_interrupted||[];
-  new Chart(document.getElementById('chart-interrupted'),{type:'bar',data:{labels:mi.map(x=>x.name),datasets:[{data:mi.map(x=>x.count),backgroundColor:mi.map(x=>x.party.includes('Social')?'rgba(146,43,43,.65)':x.party.includes('Radical')?'rgba(90,122,86,.6)':'rgba(140,120,90,.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{var p=mi[c.dataIndex];return p.count+' interruptions'+(p.party?' ('+p.party+')':'');}}}},scales:{x:{title:{display:true,text:'Times interrupted or met with uproar',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
+  new Chart(document.getElementById('chart-interrupted'),{type:'bar',data:{labels:mi.map(x=>x.name),datasets:[{data:mi.map(x=>x.rate),backgroundColor:mi.map(x=>x.party.includes('Social')?'rgba(146,43,43,.65)':x.party.includes('Liberal')?'rgba(90,122,86,.6)':'rgba(140,120,90,.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{var p=mi[c.dataIndex];return p.rate+'% ('+p.count+' in '+p.total+' speeches)'+(p.party?' — '+p.party:'');}}}},scales:{x:{title:{display:true,text:'Interruptions per 100 speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
 
   // REACTIONS
   var rnames=['Applause','Interruptions','Uproar','Laughter','Comments'];
@@ -860,6 +875,33 @@ fetch('data.json').then(r=>r.json()).then(D=>{
   var pl=Object.entries(prov).sort((a,b)=>b[1]-a[1]).slice(0,25);
   var southProv=['Napoli','Palermo','Catania','Potenza','Messina','Bari','Avellino','Salerno','Trapani','Campobasso','Catanzaro','Cosenza','Foggia','Lecce','Reggio Calabria','Cagliari','Sassari',"L'Aquila",'Chieti'];
   new Chart(document.getElementById('chart-provinces'),{type:'bar',data:{labels:pl.map(p=>p[0]),datasets:[{data:pl.map(p=>p[1]),backgroundColor:pl.map(p=>southProv.includes(p[0])?'rgba(184,92,56,.65)':'rgba(26,56,40,.55)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x+' deputies'}}},scales:{x:{title:{display:true,text:'Number of deputies born in this province',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
+
+  // MAPS
+  fetch('italy_regions.json').then(r=>r.json()).then(paths=>{
+    var regToProvAbs={'Piemonte':93,'Lombardia':42,"Valle d'Aosta/Vallée d'Aoste":0,'Veneto':21,'Friuli-Venezia Giulia':8,'Liguria':11,'Emilia-Romagna':22,'Toscana':28,'Umbria':3,'Marche':7,'Lazio':13,'Abruzzo':6,'Molise':6,'Campania':53,'Puglia':10,'Basilicata':12,'Calabria':7,'Sicilia':47,'Sardegna':7,'Trentino-Alto Adige/Südtirol':0};
+    var regToProvPC={'Piemonte':4.2,'Lombardia':2.6,"Valle d'Aosta/Vallée d'Aoste":0,'Veneto':2.4,'Friuli-Venezia Giulia':1.2,'Liguria':2.8,'Emilia-Romagna':2.6,'Toscana':2.8,'Umbria':1.2,'Marche':1.8,'Lazio':1.5,'Abruzzo':3.6,'Molise':3.2,'Campania':3.2,'Puglia':1.2,'Basilicata':4.9,'Calabria':1.1,'Sicilia':3.2,'Sardegna':2.0,'Trentino-Alto Adige/Südtirol':0};
+    function colorScale(val,max,hue){var t=Math.min(val/max,1);return 'rgba('+hue+','+(.15+t*.75)+')';}
+    ['abs','pc'].forEach(function(mode){
+      var svg=document.getElementById('map-'+mode);
+      var vals=mode==='abs'?regToProvAbs:regToProvPC;
+      var mx=Math.max(...Object.values(vals));
+      var hue=mode==='abs'?'146,43,43':'26,56,40';
+      Object.entries(paths).forEach(function(e){
+        var name=e[0],d=e[1],v=vals[name]||0;
+        var path=document.createElementNS('http://www.w3.org/2000/svg','path');
+        path.setAttribute('d',d);
+        path.setAttribute('fill',v>0?colorScale(v,mx,hue):'#e8e0d4');
+        path.setAttribute('stroke','#fff');
+        path.setAttribute('stroke-width','1');
+        path.style.cursor='pointer';
+        path.style.transition='opacity .2s';
+        var label=name+': '+(mode==='abs'?v+' deputies':v+' per 100k');
+        path.onmouseover=function(){this.style.opacity='.75';svg.parentElement.querySelector('p').textContent=label;};
+        path.onmouseout=function(){this.style.opacity='1';svg.parentElement.querySelector('p').textContent=mode==='abs'?'Absolute count':'Per 100,000 inhabitants';};
+        svg.appendChild(path);
+      });
+    });
+  });
 
   // YEARLY SPEECHES
   new Chart(document.getElementById('chart-yearly'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>D.yearly_speeches[y]),backgroundColor:years.map(y=>y>=1915&&y<=1918?'rgba(146,43,43,.6)':y>=1922?'rgba(26,56,40,.7)':'rgba(184,92,56,.5)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
