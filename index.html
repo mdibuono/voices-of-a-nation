@@ -492,28 +492,29 @@ code{font-family:'DM Sans',monospace;}
 <!-- ═══════════════ VISUALIZE ═══════════════ -->
 <div class="pg" id="p-visualize"><div class="wrap">
 <h2>Visualize the Data</h2>
-<p class="lead">What did Italy's parliament talk about across 24 years of seismic change? The data tells a story.</p>
+<p class="lead">What did Italy&rsquo;s parliament talk about &mdash; and how did it sound &mdash; across 24 years of seismic change?</p>
 
-<h3>Parliamentary activity over time</h3>
-<p>The volume of parliamentary debate fluctuates with political crises and institutional change. Note the sharp drop during World War I (1915&ndash;18), the explosion of activity during the post-war crisis (1920&ndash;22), and the collapse after Mussolini's consolidation of power (1923).</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-yearly" height="280"></canvas></div>
+<h3>The emotional temperature of parliament</h3>
+<p>The stenographic record doesn&rsquo;t just capture words &mdash; it captures <em>reactions</em>. Every time the audience applauded, laughed, shouted, or erupted in uproar, the stenographers wrote it down in parentheses. We extracted every single one. This is what parliament <em>felt</em> like.</p>
+<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-reactions" height="300"></canvas></div>
+<p style="font-size:.85rem;color:var(--muted)"><strong>Applause</strong> surges tenfold after 1918 &mdash; speeches become performances. <strong>Interruptions</strong> and <strong>uproar</strong> peak during the Biennio Rosso (1919&ndash;20) when socialists and nationalists clash on the floor. The chamber is becoming a battleground before Fascism even takes power.</p>
+
+<h3>How many voices? The slow death of debate</h3>
+<p>Average number of different speakers per parliamentary session. As democracy expanded (1909&ndash;14), more deputies found their voice. During the war, nearly 100 people spoke per session. After 1922, the number collapses &mdash; fewer people dare to speak.</p>
+<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-speakers" height="260"></canvas></div>
 
 <h3>What parliament debated</h3>
-<p>We track how frequently key topics appear in parliamentary speech, year by year. Each line shows the share of speeches mentioning a given topic. The patterns mirror the great events of the era.</p>
+<p>The share of speeches mentioning key topics, year by year. The lines trace the obsessions and crises of an era.</p>
 <div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-topics" height="320"></canvas></div>
-<p style="font-size:.85rem;color:var(--muted)"><strong>War</strong> dominates 1915&ndash;18. <strong>Socialism</strong> and <strong>labour</strong> surge during the Biennio Rosso (1919&ndash;20). <strong>Fascism</strong> appears from nothing in 1920 and grows rapidly. <strong>Suffrage</strong> spikes in 1912 (reform year) and 1919 (proportional representation). <strong>Colonies</strong> peak around the Libyan war (1911&ndash;12).</p>
-
-<h3>How long did they speak?</h3>
-<p>Median speech length in words, by year. During wartime, speeches got longer &mdash; fewer sessions, but more substantive debate. After 1922, speeches shortened sharply as Fascist control tightened.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-length" height="250"></canvas></div>
+<p style="font-size:.85rem;color:var(--muted)"><strong>War</strong> dominates 1915&ndash;18. <strong>Fascism</strong> appears from nothing in 1920. <strong>Suffrage</strong> spikes in 1912 and 1919. <strong>Colonies</strong> peak around the Libyan war.</p>
 
 <h3>Where did the deputies come from?</h3>
-<p>Number of unique deputies by region of birth. The North (Lombardia, Piemonte) dominates, but Southern regions (Campania, Sicilia) are strongly represented. These men carried the legacies of their origins &mdash; including exposure to the violence of Italian unification &mdash; into the Chamber.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-regions" height="350"></canvas></div>
+<p>Unique deputies by province of birth. Absolute numbers &mdash; not weighted by population. The major cities dominate (Napoli, Torino, Milano, Palermo), but deputies came from across the peninsula. <span style="color:var(--terra)">Southern provinces</span> in terracotta, <span style="color:var(--sage)">Northern/Central</span> in green.</p>
+<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-provinces" height="500"></canvas></div>
 
-<h3>Share of Southern voices over time</h3>
-<p>Percentage of speeches given by deputies born in the South (Campania, Sicilia, Puglia, Calabria, Basilicata, Molise, Abruzzo, Sardegna). Southern representation is stable around 30&ndash;35%, reflecting the geographic distribution of electoral districts.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-south" height="250"></canvas></div>
+<h3>Parliamentary volume</h3>
+<p>Total speeches per year. The sharp drop during WWI, the post-war explosion, and the Fascist suppression are all visible.</p>
+<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-yearly" height="260"></canvas></div>
 
 </div></div>
 
@@ -529,25 +530,31 @@ code{font-family:'DM Sans',monospace;}
 <!-- ═══════════════ RESEARCH ═══════════════ -->
 <div class="pg" id="p-research"><div class="wrap">
 <h2>The Research</h2>
-<p class="lead">This corpus was built to study how historical violence and democratisation shaped the language of political elites.</p>
+<p class="lead">Half a million speeches are not just data &mdash; they are a window into how a society thinks, argues, and breaks apart.</p>
 
-<h3>Motivation</h3>
-<p>The period 1900&ndash;1924 is a <strong>unique natural laboratory</strong> for political economists. Italy experienced a massive expansion of the franchise (1912), a world war, the rise of mass parties, and the collapse of parliamentary democracy &mdash; all within 24 years. No existing structured corpus covered this period for any country undergoing such a dramatic transition.</p>
-<p>We built this dataset to answer a specific set of questions: does exposure to state-formation violence leave traces in how political elites talk about the nation? And does democratisation change these patterns?</p>
+<h3>Why this matters</h3>
+<p>Between 1900 and 1924, Italy compressed into 24 years what most countries experience over a century: the expansion of democratic participation, a devastating world war, the rise of revolutionary movements, and the collapse of democracy itself. The deputies who spoke in this chamber were not just politicians &mdash; they were the voices of a society in transformation.</p>
+<p>No structured, machine-readable corpus existed for this period. These speeches open new questions across disciplines:</p>
 
-<h3>The dual nature of parliamentary speech</h3>
-<p>Deputies in this corpus serve a <strong>dual analytical role</strong>:</p>
 <div class="cg">
-<div class="card" style="border-top:3px solid var(--terra)"><h4>As mirrors of society</h4><p>They represent the culture, values, and grievances of their constituents. Deputies from Southern provinces where unification was violent carry that memory. Deputies from industrialising Northern cities speak the language of labour reform. Their words reveal what Italian society was thinking.</p></div>
-<div class="card" style="border-top:3px solid var(--sage)"><h4>As political actors</h4><p>They are strategic agents who respond to electoral incentives. When the electorate expands in 1912, they must adapt their rhetoric to appeal to millions of new voters. When Fascist violence escalates, they choose whether to resist, accommodate, or stay silent. Their words reveal how democracy dies.</p></div>
+<div class="card" style="border-top:3px solid var(--terra)"><h4>For economists</h4><p>How do electoral incentives shape political language? When 5 million new voters enter the system overnight (1912 reform), do representatives change what they say and how they say it?</p></div>
+<div class="card" style="border-top:3px solid var(--sage)"><h4>For political scientists</h4><p>What does polarisation look like in a parliament that is about to die? Can we measure the rhetorical distance between groups as democracy collapses?</p></div>
+<div class="card" style="border-top:3px solid var(--kingdom)"><h4>For historians</h4><p>What did deputies actually say about the Southern Question, colonial wars, women&rsquo;s rights, or labour strikes? The full text makes it possible to move beyond anecdotes to systematic evidence.</p></div>
+<div class="card" style="border-top:3px solid var(--republic)"><h4>For sociologists &amp; psychologists</h4><p>These deputies are mirrors of their society &mdash; shaped by where they grew up, the violence they witnessed, the culture they inherited. Their words reveal collective attitudes, moral values, and the emotional texture of an era.</p></div>
 </div>
 
-<h3>The identification strategy</h3>
-<p>The <strong>1912 suffrage reform</strong> is our key source of causal variation. The reform expanded the electorate from 3.3 million to 8.65 million voters, while leaving electoral districts and rules unchanged. Crucially, the expansion was not uniform: districts with different demographic compositions (literacy, age structure) experienced different increases in enfranchisement.</p>
-<p>We exploit this variation in a <strong>difference-in-differences</strong> design: comparing the change in rhetoric after the reform for deputies from more versus less violent origins, and interacting this with the district-level intensity of enfranchisement.</p>
+<h3>The dual nature of parliamentary speech</h3>
+<p>Every deputy in this corpus can be read in two ways:</p>
+<div class="cg">
+<div class="card" style="border-left:4px solid var(--terra)"><h4>As a mirror of society</h4><p>Deputies from Southern provinces where Italian unification was imposed through military force carry that memory into the Chamber. Deputies from industrialising Northern cities speak the language of labour reform. Their words reveal what their communities were thinking &mdash; the fears, aspirations, and grievances of millions of people who left no written record.</p></div>
+<div class="card" style="border-left:4px solid var(--sage)"><h4>As a strategic political actor</h4><p>Deputies respond to electoral incentives. When the electorate triples in 1912, they must adapt. When Fascist squads burn down union halls, they choose to denounce, accommodate, or stay silent. Their rhetorical choices reveal how democratic institutions are defended &mdash; or abandoned.</p></div>
+</div>
 
-<h3>Violence exposure</h3>
-<p>We link each deputy to the intensity of political violence in their place of origin during Italian unification and the &ldquo;Great Brigandage&rdquo; (1861&ndash;1870). Deputies who grew up in provinces where the new state imposed itself through military force may carry different conceptions of national identity than those from provinces where incorporation was peaceful.</p>
+<h3>A natural experiment: the 1912 suffrage reform</h3>
+<p>In 1912, Italy expanded its electorate from 3.3 million to 8.65 million voters &mdash; while leaving electoral districts and rules unchanged. This creates a rare opportunity: the same deputies, representing the same districts, suddenly face a radically different electorate. The expansion was not uniform across districts, allowing us to compare how deputies adapted their rhetoric depending on how many new voters entered their constituency.</p>
+
+<h3>The long shadow of state-formation violence</h3>
+<p>We link each deputy to the intensity of political violence in their birthplace during Italian unification (1861&ndash;1870). The &ldquo;Great Brigandage&rdquo; &mdash; a brutal conflict between the new Italian state and Southern resistance &mdash; left deep scars. Deputies who grew up in provinces marked by this violence may carry different conceptions of the nation, the state, and its legitimacy. We ask: do these historical experiences shape how political elites talk about national unity, decades later? And does democratisation amplify or dampen these legacies?</p>
 
 <h3>Key references</h3>
 <div class="card">
@@ -802,32 +809,32 @@ async function translateSpeech(btn){
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script>
-// Load data and build charts
 fetch('data.json').then(r=>r.json()).then(D=>{
   var years=Object.keys(D.yearly_speeches).map(Number).sort();
-  var tc={War:'#922b2b',Labour:'#5a7a56',Suffrage:'#c9a84c',Socialism:'#b85c38',Fascism:'#1a3828',Colonies:'#3a6f94',South:'#8a7e72',Emigration:'#6b8f71',Education:'#c4956a',Taxes:'#555'};
+  var tc={War:'#922b2b',Labour:'#5a7a56',Suffrage:'#c9a84c',Socialism:'#b85c38',Fascism:'#1a3828',Colonies:'#3a6f94'};
+  var cs='background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;';
 
-  // 1. Yearly speeches
-  new Chart(document.getElementById('chart-yearly'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>D.yearly_speeches[y]),backgroundColor:'rgba(184,92,56,.6)',borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{title:c=>'Year '+c[0].label}}},scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{beginAtZero:true,title:{display:true,text:'Number of speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  // REACTIONS - the surprising chart
+  var rnames=['Applause','Interruptions','Uproar','Laughter','Comments'];
+  var rcols=['#922b2b','#1a3828','#b85c38','#c9a84c','#8a7e72'];
+  new Chart(document.getElementById('chart-reactions'),{type:'line',data:{labels:years,datasets:rnames.map((r,i)=>({label:r,data:years.map(y=>(D.reactions[r]||{})[y]||0),borderColor:rcols[i],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1)+'%'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches provoking this reaction',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
 
-  // 2. Topics
+  // SPEAKERS PER SESSION
+  var spy=Object.keys(D.speakers_per_session).map(Number).sort();
+  new Chart(document.getElementById('chart-speakers'),{type:'line',data:{labels:spy,datasets:[{data:spy.map(y=>D.speakers_per_session[y]),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:'#1a3828',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' speakers/session'}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Average unique speakers per session',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+
+  // TOPICS
   var topicNames=['War','Labour','Socialism','Fascism','Suffrage','Colonies'];
-  var datasets=topicNames.map(t=>({label:t,data:years.map(y=>D.topics[t][y]||0),borderColor:tc[t],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}));
-  new Chart(document.getElementById('chart-topics'),{type:'line',data:{labels:years,datasets:datasets},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1)+'%'}}},scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{beginAtZero:true,title:{display:true,text:'% of speeches mentioning topic',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  new Chart(document.getElementById('chart-topics'),{type:'line',data:{labels:years,datasets:topicNames.map(t=>({label:t,data:years.map(y=>D.topics[t][y]||0),borderColor:tc[t],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1)+'%'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches mentioning topic',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
 
-  // 3. Speech length
-  new Chart(document.getElementById('chart-length'),{type:'line',data:{labels:years,datasets:[{data:years.map(y=>D.median_words[y]),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#1a3828',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' words'}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Median words per speech',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  // PROVINCES
+  var prov=D.deputies_by_province||{};
+  var pl=Object.entries(prov).sort((a,b)=>b[1]-a[1]).slice(0,25);
+  var southProv=['Napoli','Palermo','Catania','Potenza','Messina','Bari','Avellino','Salerno','Trapani','Campobasso','Catanzaro','Cosenza','Foggia','Lecce','Reggio Calabria','Cagliari','Sassari',"L'Aquila",'Chieti'];
+  new Chart(document.getElementById('chart-provinces'),{type:'bar',data:{labels:pl.map(p=>p[0]),datasets:[{data:pl.map(p=>p[1]),backgroundColor:pl.map(p=>southProv.includes(p[0])?'rgba(184,92,56,.65)':'rgba(26,56,40,.55)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x+' deputies'}}},scales:{x:{title:{display:true,text:'Number of deputies born in this province',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
 
-  // 4. Regions
-  var regs=D.deputies_by_region||{"Lombardia":75,"Piemonte":64,"Campania":61,"Sicilia":59,"Veneto":46,"Toscana":44,"Emilia-Romagna":40,"Puglia":28,"Lazio":22,"Liguria":20,"Calabria":17,"Abruzzo":15,"Marche":14,"Basilicata":13,"Sardegna":12,"Molise":8,"Friuli-Venezia Giulia":8,"Umbria":7};
-  var rl=Object.keys(regs);var rv=Object.values(regs);
-  var south=['Campania','Sicilia','Puglia','Calabria','Basilicata','Molise','Abruzzo','Sardegna'];
-  var colors=rl.map(r=>south.includes(r)?'rgba(184,92,56,.7)':'rgba(26,56,40,.6)');
-  new Chart(document.getElementById('chart-regions'),{type:'bar',data:{labels:rl,datasets:[{data:rv,backgroundColor:colors,borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x+' deputies'}}},scales:{x:{title:{display:true,text:'Number of deputies',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
-
-  // 5. South share
-  var sy=Object.keys(D.south_share).map(Number).sort();
-  new Chart(document.getElementById('chart-south'),{type:'line',data:{labels:sy,datasets:[{data:sy.map(y=>D.south_share[y]),borderColor:'#b85c38',backgroundColor:'rgba(184,92,56,.1)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#b85c38',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'% speeches by Southern-born deputies',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'},min:20,max:45}}}});
+  // YEARLY SPEECHES
+  new Chart(document.getElementById('chart-yearly'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>D.yearly_speeches[y]),backgroundColor:years.map(y=>y>=1915&&y<=1918?'rgba(146,43,43,.6)':y>=1922?'rgba(26,56,40,.7)':'rgba(184,92,56,.5)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
 
   // Topic explorer
   var btnBox=document.getElementById('topic-btns');
