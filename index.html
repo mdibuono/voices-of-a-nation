@@ -808,7 +808,17 @@ const PW='discorsi1900';
 function go(){if(document.getElementById('pw').value===PW){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');sessionStorage.setItem('a','1');}else{document.getElementById('err').textContent='Wrong password';}}
 if(sessionStorage.getItem('a')==='1'){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');}
 function toggleMenu(){document.querySelector('.sb').classList.toggle('open');document.querySelector('.mob-btn').classList.toggle('open');document.querySelector('.sb-overlay').classList.toggle('open');}
-function show(id){if(window.innerWidth<=900){toggleMenu();}document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.sb nav a').forEach(a=>a.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.getElementById('n-'+id).classList.add('on');document.getElementById('hero').style.display=id==='overview'?'':'none';window.scrollTo(0,0);}
+function show(id){
+  if(window.innerWidth<=900){toggleMenu();}
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.sb nav a').forEach(a=>a.classList.remove('on'));
+  var pg=document.getElementById('p-'+id);
+  var nav=document.getElementById('n-'+id);
+  if(pg)pg.classList.add('on');
+  if(nav)nav.classList.add('on');
+  document.getElementById('hero').style.display=id==='overview'?'':'none';
+  window.scrollTo(0,0);
+}
 document.querySelectorAll('.dt-text').forEach(function(td){
   var b=document.createElement('span');b.className='dt-tr';b.textContent='translate';
   b.onclick=function(){translateCell(this);};
