@@ -362,6 +362,21 @@ code{font-family:'DM Sans',monospace;}
 <h2>Historical Timeline</h2>
 <p class="lead">The speeches span an era of profound transformation &mdash; from restricted suffrage through world war to the collapse of democracy.</p>
 
+<h3>How Italy was built</h3>
+<p>Drag the slider to see how the Italian state expanded from the small Kingdom of Sardinia to the unified nation. The regions that were incorporated last &mdash; often through military force &mdash; are where many of our deputies grew up.</p>
+<div style="background:var(--card);border-radius:var(--r);padding:28px;border:1px solid rgba(0,0,0,.05);margin:20px 0;">
+<div style="text-align:center;margin-bottom:16px;">
+<strong id="stage-label" style="font-size:1.1rem;color:var(--navy);font-family:'DM Serif Display',serif;">1848: Kingdom of Sardinia</strong>
+</div>
+<div style="display:flex;justify-content:center;"><svg id="map-unification" viewBox="0 0 400 520" style="max-width:380px;width:100%;height:auto;"></svg></div>
+<div style="margin-top:20px;padding:0 10px;">
+<input type="range" id="stage-slider" min="0" max="5" value="0" step="1" style="width:100%;accent-color:var(--terra);cursor:pointer;height:8px;">
+<div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-top:4px;">
+<span>1848</span><span>1859</span><span>1860</span><span>1861</span><span>1866</span><span>1870</span>
+</div>
+</div>
+</div>
+
 <div class="tl-eras">
 <div class="tl-era tl-era-s">Kingdom of Sardinia<small>1720&ndash;1861</small></div>
 <div class="tl-era tl-era-k">Kingdom of Italy<small>1861&ndash;1946</small></div>
@@ -522,7 +537,7 @@ code{font-family:'DM Sans',monospace;}
 <p>Topics in parliamentary speech, year by year. <strong>Fascism</strong> appears from nothing in 1920 and grows every year. <strong>War</strong> swallows everything from 1915 to 1918.</p>
 <div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-topics" height="320"></canvas></div>
 
-<h3>Where did they come from?</h3>
+<h3>Where did speakers come from?</h3>
 <p>Deputies&rsquo; birthplaces mapped across Italy. Left: absolute numbers. Right: per 100,000 inhabitants (1901 census), showing which provinces punched above their weight. Hover over a region for details.</p>
 
 <div style="display:flex;gap:20px;flex-wrap:wrap;margin:20px 0;">
@@ -834,6 +849,31 @@ async function translateSpeech(btn){
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script>
+// UNIFICATION MAP
+Promise.all([fetch('italy_regions.json').then(r=>r.json()),fetch('unification_stages.json').then(r=>r.json())]).then(function(res){
+  var paths=res[0],stages=res[1];
+  var stageKeys=Object.keys(stages);
+  var svg=document.getElementById('map-unification');
+  if(!svg)return;
+  var regionEls={};
+  Object.entries(paths).forEach(function(e){
+    var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',e[1]);p.setAttribute('stroke','#fff');p.setAttribute('stroke-width','1.5');
+    p.style.transition='fill .5s';
+    svg.appendChild(p);regionEls[e[0]]=p;
+  });
+  function updateStage(idx){
+    var key=stageKeys[idx];
+    var included=stages[key];
+    document.getElementById('stage-label').textContent=key;
+    Object.entries(regionEls).forEach(function(e){
+      e[1].setAttribute('fill',included.includes(e[0])?'rgba(146,43,43,.7)':'#e0d8ca');
+    });
+  }
+  updateStage(0);
+  document.getElementById('stage-slider').oninput=function(){updateStage(parseInt(this.value));};
+});
+
 fetch('data.json').then(r=>r.json()).then(D=>{
   var years=Object.keys(D.yearly_speeches).map(Number).sort();
   var tc={War:'#922b2b',Labour:'#5a7a56',Suffrage:'#c9a84c',Socialism:'#b85c38',Fascism:'#1a3828',Colonies:'#3a6f94'};
