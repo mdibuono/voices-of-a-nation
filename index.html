@@ -863,8 +863,6 @@ function go(){if(document.getElementById('pw').value===PW){document.getElementBy
 if(sessionStorage.getItem('a')==='1'){
   document.getElementById('gate').classList.add('hidden');
   document.getElementById('content').classList.remove('hidden');
-  var _h=window.location.hash.replace('#','');
-  if(_h&&document.getElementById('p-'+_h)){show(_h);}
 }
 function showVizCat(cat,btn){
   document.querySelectorAll('#p-visualize .tp-btn').forEach(function(b){b.classList.remove('active');});
@@ -892,11 +890,11 @@ function show(id){
   window.location.hash=id;
   window.scrollTo(0,0);
 }
-// Restore page from URL hash on load
-window.addEventListener('load',function(){
+// Restore page from URL hash
+(function(){
   var h=window.location.hash.replace('#','');
   if(h&&document.getElementById('p-'+h)){show(h);}
-});
+})();
 document.querySelectorAll('.dt-text').forEach(function(td){
   var b=document.createElement('span');b.className='dt-tr';b.textContent='translate';
   b.onclick=function(){translateCell(this);};
