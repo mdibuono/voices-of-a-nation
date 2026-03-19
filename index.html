@@ -374,7 +374,7 @@ code{font-family:'DM Sans',monospace;}
 <div style="text-align:center;margin-bottom:16px;">
 <strong id="stage-label" style="font-size:1.1rem;color:var(--navy);font-family:'DM Serif Display',serif;">1848: Kingdom of Sardinia</strong>
 </div>
-<div style="display:flex;justify-content:center;"><svg id="map-unification" viewBox="0 0 400 520" style="max-width:380px;width:100%;height:auto;"></svg></div>
+<div style="display:flex;justify-content:center;"><svg id="map-unification" viewBox="0 0 400 520" style="max-width:300px;width:100%;height:auto;max-height:380px;"></svg></div>
 <div style="margin-top:20px;padding:0 10px;">
 <input type="range" id="stage-slider" min="0" max="5" value="0" step="1" style="width:100%;accent-color:var(--terra);cursor:pointer;height:8px;">
 <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-top:4px;">
@@ -565,16 +565,16 @@ code{font-family:'DM Sans',monospace;}
 
 <h3>Where did speakers come from?</h3>
 <p>Regions colored by total deputies born there. Circles show provinces &mdash; bigger = more deputies. Hover for details.</p>
-<div style="display:flex;gap:20px;flex-wrap:wrap;margin:20px 0;">
-<div style="flex:1;min-width:280px;background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);text-align:center;">
-<p style="font-weight:700;font-size:.85rem;color:var(--navy);margin-bottom:4px;">Absolute count</p>
-<p id="map-abs-tooltip" style="font-size:.8rem;color:var(--muted);min-height:18px;margin-bottom:6px;">&nbsp;</p>
-<svg id="map-abs" viewBox="0 0 400 520" style="max-width:100%;height:auto;"></svg>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin:20px 0;max-width:900px;">
+<div style="flex:1;min-width:220px;max-width:420px;background:var(--card);border-radius:var(--r);padding:20px;border:1px solid rgba(0,0,0,.05);text-align:center;">
+<p style="font-weight:700;font-size:.82rem;color:var(--navy);margin-bottom:2px;">Absolute count</p>
+<p id="map-abs-tooltip" style="font-size:.75rem;color:var(--muted);min-height:16px;margin-bottom:4px;">&nbsp;</p>
+<svg id="map-abs" viewBox="0 0 400 520" style="max-width:100%;height:auto;max-height:380px;"></svg>
 </div>
-<div style="flex:1;min-width:280px;background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);text-align:center;">
-<p style="font-weight:700;font-size:.85rem;color:var(--navy);margin-bottom:4px;">Per 100,000 inhabitants</p>
-<p id="map-pc-tooltip" style="font-size:.8rem;color:var(--muted);min-height:18px;margin-bottom:6px;">&nbsp;</p>
-<svg id="map-pc" viewBox="0 0 400 520" style="max-width:100%;height:auto;"></svg>
+<div style="flex:1;min-width:220px;max-width:420px;background:var(--card);border-radius:var(--r);padding:20px;border:1px solid rgba(0,0,0,.05);text-align:center;">
+<p style="font-weight:700;font-size:.82rem;color:var(--navy);margin-bottom:2px;">Per 100,000 inhabitants</p>
+<p id="map-pc-tooltip" style="font-size:.75rem;color:var(--muted);min-height:16px;margin-bottom:4px;">&nbsp;</p>
+<svg id="map-pc" viewBox="0 0 400 520" style="max-width:100%;height:auto;max-height:380px;"></svg>
 </div>
 </div>
 
@@ -846,7 +846,12 @@ Ash, Chen &amp; Naidu (2025). &ldquo;Ideas Have Consequences.&rdquo; <em>QJE</em
 <script>
 const PW='discorsi1900';
 function go(){if(document.getElementById('pw').value===PW){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');sessionStorage.setItem('a','1');}else{document.getElementById('err').textContent='Wrong password';}}
-if(sessionStorage.getItem('a')==='1'){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');}
+if(sessionStorage.getItem('a')==='1'){
+  document.getElementById('gate').classList.add('hidden');
+  document.getElementById('content').classList.remove('hidden');
+  var _h=window.location.hash.replace('#','');
+  if(_h&&document.getElementById('p-'+_h)){show(_h);}
+}
 function showVizCat(cat,btn){
   document.querySelectorAll('#p-visualize .tp-btn').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
@@ -1088,12 +1093,14 @@ fetch('data.json').then(r=>r.json()).then(D=>{
 var exploreData=null,exploreFiltered=null,exploreShown=0,partyLinks=null,topicsFilter=null;
 var exploreChunksLoaded=0,exploreTotalChunks=5,exploreLoading=false;
 
+var deputyPhotos=null;
 Promise.all([
   fetch('explore_data.json').then(r=>r.json()),
   fetch('party_links.json').then(r=>r.json()),
-  fetch('topics_filter.json').then(r=>r.json())
+  fetch('topics_filter.json').then(r=>r.json()),
+  fetch('deputy_photos.json').then(r=>r.json()).catch(function(){return {};})
 ]).then(function(res){
-  exploreData=res[0];exploreFiltered=exploreData;partyLinks=res[1];topicsFilter=res[2];
+  exploreData=res[0];exploreFiltered=exploreData;partyLinks=res[1];topicsFilter=res[2];deputyPhotos=res[3];
   document.getElementById('explore-count').textContent='Showing '+exploreData.length+' of 22,751 speeches (5% sample). ';
 
   // Topic buttons
@@ -1155,7 +1162,8 @@ function renderExplore(reset){
     function titleCase(s){if(!s)return '';return s.replace(/\w\S*/g,function(t){return t.charAt(0).toUpperCase()+t.substr(1).toLowerCase();});}
     var pob=r[7];if(pob===pob.toUpperCase()&&pob.length>2)pob=titleCase(pob);
     var preview=r[4].substring(0,120)+(r[4].length>120?' <span style="color:var(--terra);font-size:.72rem;font-style:normal">[click to read]</span>':'');
-    tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer" onclick="expandSpeech(this)" data-full="'+full.replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">'+preview+'</td><td>'+plink+'</td><td>'+pob+'</td><td>'+r[8]+'</td><td>'+r[9]+'</td>';
+    var photo=deputyPhotos&&deputyPhotos[r[0]]?'<img src="'+deputyPhotos[r[0]]+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:6px;" onerror="this.style.display=\'none\'">':'';
+    tr.innerHTML='<td>'+photo+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer" onclick="expandSpeech(this)" data-full="'+full.replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">'+preview+'</td><td>'+plink+'</td><td>'+pob+'</td><td>'+r[8]+'</td><td>'+r[9]+'</td>';
     tbody.appendChild(tr);
   }
   exploreShown=end;
