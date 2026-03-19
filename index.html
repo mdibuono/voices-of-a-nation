@@ -1173,14 +1173,14 @@ function renderExplore(reset){
     var r=exploreFiltered[i];
     var tr=document.createElement('tr');
     var party=r[6];
-    var plink=partyLinks&&partyLinks[party]?'<a href="'+partyLinks[party]+'" target="_blank" style="font-size:.78rem">'+party+'</a>':party;
+    var plink=partyLinks&&partyLinks[party]?'\x3ca href="'+partyLinks[party]+'" target="_blank" style="font-size:.78rem">'+party+'</a>':party;
     var full=r[5]||r[4];
     function titleCase(s){if(!s)return '';return s.replace(/\w\S*/g,function(t){return t.charAt(0).toUpperCase()+t.substr(1).toLowerCase();});}
     var pob=r[7];if(pob===pob.toUpperCase()&&pob.length>2)pob=titleCase(pob);
     var preview=r[4].substring(0,120)+(r[4].length>120?' <span style="color:var(--terra);font-size:.72rem;font-style:normal">[click to read]</span>':'');
-    var photo=deputyPhotos&&deputyPhotos[r[0]]?'<img src="'+deputyPhotos[r[0]]+'" style="width:26px;height:26px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:5px;" onerror="this.style.display=\'none\'">':'';
+    var photo=deputyPhotos&&deputyPhotos[r[0]]?'\x3cimg src="'+deputyPhotos[r[0]]+'" style="width:26px;height:26px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:5px;" onerror="this.style.display=\'none\'">':'';
     var dob=r[10]||'';
-    tr.innerHTML='<td>'+photo+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer;max-width:250px;" onclick="expandSpeech(this)" data-full="'+full.replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">'+preview+'</td><td>'+plink+'</td><td style="font-size:.75rem">'+dob+'</td><td>'+pob+'</td><td>'+r[8]+'</td><td>'+r[9]+'</td>';
+    tr.innerHTML='\x3ctd>'+photo+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer;max-width:250px;" onclick="expandSpeech(this)" data-full="'+full.replace(/"/g,'&quot;').replace(/\x3c/g,'&lt;')+'">'+preview+'</td><td>'+plink+'</td><td style="font-size:.75rem">'+dob+'</td><td>'+pob+'</td><td>'+r[8]+'</td><td>'+r[9]+'</td>';
     tbody.appendChild(tr);
   }
   exploreShown=end;
@@ -1193,7 +1193,7 @@ function expandSpeech(td){
   }
   td.dataset.preview=td.innerHTML;
   var full=td.dataset.full;
-  td.innerHTML=full+'<br><span class="dt-tr" onclick="event.stopPropagation();translateCell2(this)" style="display:inline-block;margin-top:6px;">translate</span><span class="dt-translated" style="display:none"></span><br><span style="color:var(--muted);font-size:.7rem;cursor:pointer;font-style:normal" onclick="event.stopPropagation();expandSpeech(this.parentElement)">[collapse]</span>';
+  td.innerHTML=full+'\x3cbr><span class="dt-tr" onclick="event.stopPropagation();translateCell2(this)" style="display:inline-block;margin-top:6px;">translate</span><span class="dt-translated" style="display:none"></span><br><span style="color:var(--muted);font-size:.7rem;cursor:pointer;font-style:normal" onclick="event.stopPropagation();expandSpeech(this.parentElement)">[collapse]</span>';
   td.dataset.expanded='1';
 }
 async function translateCell2(btn){
