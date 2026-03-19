@@ -647,7 +647,7 @@ code{font-family:'DM Sans',monospace;}
 
 <div style="margin-bottom:20px;">
 <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;" id="explore-topics"></div>
-<p style="font-size:.82rem;color:var(--muted);" id="explore-count">Loading 50,000 speeches...</p>
+<p style="font-size:.82rem;color:var(--muted);" id="explore-count">Loading speeches...</p>
 </div>
 
 <div id="explore-table-wrap" style="overflow:auto;border:1px solid var(--light);border-radius:var(--r);background:var(--card);max-height:70vh;">
@@ -1012,18 +1012,12 @@ fetch('data.json').then(r=>r.json()).then(D=>{
   // LEFT vs RIGHT ANGER
   var la=D.left_vs_right_anger||{};
   var lay=Object.keys(la.left||{}).map(Number).sort();
-  try{new Chart(document.getElementById('chart-lr-anger'),{type:'line',data:{labels:lay,datasets:[}catch(e){console.error("Chart fail:",e);}
-    {label:'Left',data:lay.map(y=>(la.left||{})[y]||0),borderColor:'#922b2b',backgroundColor:'rgba(146,43,43,.08)',fill:true,borderWidth:2.5,pointRadius:0,tension:.3},
-    {label:'Right',data:lay.map(y=>(la.right||{})[y]||0),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:2.5,pointRadius:0,tension:.3}
-  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches with anger words',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  try{new Chart(document.getElementById('chart-lr-anger'),{type:'line',data:{labels:lay,datasets:[{label:'Left',data:lay.map(y=>(la.left||{})[y]||0),borderColor:'#922b2b',backgroundColor:'rgba(146,43,43,.08)',fill:true,borderWidth:2.5,pointRadius:0,tension:.3},{label:'Right',data:lay.map(y=>(la.right||{})[y]||0),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:2.5,pointRadius:0,tension:.3}]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches with anger words',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}})}catch(e){console.error("Chart fail:",e);}
 
   // SOUTH vs NORTH TOPICS
   var snt=D.south_north_topics||{};
   var sntk=Object.keys(snt);
-  try{new Chart(document.getElementById('chart-sn-topics'),{type:'bar',data:{labels:sntk.map(k=>k.charAt(0).toUpperCase()+k.slice(1)),datasets:[}catch(e){console.error("Chart fail:",e);}
-    {label:'South',data:sntk.map(k=>snt[k].south),backgroundColor:'rgba(184,92,56,.6)',borderRadius:4},
-    {label:'North',data:sntk.map(k=>snt[k].north),backgroundColor:'rgba(26,56,40,.5)',borderRadius:4}
-  ]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  try{new Chart(document.getElementById('chart-sn-topics'),{type:'bar',data:{labels:sntk.map(k=>k.charAt(0).toUpperCase()+k.slice(1)),datasets:[{label:'South',data:sntk.map(k=>snt[k].south),backgroundColor:'rgba(184,92,56,.6)',borderRadius:4},{label:'North',data:sntk.map(k=>snt[k].north),backgroundColor:'rgba(26,56,40,.5)',borderRadius:4}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}})}catch(e){console.error("Chart fail:",e);}
 
   // ANGRIEST DEPUTIES
   var ag=D.angriest_deputies||[];
