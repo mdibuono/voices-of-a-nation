@@ -1055,7 +1055,7 @@ function filterExplore(topic,btn){
   if(topic==='all'){exploreFiltered=exploreData;}
   else{
     var pat=new RegExp(topicsFilter[topic],'i');
-    exploreFiltered=exploreData.filter(function(r){return pat.test(r[4]);});
+    exploreFiltered=exploreData.filter(function(r){return pat.test(r[4])||pat.test(r[5]);});
   }
   document.getElementById('explore-count').textContent=exploreFiltered.length.toLocaleString()+' speeches'+(topic!=='all'?' about '+topic:'');
   renderExplore(true);
@@ -1069,7 +1069,7 @@ function renderExplore(reset){
   for(var i=exploreShown;i<end;i++){
     var r=exploreFiltered[i];
     var tr=document.createElement('tr');
-    var party=r[5];
+    var party=r[6];
     var plink=partyLinks&&partyLinks[party]?'<a href="'+partyLinks[party]+'" target="_blank" style="font-size:.78rem">'+party+'</a>':party;
     var full=r[5]||r[4];
     function titleCase(s){if(!s)return '';return s.replace(/\w\S*/g,function(t){return t.charAt(0).toUpperCase()+t.substr(1).toLowerCase();});}
@@ -1127,7 +1127,7 @@ function loadMoreChunk(){
     var activeBtn=document.querySelector('.tp-btn.active');
     var topic=activeBtn?activeBtn.dataset.topic:'all';
     if(topic==='all'){exploreFiltered=exploreData;}
-    else{var pat=new RegExp(topicsFilter[topic],'i');exploreFiltered=exploreData.filter(function(r){return pat.test(r[4]);});}
+    else{var pat=new RegExp(topicsFilter[topic],'i');exploreFiltered=exploreData.filter(function(r){return pat.test(r[4])||pat.test(r[5]);});}
     document.getElementById('explore-count').textContent='Showing '+exploreFiltered.length+' of 22,751 speeches (5% sample). ';
     renderExplore(true);
     var remaining=exploreTotalChunks-exploreChunksLoaded;
