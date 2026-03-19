@@ -1057,7 +1057,9 @@ function filterExplore(topic,btn){
     var pat=new RegExp(topicsFilter[topic],'i');
     exploreFiltered=exploreData.filter(function(r){return pat.test(r[4])||pat.test(r[5]);});
   }
-  document.getElementById('explore-count').textContent=exploreFiltered.length.toLocaleString()+' speeches'+(topic!=='all'?' about '+topic:'');
+  var msg=exploreFiltered.length.toLocaleString()+' speeches'+(topic!=='all'?' about '+topic:'');
+  if(exploreFiltered.length===0&&exploreChunksLoaded<exploreTotalChunks){msg+=' found so far. Try loading more speeches below.';}
+  document.getElementById('explore-count').textContent=msg;
   renderExplore(true);
 }
 
