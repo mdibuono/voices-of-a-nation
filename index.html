@@ -492,29 +492,39 @@ code{font-family:'DM Sans',monospace;}
 <!-- ═══════════════ VISUALIZE ═══════════════ -->
 <div class="pg" id="p-visualize"><div class="wrap">
 <h2>Visualize the Data</h2>
-<p class="lead">What did Italy&rsquo;s parliament talk about &mdash; and how did it sound &mdash; across 24 years of seismic change?</p>
+<p class="lead">These are not just numbers &mdash; they are the vital signs of a democracy being born, stressed, and killed.</p>
 
-<h3>The emotional temperature of parliament</h3>
-<p>The stenographic record doesn&rsquo;t just capture words &mdash; it captures <em>reactions</em>. Every time the audience applauded, laughed, shouted, or erupted in uproar, the stenographers wrote it down in parentheses. We extracted every single one. This is what parliament <em>felt</em> like.</p>
+<h3>A generation takes over</h3>
+<p>The average age of deputies speaking in parliament drops by <strong>13 years</strong> between 1918 and 1923. After WWI, a wave of young men &mdash; many of them veterans &mdash; enter the Chamber. They bring radicalism, impatience, and a willingness to break the rules. Mussolini is 38 when he becomes Prime Minister.</p>
+<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-age" height="260"></canvas></div>
+
+<h3>The rise and fall of &ldquo;patria&rdquo;</h3>
+<p>How often do deputies invoke <em>patria</em> (fatherland), <em>libert&agrave;</em> (liberty), <em>nazione</em> (nation), or <em>popolo</em> (the people)? The language of national identity <strong>triples</strong> during WWI, then collapses. &ldquo;Libert&agrave;&rdquo; surges in 1919 as democracy expands &mdash; and spikes again in 1923, this time in desperation.</p>
+<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-identity" height="300"></canvas></div>
+
+<h3>When they talked about women&rsquo;s right to vote</h3>
+<p>Women couldn&rsquo;t vote until 1946. But they were discussed. The debate spiked in <strong>1912</strong> (when universal <em>male</em> suffrage passed &mdash; women were explicitly excluded) and again in <strong>1919&ndash;20</strong> after women had worked in factories during the war. Then silence.</p>
+<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-women" height="240"></canvas></div>
+
+<h3>The emotional temperature of the chamber</h3>
+<p>The stenographers wrote down every reaction: <em>(Applausi)</em>, <em>(Interruzioni)</em>, <em>(Rumori)</em>, <em>(Si ride)</em>. We extracted them all. Applause <strong>surges tenfold</strong> after 1918. Interruptions peak during the Biennio Rosso. Parliament becomes a stage &mdash; then a battlefield.</p>
 <div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-reactions" height="300"></canvas></div>
-<p style="font-size:.85rem;color:var(--muted)"><strong>Applause</strong> surges tenfold after 1918 &mdash; speeches become performances. <strong>Interruptions</strong> and <strong>uproar</strong> peak during the Biennio Rosso (1919&ndash;20) when socialists and nationalists clash on the floor. The chamber is becoming a battleground before Fascism even takes power.</p>
 
-<h3>How many voices? The slow death of debate</h3>
-<p>Average number of different speakers per parliamentary session. As democracy expanded (1909&ndash;14), more deputies found their voice. During the war, nearly 100 people spoke per session. After 1922, the number collapses &mdash; fewer people dare to speak.</p>
+<h3>The most interrupted deputies</h3>
+<p>Some speakers couldn&rsquo;t finish a sentence without provoking uproar. The most interrupted man in parliament? <strong>Filippo Turati</strong>, the socialist leader &mdash; interrupted 348 times in 24 years.</p>
+<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-interrupted" height="300"></canvas></div>
+
+<h3>The death of debate</h3>
+<p>Average number of speakers per session. Democracy means many voices. As Fascism rises after 1922, the number of people willing to speak collapses.</p>
 <div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-speakers" height="260"></canvas></div>
 
-<h3>What parliament debated</h3>
-<p>The share of speeches mentioning key topics, year by year. The lines trace the obsessions and crises of an era.</p>
+<h3>What they obsessed about</h3>
+<p>Topics in parliamentary speech, year by year. <strong>Fascism</strong> appears from nothing in 1920 and grows every year. <strong>War</strong> swallows everything from 1915 to 1918.</p>
 <div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-topics" height="320"></canvas></div>
-<p style="font-size:.85rem;color:var(--muted)"><strong>War</strong> dominates 1915&ndash;18. <strong>Fascism</strong> appears from nothing in 1920. <strong>Suffrage</strong> spikes in 1912 and 1919. <strong>Colonies</strong> peak around the Libyan war.</p>
 
-<h3>Where did the deputies come from?</h3>
-<p>Unique deputies by province of birth. Absolute numbers &mdash; not weighted by population. The major cities dominate (Napoli, Torino, Milano, Palermo), but deputies came from across the peninsula. <span style="color:var(--terra)">Southern provinces</span> in terracotta, <span style="color:var(--sage)">Northern/Central</span> in green.</p>
+<h3>Where did they come from?</h3>
+<p>Deputies by province of birth (absolute count, not per capita). <span style="color:var(--terra)">Southern provinces</span> in terracotta, <span style="color:var(--sage)">Northern/Central</span> in green.</p>
 <div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-provinces" height="500"></canvas></div>
-
-<h3>Parliamentary volume</h3>
-<p>Total speeches per year. The sharp drop during WWI, the post-war explosion, and the Fascist suppression are all visible.</p>
-<div style="background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;"><canvas id="chart-yearly" height="260"></canvas></div>
 
 </div></div>
 
@@ -814,7 +824,25 @@ fetch('data.json').then(r=>r.json()).then(D=>{
   var tc={War:'#922b2b',Labour:'#5a7a56',Suffrage:'#c9a84c',Socialism:'#b85c38',Fascism:'#1a3828',Colonies:'#3a6f94'};
   var cs='background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;';
 
-  // REACTIONS - the surprising chart
+  // AGE
+  var ay=Object.keys(D.speaker_age).map(Number).sort();
+  new Chart(document.getElementById('chart-age'),{type:'line',data:{labels:ay,datasets:[{data:ay.map(y=>D.speaker_age[y]),borderColor:'var(--terra)',backgroundColor:'rgba(184,92,56,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:ay.map(y=>y>=1920?'#922b2b':'#b85c38'),tension:.3}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' years old'}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Average age of speakers',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'},min:44,max:62}}}});
+
+  // IDENTITY WORDS
+  var iw=D.identity_words||{};
+  var iwn=['patria','libertà','nazione','popolo'];
+  var iwc=['#922b2b','#5a7a56','#1a3828','#c9a84c'];
+  new Chart(document.getElementById('chart-identity'),{type:'line',data:{labels:years,datasets:iwn.map((w,i)=>({label:w,data:years.map(y=>(iw[w]||{})[y]||0),borderColor:iwc[i],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11,style:'italic'}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+
+  // WOMEN'S SUFFRAGE
+  var ws=D.womens_suffrage||{};
+  new Chart(document.getElementById('chart-women'),{type:'bar',data:{labels:years,datasets:[{data:years.map(y=>ws[y]||0),backgroundColor:years.map(y=>(y==1912||y==1919||y==1920)?'rgba(146,43,43,.7)':'rgba(184,92,56,.35)'),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' speeches'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Speeches mentioning women\'s suffrage',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+
+  // MOST INTERRUPTED
+  var mi=D.most_interrupted||[];
+  new Chart(document.getElementById('chart-interrupted'),{type:'bar',data:{labels:mi.map(x=>x.name),datasets:[{data:mi.map(x=>x.count),backgroundColor:mi.map(x=>x.party.includes('Social')?'rgba(146,43,43,.65)':x.party.includes('Radical')?'rgba(90,122,86,.6)':'rgba(140,120,90,.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{var p=mi[c.dataIndex];return p.count+' interruptions'+(p.party?' ('+p.party+')':'');}}}},scales:{x:{title:{display:true,text:'Times interrupted or met with uproar',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
+
+  // REACTIONS
   var rnames=['Applause','Interruptions','Uproar','Laughter','Comments'];
   var rcols=['#922b2b','#1a3828','#b85c38','#c9a84c','#8a7e72'];
   new Chart(document.getElementById('chart-reactions'),{type:'line',data:{labels:years,datasets:rnames.map((r,i)=>({label:r,data:years.map(y=>(D.reactions[r]||{})[y]||0),borderColor:rcols[i],backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.3}))},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1)+'%'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% of speeches provoking this reaction',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
