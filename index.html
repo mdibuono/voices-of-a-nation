@@ -590,7 +590,7 @@ code{font-family:'DM Sans',monospace;}
 <!-- ═══════════════ EXPLORE THE DATA ═══════════════ -->
 <div class="pg" id="p-explore"><div class="wrap">
 <h2>Explore the Data</h2>
-<p class="lead">A 5% random sample from the corpus &mdash; 22,751 speeches. Filter by topic, read the originals.</p>
+<p class="lead">A 5% random sample from the corpus &mdash; 22,751 speeches. Filter by topic, read the originals. Click on any speech to expand the full text.</p>
 
 <div style="margin-bottom:20px;">
 <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;" id="explore-topics"></div>
@@ -1072,10 +1072,37 @@ function renderExplore(reset){
     var party=r[5];
     var plink=partyLinks&&partyLinks[party]?'<a href="'+partyLinks[party]+'" target="_blank" style="font-size:.78rem">'+party+'</a>':party;
     var full=r[5]||r[4];
-    tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer" onclick="this.textContent=this.dataset.full||this.textContent" data-full="'+full.replace(/"/g,'&quot;')+'">'+r[4].substring(0,120)+(r[4].length>120?'...':'')+'</td><td>'+plink+'</td><td>'+r[7]+'</td><td>'+r[8]+'</td><td>'+r[9]+'</td>';
+    function titleCase(s){if(!s)return '';return s.replace(/\w\S*/g,function(t){return t.charAt(0).toUpperCase()+t.substr(1).toLowerCase();});}
+    var pob=r[7];if(pob===pob.toUpperCase()&&pob.length>2)pob=titleCase(pob);
+    var preview=r[4].substring(0,120)+(r[4].length>120?' <span style="color:var(--terra);font-size:.72rem;font-style:normal">[click to read]</span>':'');
+    tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="dt-text" style="cursor:pointer" onclick="expandSpeech(this)" data-full="'+full.replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">'+preview+'</td><td>'+plink+'</td><td>'+pob+'</td><td>'+r[8]+'</td><td>'+r[9]+'</td>';
     tbody.appendChild(tr);
   }
   exploreShown=end;
+}
+
+// Expand speech in table
+function expandSpeech(td){
+  if(td.dataset.expanded==='1'){
+    td.innerHTML=td.dataset.preview;td.dataset.expanded='';return;
+  }
+  td.dataset.preview=td.innerHTML;
+  var full=td.dataset.full;
+  td.innerHTML=full+'<br><span class="dt-tr" onclick="event.stopPropagation();translateCell2(this)" style="display:inline-block;margin-top:6px;">translate</span><span class="dt-translated" style="display:none"></span><br><span style="color:var(--muted);font-size:.7rem;cursor:pointer;font-style:normal" onclick="event.stopPropagation();expandSpeech(this.parentElement)">[collapse]</span>';
+  td.dataset.expanded='1';
+}
+async function translateCell2(btn){
+  var span=btn.nextElementSibling;
+  if(span.style.display==='block'){span.style.display='none';btn.textContent='translate';return;}
+  if(span.dataset.done){span.style.display='block';btn.textContent='hide translation';return;}
+  var txt=btn.parentElement.dataset.full||btn.parentElement.textContent;
+  btn.textContent='translating...';
+  try{
+    var chunks=[];var s=txt.substring(0,1500);while(s.length>0){chunks.push(s.substring(0,450));s=s.substring(450);}
+    var results=[];
+    for(var i=0;i<chunks.length;i++){var r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(chunks[i])+'&langpair=it|en');var d=await r.json();results.push(d.responseData.translatedText);}
+    span.textContent=results.join(' ');span.style.display='block';span.dataset.done='1';btn.textContent='hide translation';
+  }catch(e){btn.textContent='failed';}
 }
 
 // Infinite scroll within loaded data
