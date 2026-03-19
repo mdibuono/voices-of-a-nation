@@ -605,7 +605,10 @@ code{font-family:'DM Sans',monospace;}
 <tbody id="explore-tbody"></tbody>
 </table>
 </div>
-<p style="font-size:.8rem;color:var(--muted);margin-top:8px;">Showing first 200 rows. Scroll down to load more.</p>
+<div style="text-align:center;margin-top:16px;">
+<button id="explore-load-more" onclick="loadMoreChunk()" style="padding:12px 28px;border:1px solid var(--terra);border-radius:8px;background:var(--card);color:var(--terra);cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:600;transition:.2s;">Load 5,000 more speeches</button>
+<p style="font-size:.8rem;color:var(--muted);margin-top:8px;" id="explore-load-status">4 more batches available</p>
+</div>
 </div></div>
 
 <!-- ═══════════════ RESEARCH ═══════════════ -->
@@ -1018,8 +1021,9 @@ fetch('data.json').then(r=>r.json()).then(D=>{
 
 });
 
-// EXPLORE THE DATA - 50k speeches with topic filter and virtual scroll
+// EXPLORE THE DATA - lazy loaded chunks
 var exploreData=null,exploreFiltered=null,exploreShown=0,partyLinks=null,topicsFilter=null;
+var exploreChunksLoaded=0,exploreTotalChunks=5,exploreLoading=false;
 
 Promise.all([
   fetch('explore_data.json').then(r=>r.json()),
@@ -1027,7 +1031,7 @@ Promise.all([
   fetch('topics_filter.json').then(r=>r.json())
 ]).then(function(res){
   exploreData=res[0];exploreFiltered=exploreData;partyLinks=res[1];topicsFilter=res[2];
-  document.getElementById('explore-count').textContent=exploreData.length.toLocaleString()+' speeches (5% sample). Select a topic or scroll to browse.';
+  document.getElementById('explore-count').textContent='Showing '+exploreData.length+' of 22,751 speeches (5% sample). ';
 
   // Topic buttons
   var box=document.getElementById('explore-topics');
@@ -1074,13 +1078,36 @@ function renderExplore(reset){
   exploreShown=end;
 }
 
-// Infinite scroll for explore table
+// Infinite scroll within loaded data
 var ew=document.getElementById('explore-table-wrap');
 if(ew)ew.onscroll=function(){
   if(this.scrollTop+this.clientHeight>=this.scrollHeight-200&&exploreShown<exploreFiltered.length){
     renderExplore(false);
   }
 };
+
+// Load more chunks
+function loadMoreChunk(){
+  if(exploreLoading||exploreChunksLoaded>=exploreTotalChunks)return;
+  exploreLoading=true;
+  var btn=document.getElementById('explore-load-more');
+  btn.textContent='Loading...';
+  fetch('explore_chunk_'+exploreChunksLoaded+'.json').then(r=>r.json()).then(function(chunk){
+    exploreData=exploreData.concat(chunk);
+    exploreChunksLoaded++;
+    exploreLoading=false;
+    // Re-apply current filter
+    var activeBtn=document.querySelector('.tp-btn.active');
+    var topic=activeBtn?activeBtn.dataset.topic:'all';
+    if(topic==='all'){exploreFiltered=exploreData;}
+    else{var pat=new RegExp(topicsFilter[topic],'i');exploreFiltered=exploreData.filter(function(r){return pat.test(r[4]);});}
+    document.getElementById('explore-count').textContent='Showing '+exploreFiltered.length+' of 22,751 speeches (5% sample). ';
+    renderExplore(true);
+    var remaining=exploreTotalChunks-exploreChunksLoaded;
+    if(remaining>0){btn.textContent='Load 5,000 more speeches';document.getElementById('explore-load-status').textContent=remaining+' more batch'+(remaining>1?'es':'')+' available';}
+    else{btn.style.display='none';document.getElementById('explore-load-status').textContent='All speeches loaded.';}
+  }).catch(function(){exploreLoading=false;btn.textContent='Load failed — try again';});
+}
 </script>
 <style>
 .tp-btn{padding:8px 16px;border:1px solid var(--light);border-radius:8px;background:var(--card);cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:500;transition:.2s;}
