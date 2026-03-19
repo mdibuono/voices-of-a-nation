@@ -215,6 +215,8 @@ tbody tr:hover{background:rgba(184,92,56,.02);}
 code{font-family:'DM Sans',monospace;}
 
 /* ── FOOTER ── */
+.viz-sec{display:none;}
+.viz-sec.viz-show{display:block;}
 .viz-cat{font-family:'DM Serif Display',serif;font-size:1.5rem;font-weight:400;color:var(--navy);margin:56px 0 12px;padding-top:32px;border-top:2px solid var(--light);}
 .viz-cat:first-of-type{border-top:none;margin-top:0;padding-top:0;}
 .viz-cat-desc{font-size:.95rem;color:var(--muted);margin-bottom:28px;}
@@ -513,6 +515,17 @@ code{font-family:'DM Sans',monospace;}
 <h2>Visualizations</h2>
 <p class="lead">The vital signs of a democracy being born, stressed, and killed. Sessions from 1900 to 1923.</p>
 
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;">
+<button class="tp-btn active" onclick="showVizCat('all',this)">All</button>
+<button class="tp-btn" onclick="showVizCat('talked',this)">What They Talked About</button>
+<button class="tp-btn" onclick="showVizCat('how',this)">How They Talked</button>
+<button class="tp-btn" onclick="showVizCat('who',this)">Who They Were</button>
+<button class="tp-btn" onclick="showVizCat('dualities',this)">Dualities</button>
+<button class="tp-btn" onclick="showVizCat('women',this)">Women</button>
+<button class="tp-btn" onclick="showVizCat('curiosities',this)">Curiosities</button>
+</div>
+
+<div class="viz-sec" data-cat="talked">
 <div class="viz-cat">What They Talked About</div>
 <p class="viz-cat-desc">The topics, words, and obsessions of 24 years of debate.</p>
 
@@ -524,6 +537,8 @@ code{font-family:'DM Sans',monospace;}
 <p>How often do deputies invoke <em>patria</em> (fatherland), <em>libert&agrave;</em> (liberty), <em>nazione</em> (nation), or <em>popolo</em> (the people)? The language of national identity <strong>triples</strong> during WWI, then collapses. &ldquo;Libert&agrave;&rdquo; surges in 1919 as democracy expands &mdash; and again in 1923, this time in desperation.</p>
 <div class="chart-box"><canvas id="chart-identity"></canvas></div>
 
+</div>
+<div class="viz-sec" data-cat="how">
 <div class="viz-cat">How They Talked</div>
 <p class="viz-cat-desc">The emotions, conflicts, and silences in parliamentary debate.</p>
 
@@ -535,6 +550,8 @@ code{font-family:'DM Sans',monospace;}
 <p>We track three emotional registers across all speeches: <strong>anger</strong> (vergogna, scandalo, violenza, menzogna...), <strong>hope</strong> (progresso, giustizia, riforma, civiltà...), and <strong>fear</strong> (pericolo, minaccia, anarchia, rivoluzione...). Fear overtakes hope after 1919.</p>
 <div class="chart-box"><canvas id="chart-sentiment"></canvas></div>
 
+</div>
+<div class="viz-sec" data-cat="who">
 <div class="viz-cat">Who They Were</div>
 <p class="viz-cat-desc">Age, origins, and the divides that shaped Italy.</p>
 
@@ -561,6 +578,8 @@ code{font-family:'DM Sans',monospace;}
 </div>
 </div>
 
+</div>
+<div class="viz-sec" data-cat="dualities">
 <div class="viz-cat">Dualities</div>
 <p class="viz-cat-desc">Left vs right. South vs North. The parliament mirrored Italy&rsquo;s deepest divides.</p>
 
@@ -580,6 +599,8 @@ code{font-family:'DM Sans',monospace;}
 <p>Interruption rate per 100 speeches (min 50). The provocateurs were not the most famous.</p>
 <div class="chart-box"><canvas id="chart-interrupted"></canvas></div>
 
+</div>
+<div class="viz-sec" data-cat="women">
 <div class="viz-cat">Women in a Men&rsquo;s Parliament</div>
 <p class="viz-cat-desc">They couldn&rsquo;t vote, couldn&rsquo;t run for office, and were barely mentioned. But when they were, it tells us everything.</p>
 
@@ -591,6 +612,8 @@ code{font-family:'DM Sans',monospace;}
 <p>Speeches mentioning women&rsquo;s right to vote. At most 51 in a single year. The left discussed women <strong>twice as much</strong> as the right.</p>
 <div class="chart-box"><canvas id="chart-women-vote"></canvas></div>
 
+</div>
+<div class="viz-sec" data-cat="curiosities">
 <div class="viz-cat">Curiosities</div>
 <p class="viz-cat-desc">The unexpected things you find in half a million speeches.</p>
 
@@ -600,6 +623,7 @@ code{font-family:'DM Sans',monospace;}
 <h3>The shortest</h3>
 <p>&ldquo;<em>Ma io qualche volta ci sono stato!</em>&rdquo; &mdash; Piero Foscari, 34 characters, 9 September 1919.</p>
 
+</div><!-- end curiosities -->
 </div></div>
 
 <!-- ═══════════════ EXPLORE THE DATA ═══════════════ -->
@@ -823,6 +847,19 @@ Ash, Chen &amp; Naidu (2025). &ldquo;Ideas Have Consequences.&rdquo; <em>QJE</em
 const PW='discorsi1900';
 function go(){if(document.getElementById('pw').value===PW){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');sessionStorage.setItem('a','1');}else{document.getElementById('err').textContent='Wrong password';}}
 if(sessionStorage.getItem('a')==='1'){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');}
+function showVizCat(cat,btn){
+  document.querySelectorAll('#p-visualize .tp-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.viz-sec').forEach(function(s){
+    if(cat==='all'||s.dataset.cat===cat){s.classList.add('viz-show');}
+    else{s.classList.remove('viz-show');}
+  });
+  window.scrollTo(0,document.getElementById('p-visualize').offsetTop);
+}
+// Show all categories by default
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.viz-sec').forEach(function(s){s.classList.add('viz-show');});
+});
 function toggleMenu(){document.querySelector('.sb').classList.toggle('open');document.querySelector('.mob-btn').classList.toggle('open');document.querySelector('.sb-overlay').classList.toggle('open');}
 function show(id){
   if(window.innerWidth<=900){toggleMenu();}
@@ -833,8 +870,14 @@ function show(id){
   if(pg)pg.classList.add('on');
   if(nav)nav.classList.add('on');
   document.getElementById('hero').style.display=id==='overview'?'':'none';
+  window.location.hash=id;
   window.scrollTo(0,0);
 }
+// Restore page from URL hash on load
+window.addEventListener('load',function(){
+  var h=window.location.hash.replace('#','');
+  if(h&&document.getElementById('p-'+h)){show(h);}
+});
 document.querySelectorAll('.dt-text').forEach(function(td){
   var b=document.createElement('span');b.className='dt-tr';b.textContent='translate';
   b.onclick=function(){translateCell(this);};
@@ -910,6 +953,9 @@ fetch('data.json').then(r=>r.json()).then(D=>{
   var tc={War:'#922b2b',Labour:'#5a7a56',Suffrage:'#c9a84c',Socialism:'#b85c38',Fascism:'#1a3828',Colonies:'#3a6f94'};
   var cs='background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;';
 
+  // ALL CHARTS wrapped in try/catch so maps always render
+  try{
+
   // AGE
   var ay=Object.keys(D.speaker_age).map(Number).sort();
   new Chart(document.getElementById('chart-age'),{type:'line',data:{labels:ay,datasets:[{data:ay.map(y=>D.speaker_age[y]),borderColor:'var(--terra)',backgroundColor:'rgba(184,92,56,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:ay.map(y=>y>=1920?'#922b2b':'#b85c38'),tension:.3}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' years old'}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Average age of speakers',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'},min:44,max:62}}}});
@@ -984,6 +1030,8 @@ fetch('data.json').then(r=>r.json()).then(D=>{
     var sp2=Object.keys(D.speakers_per_session).map(Number).sort();
     new Chart(document.getElementById('chart-speakers2'),{type:'line',data:{labels:sp2,datasets:[{data:sp2.map(y=>D.speakers_per_session[y]),borderColor:'#1a3828',backgroundColor:'rgba(26,56,40,.08)',fill:true,borderWidth:3,pointRadius:4,pointBackgroundColor:'#1a3828',tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'Speakers per session',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}}}}});
   }
+
+  }catch(e){console.error('Chart error:',e);}
 
   // MAPS with province circles
   Promise.all([fetch('italy_regions.json').then(r=>r.json()),fetch('province_circles.json').then(r=>r.json())]).then(function(res){
