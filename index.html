@@ -1004,7 +1004,7 @@ function startQuiz(type){
 function showQuizPair(){
   if(quizIdx>=quizTotal){
     document.getElementById('quiz-pair').innerHTML='';
-    document.getElementById('quiz-feedback').innerHTML='\x3cdiv style="font-family:DM Serif Display,serif;font-size:1.5rem;color:var(--navy);">'+quizScore+'/'+quizTotal+' correct\x3c/div>\x3cp style="color:var(--muted);margin-top:8px;">'+(quizScore>=4?'Impressive! You can read historical faces.':quizScore>=2?'Not bad. Faces are tricky.':'Faces don\\'t reveal much, do they?')+'\x3c/p>';
+    document.getElementById('quiz-feedback').innerHTML='\x3cdiv style="font-family:DM Serif Display,serif;font-size:1.5rem;color:var(--navy);">'+quizScore+'/'+quizTotal+' correct\x3c/div>\x3cp style="color:var(--muted);margin-top:8px;">'+(quizScore>=4?'Impressive! You can read historical faces.':quizScore>=2?'Not bad. Faces are tricky.':'Faces don&#39;t reveal much, do they?')+'\x3c/p>';
     document.getElementById('quiz-score').textContent='';
     return;
   }
@@ -1019,7 +1019,7 @@ function showQuizPair(){
     var side=x[0],name=x[1];
     var photo=quizPhotos[name]||'';
     var imgTag=photo?'\x3cimg src="'+photo+'" alt="'+name+'">':'\x3cdiv style="width:100px;height:100px;border-radius:50%;background:var(--lighter);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.7rem;">No photo\x3c/div>';
-    html+='\x3cdiv class="quiz-face" id="qf-'+side+'" onclick="quizAnswer(\\''+side+'\\',\\''+correctSide+'\\')" data-name="'+name+'">'+imgTag+'\x3cdiv class="qname">'+name+'\x3c/div>\x3c/div>';
+    html+='\x3cdiv class="quiz-face" id="qf-'+side+'" onclick="quizAnswer(&#39;'+side+'&#39;,&#39;'+correctSide+'&#39;)" data-name="'+name+'">'+imgTag+'\x3cdiv class="qname">'+name+'\x3c/div>\x3c/div>';
   });
   document.getElementById('quiz-pair').innerHTML=html;
 }
