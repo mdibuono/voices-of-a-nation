@@ -293,21 +293,21 @@ code{font-family:'DM Sans',monospace;}
 <div class="sb">
 <div class="logo"><h1>Voices of a Nation</h1><p>Half a million speeches from the Italian Parliament, 1900&ndash;1924</p></div>
 <nav>
-<a href="#" onclick="show('overview')" class="on" id="n-overview">Overview</a>
-<a href="#" onclick="show('timeline')" id="n-timeline">Historical Timeline</a>
+<a href="javascript:void(0)" onclick="show('overview')" id="n-overview">Overview</a>
+<a href="javascript:void(0)" onclick="show('timeline')" id="n-timeline">Historical Timeline</a>
 <div class="sep"></div>
-<a href="#" onclick="show('corpus')" id="n-corpus">The Corpus</a>
-<a href="#" onclick="show('explore')" id="n-explore">Explore the Data</a>
+<a href="javascript:void(0)" onclick="show('corpus')" id="n-corpus">The Corpus</a>
+<a href="javascript:void(0)" onclick="show('explore')" id="n-explore">Explore the Data</a>
 <div class="sep"></div>
-<a href="#" onclick="show('visualize')" id="n-visualize">Visualizations</a>
-<a href="#" onclick="show('research')" id="n-research">The Research</a>
+<a href="javascript:void(0)" onclick="show('visualize')" id="n-visualize">Visualizations</a>
+<a href="javascript:void(0)" onclick="show('research')" id="n-research">The Research</a>
 <div class="sep"></div>
-<a href="#" onclick="show('pipeline')" id="n-pipeline">How It Was Built</a>
-<a href="#" onclick="show('matching')" id="n-matching">Linking Speeches</a>
-<a href="#" onclick="show('accuracy')" id="n-accuracy">Quality &amp; Accuracy</a>
-<a href="#" onclick="show('sources')" id="n-sources">Sources</a>
+<a href="javascript:void(0)" onclick="show('pipeline')" id="n-pipeline">How It Was Built</a>
+<a href="javascript:void(0)" onclick="show('matching')" id="n-matching">Linking Speeches</a>
+<a href="javascript:void(0)" onclick="show('accuracy')" id="n-accuracy">Quality &amp; Accuracy</a>
+<a href="javascript:void(0)" onclick="show('sources')" id="n-sources">Sources</a>
 <div class="sep"></div>
-<a href="#" onclick="show('contact')" id="n-contact">Contact</a>
+<a href="javascript:void(0)" onclick="show('contact')" id="n-contact">Contact</a>
 </nav>
 </div>
 
@@ -742,7 +742,7 @@ Ash, Chen &amp; Naidu (2025). &ldquo;Ideas Have Consequences.&rdquo; <em>QJE</em
 <div class="step"><h4>PDF to images</h4><p>Each PDF page is converted into an individual image. Filenames encode the legislature, session number, and date (e.g. <code style="font-size:.82rem;background:var(--lighter);padding:1px 6px;border-radius:3px;">leg_r24_sed001_19131128_p0001.png</code>). When automatic date extraction fails, dates are corrected manually.</p></div>
 <div class="step"><h4>AI-powered text extraction</h4><p>An AI language model reads each page image and extracts structured speech data: who is speaking, their institutional role, and the full text of what they said. Standard text extraction tools couldn&rsquo;t handle the historical double-column layout and embedded speaker transitions, so we used a custom approach with a large language model.</p></div>
 <div class="step"><h4>Post-processing &amp; cleaning</h4><p>Automated checks catch extraction errors. Written responses (marked &ldquo;RISPOSTA SCRITTA&rdquo;) are matched to their actual author by detecting the signature at the end of the text. Sessions with parsing failures are re-processed. Speeches are then cleaned, merged, and deduplicated across a 7-phase pipeline.</p></div>
-<div class="step"><h4>Deputy database &amp; linking</h4><p>Personal information about each deputy is assembled from 5 independent sources (official Camera database, Wikipedia, Wikidata, storia.camera.it, and ISTAT geographic data). Each speech is then matched to its speaker &mdash; handling name variants, compound surnames, and people who share the same last name. Details in <a href="#" onclick="show('matching')">Linking Speeches</a>.</p></div>
+<div class="step"><h4>Deputy database &amp; linking</h4><p>Personal information about each deputy is assembled from 5 independent sources (official Camera database, Wikipedia, Wikidata, storia.camera.it, and ISTAT geographic data). Each speech is then matched to its speaker &mdash; handling name variants, compound surnames, and people who share the same last name. Details in <a href="javascript:void(0)" onclick="show('matching')">Linking Speeches</a>.</p></div>
 </div>
 
 <h3>Cleaning pipeline (7 phases)</h3>
@@ -890,14 +890,12 @@ if(sessionStorage.getItem('a')==='1'){
   document.getElementById('gate').classList.add('hidden');
   document.getElementById('content').classList.remove('hidden');
   var _ip=window.location.hash.replace('#','')||'overview';
-  console.log('INIT: hash='+window.location.hash+' _ip='+_ip);
   if(!document.getElementById('p-'+_ip))_ip='overview';
   document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
   document.querySelectorAll('.sb nav a').forEach(function(a){a.classList.remove('on');});
   document.getElementById('p-'+_ip).classList.add('on');
   var _in=document.getElementById('n-'+_ip);if(_in)_in.classList.add('on');
   document.getElementById('hero').style.display=_ip==='overview'?'':'none';
-  console.log('INIT: showed page p-'+_ip);
 }
 function showVizCat(cat,btn){
   document.querySelectorAll('#p-visualize .tp-btn').forEach(function(b){b.classList.remove('active');});
@@ -1007,9 +1005,9 @@ Promise.all([fetch('italy_regions.json').then(r=>r.json()),fetch('unification_st
   document.getElementById('stage-slider').oninput=function(){updateStage(parseInt(this.value));};
 });
 
-var _chartsBuilt=false;
 fetch('data.json').then(r=>r.json()).then(D=>{
-  if(_chartsBuilt)return;_chartsBuilt=true;
+  // Destroy any existing charts to prevent "canvas already in use" error
+  Object.values(Chart.instances||{}).forEach(function(c){c.destroy();});
   var years=Object.keys(D.yearly_speeches).map(Number).sort();
   var tc={War:'#922b2b',Labour:'#5a7a56',Suffrage:'#c9a84c',Socialism:'#b85c38',Fascism:'#1a3828',Colonies:'#3a6f94'};
   var cs='background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;';
