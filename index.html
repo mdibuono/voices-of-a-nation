@@ -890,12 +890,14 @@ if(sessionStorage.getItem('a')==='1'){
   document.getElementById('gate').classList.add('hidden');
   document.getElementById('content').classList.remove('hidden');
   var _ip=window.location.hash.replace('#','')||'overview';
+  console.log('INIT: hash='+window.location.hash+' _ip='+_ip);
   if(!document.getElementById('p-'+_ip))_ip='overview';
   document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
   document.querySelectorAll('.sb nav a').forEach(function(a){a.classList.remove('on');});
   document.getElementById('p-'+_ip).classList.add('on');
   var _in=document.getElementById('n-'+_ip);if(_in)_in.classList.add('on');
   document.getElementById('hero').style.display=_ip==='overview'?'':'none';
+  console.log('INIT: showed page p-'+_ip);
 }
 function showVizCat(cat,btn){
   document.querySelectorAll('#p-visualize .tp-btn').forEach(function(b){b.classList.remove('active');});
