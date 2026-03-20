@@ -300,7 +300,7 @@ code{font-family:'DM Sans',monospace;}
 <a href="javascript:void(0)" onclick="show('explore')" id="n-explore">Explore the Data</a>
 <div class="sep"></div>
 <a href="javascript:void(0)" onclick="show('visualize')" id="n-visualize">Visualizations</a>
-<a href="javascript:void(0)" onclick="show('research')" id="n-research">The Research</a>
+<a href="javascript:void(0)" onclick="show('research')" id="n-research">Research</a>
 <div class="sep"></div>
 <a href="javascript:void(0)" onclick="show('pipeline')" id="n-pipeline">How It Was Built</a>
 <a href="javascript:void(0)" onclick="show('accuracy')" id="n-accuracy">Quality &amp; Accuracy</a>
@@ -690,43 +690,51 @@ code{font-family:'DM Sans',monospace;}
 
 <!-- ═══════════════ RESEARCH ═══════════════ -->
 <div class="pg" id="p-research"><div class="wrap">
-<h2>The Research</h2>
-<p class="lead">Half a million speeches are not just data &mdash; they are a window into how a society thinks, argues, and breaks apart.</p>
+<h2>Research</h2>
+<p class="lead">Why we built this corpus, and what can be learned from it.</p>
 
-<h3>Why this matters</h3>
-<p>Between 1900 and 1924, Italy compressed into 24 years what most countries experience over a century: the expansion of democratic participation, a devastating world war, the rise of revolutionary movements, and the collapse of democracy itself. The deputies who spoke in this chamber were not just politicians &mdash; they were the voices of a society in transformation.</p>
-<p>No structured, machine-readable corpus existed for this period. These speeches open new questions across disciplines:</p>
+<h3>Motivation</h3>
+<p>Between 1900 and 1924, Italy compressed into 24 years what most countries experience over a century: the expansion of democratic participation, a devastating world war, the rise of revolutionary movements, and the collapse of democracy itself.</p>
+<p>No structured, machine-readable corpus existed for this period. We built one because these speeches open questions that could not be asked before:</p>
 
-<div class="cg">
-<div class="card" style="border-top:3px solid var(--terra)"><h4>For economists</h4><p>How do electoral incentives shape political language? When 5 million new voters enter the system overnight (1912 reform), do representatives change what they say and how they say it?</p></div>
-<div class="card" style="border-top:3px solid var(--sage)"><h4>For political scientists</h4><p>What does polarisation look like in a parliament that is about to die? Can we measure the rhetorical distance between groups as democracy collapses?</p></div>
-<div class="card" style="border-top:3px solid var(--kingdom)"><h4>For historians</h4><p>What did deputies actually say about the Southern Question, colonial wars, women&rsquo;s rights, or labour strikes? The full text makes it possible to move beyond anecdotes to systematic evidence.</p></div>
-<div class="card" style="border-top:3px solid var(--republic)"><h4>For sociologists &amp; psychologists</h4><p>These deputies are mirrors of their society &mdash; shaped by where they grew up, the violence they witnessed, the culture they inherited. Their words reveal collective attitudes, moral values, and the emotional texture of an era.</p></div>
+<div class="card" style="border-left:4px solid var(--terra);margin:20px 0;">
+<p>How do electoral incentives shape political language? What does polarisation look like in a parliament that is about to die? What did deputies actually say about colonial wars, women&rsquo;s rights, or labour strikes &mdash; and can we move beyond anecdotes to systematic evidence? How do collective attitudes, moral values, and the emotional texture of an era reveal themselves in the words of the people who governed?</p>
 </div>
 
+<p>These questions matter to economists, political scientists, historians, sociologists, and anyone interested in how democracies work &mdash; and how they fail. The corpus makes it possible to study them with data rather than narrative alone.</p>
+
 <h3>The dual nature of parliamentary speech</h3>
-<p>Every deputy in this corpus can be read in two ways:</p>
+<p>Every deputy in this corpus can be read in two ways, and this duality is central to our research agenda:</p>
 <div class="cg">
 <div class="card" style="border-left:4px solid var(--terra)"><h4>As a mirror of society</h4><p>Deputies from Southern provinces where Italian unification was imposed through military force carry that memory into the Chamber. Deputies from industrialising Northern cities speak the language of labour reform. Their words reveal what their communities were thinking &mdash; the fears, aspirations, and grievances of millions of people who left no written record.</p></div>
 <div class="card" style="border-left:4px solid var(--sage)"><h4>As a strategic political actor</h4><p>Deputies respond to electoral incentives. When the electorate triples in 1912, they must adapt. When Fascist squads burn down union halls, they choose to denounce, accommodate, or stay silent. Their rhetorical choices reveal how democratic institutions are defended &mdash; or abandoned.</p></div>
 </div>
 
-<h3>A natural experiment: the 1912 suffrage reform</h3>
-<p>In 1912, Italy expanded its electorate from 3.3 million to 8.65 million voters &mdash; while leaving electoral districts and rules unchanged. This creates a rare opportunity: the same deputies, representing the same districts, suddenly face a radically different electorate. The expansion was not uniform across districts, allowing us to compare how deputies adapted their rhetoric depending on how many new voters entered their constituency.</p>
+<h3 style="margin-top:48px;">Working Papers</h3>
 
-<h3>The long shadow of state-formation violence</h3>
-<p>We link each deputy to the intensity of political violence in their birthplace during Italian unification (1861&ndash;1870). The &ldquo;Great Brigandage&rdquo; &mdash; a brutal conflict between the new Italian state and Southern resistance &mdash; left deep scars. Deputies who grew up in provinces marked by this violence may carry different conceptions of the nation, the state, and its legitimacy. We ask: do these historical experiences shape how political elites talk about national unity, decades later? And does democratisation amplify or dampen these legacies?</p>
+<div class="card" style="margin:16px 0;cursor:pointer;" onclick="this.querySelector('.paper-abs').style.display=this.querySelector('.paper-abs').style.display==='block'?'none':'block'">
+<h4 style="color:var(--navy);font-size:1rem;">Violence and Nation-Building in Elite Rhetoric: Evidence from Italian Parliamentary Debates, 1900&ndash;1924</h4>
+<p style="font-size:.88rem;color:var(--muted);margin-bottom:0;">Maurizia Di Buono, Sergio Galletta, Andrea Geraci, Gianluca Mazzarella</p>
+<p style="font-size:.78rem;color:var(--terra);margin-top:6px;">Click to read abstract &darr;</p>
+<div class="paper-abs" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--light);font-size:.9rem;line-height:1.8;">
+This paper studies whether exposure to violence during state formation shapes the nation-building rhetoric of political elites, and whether democratisation changes how such formative experiences are expressed in national politics. We assemble a new corpus of speeches from the Italian Chamber of Deputies between 1900 and 1924 and link each intervention to deputies&rsquo; biographical characteristics. To capture early-life exposure to coercive state formation, we merge deputies&rsquo; places and cohorts of origin to fine-grained measures of political violence associated with Italian unification and its aftermath, focusing on the &ldquo;Great Brigandage&rdquo; and related repression. We measure nation-building rhetoric using a text-as-data approach that combines pairwise comparisons of excerpts with Bradley&ndash;Terry scaling and supervised prediction. Our empirical strategy exploits the 1912 suffrage reform, which expanded the electorate sharply while leaving electoral districts unchanged, to study how the rhetoric of deputies from more violent origins adjusts when political representation broadens.
+</div>
+</div>
 
-<h3>Key references</h3>
-<div class="card">
-<p style="font-size:.88rem;line-height:1.8;">
-Gentzkow, Shapiro &amp; Taddy (2019). &ldquo;Measuring Group Differences in High-Dimensional Choices.&rdquo; <em>Econometrica</em>.<br>
-Spirling (2016). &ldquo;Democratization and Linguistic Complexity.&rdquo; <em>Journal of Politics</em>.<br>
-Larcinese (2024). &ldquo;Enfranchisement and Representation: Italy 1912.&rdquo; <em>Journal of Politics</em>.<br>
-Lecce, Ogliari &amp; Orlando (2022). &ldquo;State Formation, Social Unrest and Cultural Distance.&rdquo; <em>Journal of Economic Growth</em>.<br>
-Hansen, McMahon &amp; Prat (2018). &ldquo;Transparency and Deliberation Within the FOMC.&rdquo; <em>QJE</em>.<br>
-Ash, Chen &amp; Naidu (2025). &ldquo;Ideas Have Consequences.&rdquo; <em>QJE</em>.
-</p>
+<div class="card" style="margin:16px 0;cursor:pointer;" onclick="this.querySelector('.paper-abs').style.display=this.querySelector('.paper-abs').style.display==='block'?'none':'block'">
+<h4 style="color:var(--navy);font-size:1rem;">Towards Dictatorship: Parliamentary Rhetoric and the Death of Democracy in Italy, 1900&ndash;1924</h4>
+<p style="font-size:.88rem;color:var(--muted);margin-bottom:0;">Maurizia Di Buono, Sergio Galletta</p>
+<p style="font-size:.78rem;color:var(--terra);margin-top:6px;">Click to read abstract &darr;</p>
+<div class="paper-abs" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--light);font-size:.9rem;line-height:1.8;">
+Abstract forthcoming.
+</div>
+</div>
+
+<h3 style="margin-top:48px;">Work in Progress</h3>
+
+<div class="card" style="margin:16px 0;opacity:.7;">
+<h4 style="color:var(--navy);font-size:1rem;">Titolo a caso solo per capire come apparirebbe nel sito</h4>
+<p style="font-size:.88rem;color:var(--muted);margin-bottom:0;">Maurizia Di Buono, Topolino</p>
 </div>
 
 </div></div>
