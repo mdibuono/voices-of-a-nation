@@ -928,7 +928,23 @@ Abstract forthcoming.
 
 <script>
 const PW='discorsi1900';
-function go(){if(document.getElementById('pw').value===PW){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');sessionStorage.setItem('a','1');var h=window.location.hash.replace('#','')||'overview';if(document.getElementById('p-'+h)){show(h);}else{show('overview');}}else{document.getElementById('err').textContent='Wrong password';}}
+function go(){
+  if(document.getElementById('pw').value===PW){
+    document.getElementById('gate').classList.add('hidden');
+    document.getElementById('content').classList.remove('hidden');
+    sessionStorage.setItem('a','1');
+    // Show the right page
+    var h=window.location.hash.replace('#','')||'overview';
+    if(!document.getElementById('p-'+h))h='overview';
+    document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+    document.querySelectorAll('.sb nav a').forEach(function(a){a.classList.remove('on');});
+    document.getElementById('p-'+h).classList.add('on');
+    var nav=document.getElementById('n-'+h);if(nav)nav.classList.add('on');
+    document.getElementById('hero').style.display=h==='overview'?'':'none';
+  }else{
+    document.getElementById('err').textContent='Wrong password';
+  }
+}
 if(sessionStorage.getItem('a')==='1'){
   document.getElementById('gate').classList.add('hidden');
   document.getElementById('content').classList.remove('hidden');
