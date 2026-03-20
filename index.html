@@ -215,6 +215,22 @@ tbody tr:hover{background:rgba(184,92,56,.02);}
 code{font-family:'DM Sans',monospace;}
 
 /* ── FOOTER ── */
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes countUp{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+.anim{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
+.anim.visible{opacity:1;transform:translateY(0);}
+.hero .cnt{animation:fadeUp .8s ease .2s both;}
+.hero-stats{animation:fadeUp .8s ease .5s both;}
+.hs .n{animation:countUp .6s ease .7s both;}
+.speech{transition:transform .2s,box-shadow .2s;}
+.speech:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.08);}
+.card{transition:transform .2s,box-shadow .2s;}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.06);}
+.chart-box{transition:transform .2s;}
+.chart-box:hover{transform:scale(1.01);}
+
 .viz-sec{display:none;}
 .viz-sec.viz-show{display:block;}
 .viz-cat{font-family:'DM Serif Display',serif;font-size:1.5rem;font-weight:400;color:var(--navy);margin:56px 0 12px;padding-top:32px;border-top:2px solid var(--light);}
@@ -304,7 +320,7 @@ code{font-family:'DM Sans',monospace;}
 </div>
 
 <!-- ═══════════════ OVERVIEW ═══════════════ -->
-<div class="pg on" id="p-overview"><div class="wrap">
+<div class="pg" id="p-overview"><div class="wrap">
 
 <h2>What is this?</h2>
 <p class="lead">We digitised, cleaned, and structured over 460,000 individual speeches from the official stenographic records of the Italian Chamber of Deputies &mdash; and linked each one to the person who spoke it.</p>
@@ -863,6 +879,13 @@ function go(){if(document.getElementById('pw').value===PW){document.getElementBy
 if(sessionStorage.getItem('a')==='1'){
   document.getElementById('gate').classList.add('hidden');
   document.getElementById('content').classList.remove('hidden');
+  var _initPage=window.location.hash.replace('#','')||'overview';
+  if(!document.getElementById('p-'+_initPage))_initPage='overview';
+  document.getElementById('p-'+_initPage).classList.add('on');
+  var _initNav=document.getElementById('n-'+_initPage);
+  if(_initNav)_initNav.classList.add('on');
+  if(_initPage==='overview')document.getElementById('hero').style.display='';
+  else document.getElementById('hero').style.display='none';
 }
 function showVizCat(cat,btn){
   document.querySelectorAll('#p-visualize .tp-btn').forEach(function(b){b.classList.remove('active');});
@@ -890,13 +913,18 @@ function show(id){
   window.location.hash=id;
   window.scrollTo(0,0);
 }
-// Restore page from URL hash on load and on hash change
-function restoreHash(){
+// Scroll-triggered animations
+var animObserver=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');animObserver.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.chart-box,.speech,.card,.stat-box,.sb2,.viz-cat').forEach(function(el){
+  el.classList.add('anim');animObserver.observe(el);
+});
+
+window.addEventListener('hashchange', function(){
   var h=window.location.hash.replace('#','');
   if(h&&document.getElementById('p-'+h)){show(h);}
-}
-restoreHash();
-window.addEventListener('hashchange', restoreHash);
+});
 document.querySelectorAll('.dt-text').forEach(function(td){
   var b=document.createElement('span');b.className='dt-tr';b.textContent='translate';
   b.onclick=function(){translateCell(this);};
