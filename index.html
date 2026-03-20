@@ -1005,7 +1005,9 @@ Promise.all([fetch('italy_regions.json').then(r=>r.json()),fetch('unification_st
   document.getElementById('stage-slider').oninput=function(){updateStage(parseInt(this.value));};
 });
 
+var _chartsBuilt=false;
 fetch('data.json').then(r=>r.json()).then(D=>{
+  if(_chartsBuilt)return;_chartsBuilt=true;
   var years=Object.keys(D.yearly_speeches).map(Number).sort();
   var tc={War:'#922b2b',Labour:'#5a7a56',Suffrage:'#c9a84c',Socialism:'#b85c38',Fascism:'#1a3828',Colonies:'#3a6f94'};
   var cs='background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(0,0,0,.05);margin:20px 0;';
