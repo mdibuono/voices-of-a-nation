@@ -231,6 +231,14 @@ code{font-family:'DM Sans',monospace;}
 .card:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(0,0,0,.08);}
 .chart-box{transition:transform .3s cubic-bezier(.23,1,.32,1),box-shadow .3s;}
 .chart-box:hover{transform:scale(1.015);box-shadow:0 4px 20px rgba(0,0,0,.06);}
+.quiz-face{width:160px;text-align:center;cursor:pointer;transition:transform .25s,box-shadow .25s;border-radius:var(--r);padding:16px;background:var(--card);border:2px solid var(--light);}
+.quiz-face:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(0,0,0,.1);border-color:var(--terra);}
+.quiz-face img{width:100px;height:100px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 10px;border:3px solid var(--light);}
+.quiz-face .qname{font-weight:600;font-size:.9rem;color:var(--navy);}
+.quiz-face.correct{border-color:var(--sage);background:rgba(90,130,80,.06);}
+.quiz-face.wrong{border-color:var(--terra);background:rgba(184,92,56,.06);}
+.quiz-face.correct img{border-color:var(--sage);}
+.quiz-face.wrong img{border-color:var(--terra);}
 .tp-btn{transition:all .25s cubic-bezier(.23,1,.32,1);}
 .tp-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08);}
 .tp-btn.active{transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,.12);}
@@ -670,6 +678,23 @@ code{font-family:'DM Sans',monospace;}
 
 </div>
 <div class="viz-sec" data-cat="curiosities">
+<div class="viz-cat">Can You Read a Face?</div>
+<p class="viz-cat-desc">Historical portraits meet parliamentary data. Can you guess who was interrupted more, who was from the South, or who was further to the left &mdash; just from their face?</p>
+
+<p>Choose a challenge:</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px;">
+<button class="tp-btn" onclick="startQuiz('interrupted')">Who was interrupted more?</button>
+<button class="tp-btn" onclick="startQuiz('geography')">Who is from the South?</button>
+<button class="tp-btn" onclick="startQuiz('politics')">Who is further to the left?</button>
+</div>
+
+<div id="quiz-area" style="display:none;">
+<div id="quiz-question" style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--navy);margin-bottom:20px;"></div>
+<div id="quiz-score" style="font-size:.85rem;color:var(--muted);margin-bottom:16px;"></div>
+<div id="quiz-pair" style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:20px 0;"></div>
+<div id="quiz-feedback" style="text-align:center;margin-top:16px;font-size:.95rem;min-height:60px;"></div>
+</div>
+
 <div class="viz-cat">Curiosities</div>
 <p class="viz-cat-desc">The unexpected things you find in half a million speeches.</p>
 
@@ -948,6 +973,53 @@ var animObserver=new IntersectionObserver(function(entries){
 document.querySelectorAll('.chart-box,.speech,.card,.stat-box,.sb2,.viz-cat').forEach(function(el){
   el.classList.add('anim');animObserver.observe(el);
 });
+
+// QUIZ GAME
+var quizData=null,quizCurrent=null,quizIdx=0,quizScore=0,quizTotal=0,quizPhotos=null;
+Promise.all([fetch('quiz_data.json').then(r=>r.json()),fetch('deputy_photos.json').then(r=>r.json())]).then(function(r){quizData=r[0];quizPhotos=r[1];}).catch(function(){});
+
+function startQuiz(type){
+  if(!quizData||!quizPhotos)return;
+  quizCurrent=quizData[type];quizIdx=0;quizScore=0;quizTotal=quizCurrent.pairs.length;
+  document.getElementById('quiz-area').style.display='block';
+  document.getElementById('quiz-question').textContent=quizCurrent.question;
+  showQuizPair();
+}
+function showQuizPair(){
+  if(quizIdx>=quizTotal){
+    document.getElementById('quiz-pair').innerHTML='';
+    document.getElementById('quiz-feedback').innerHTML='\x3cdiv style="font-family:DM Serif Display,serif;font-size:1.5rem;color:var(--navy);">'+quizScore+'/'+quizTotal+' correct\x3c/div>\x3cp style="color:var(--muted);margin-top:8px;">'+(quizScore>=4?'Impressive! You can read historical faces.':quizScore>=2?'Not bad. Faces are tricky.':'Faces don\\'t reveal much, do they?')+'\x3c/p>';
+    document.getElementById('quiz-score').textContent='';
+    return;
+  }
+  var p=quizCurrent.pairs[quizIdx];
+  var flip=Math.random()>0.5;
+  var left=flip?p.b:p.a, right=flip?p.a:p.b;
+  var correctSide=flip?'right':'left';
+  document.getElementById('quiz-score').textContent='Question '+(quizIdx+1)+' of '+quizTotal+(quizScore>0?' — Score: '+quizScore:'');
+  document.getElementById('quiz-feedback').innerHTML='';
+  var html='';
+  [['left',left],['right',right]].forEach(function(x){
+    var side=x[0],name=x[1];
+    var photo=quizPhotos[name]||'';
+    var imgTag=photo?'\x3cimg src="'+photo+'" alt="'+name+'">':'\x3cdiv style="width:100px;height:100px;border-radius:50%;background:var(--lighter);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.7rem;">No photo\x3c/div>';
+    html+='\x3cdiv class="quiz-face" id="qf-'+side+'" onclick="quizAnswer(\\''+side+'\\',\\''+correctSide+'\\')" data-name="'+name+'">'+imgTag+'\x3cdiv class="qname">'+name+'\x3c/div>\x3c/div>';
+  });
+  document.getElementById('quiz-pair').innerHTML=html;
+}
+function quizAnswer(picked,correct){
+  var p=quizCurrent.pairs[quizIdx];
+  var isCorrect=picked===correct;
+  if(isCorrect)quizScore++;
+  document.getElementById('qf-'+correct).classList.add('correct');
+  if(!isCorrect)document.getElementById('qf-'+picked).classList.add('wrong');
+  var reveal='';
+  if(p.a_val!==undefined)reveal=p.a+': '+p.a_val+'% — '+p.b+': '+p.b_val+'%';
+  else if(p.a_region)reveal=p.a+': '+p.a_region+' — '+p.b+': '+p.b_region;
+  else if(p.a_party)reveal=p.a+': '+p.a_party+' — '+p.b+': '+p.b_party;
+  document.getElementById('quiz-feedback').innerHTML=(isCorrect?'\x3cspan style="color:var(--sage);font-weight:700;">Correct!\x3c/span>':'\x3cspan style="color:var(--terra);font-weight:700;">Wrong!\x3c/span>')+'\x3cbr>\x3cspan style="font-size:.85rem;color:var(--muted);">'+reveal+'\x3c/span>';
+  setTimeout(function(){quizIdx++;showQuizPair();},2000);
+}
 
 window.addEventListener('hashchange', function(){
   var h=window.location.hash.replace('#','');
