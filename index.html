@@ -215,21 +215,31 @@ tbody tr:hover{background:rgba(184,92,56,.02);}
 code{font-family:'DM Sans',monospace;}
 
 /* ── FOOTER ── */
-/* ── ANIMATIONS ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes countUp{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
-.anim{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
+/* ── ANIMATIONS (facts.report style) ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+.anim{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.23,1,.32,1),transform .7s cubic-bezier(.23,1,.32,1);}
 .anim.visible{opacity:1;transform:translateY(0);}
-.hero .cnt{animation:fadeUp .8s ease .2s both;}
-.hero-stats{animation:fadeUp .8s ease .5s both;}
-.hs .n{animation:countUp .6s ease .7s both;}
-.speech{transition:transform .2s,box-shadow .2s;}
-.speech:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.08);}
-.card{transition:transform .2s,box-shadow .2s;}
-.card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.06);}
-.chart-box{transition:transform .2s;}
-.chart-box:hover{transform:scale(1.01);}
+.hero .cnt{animation:fadeUp .9s cubic-bezier(.23,1,.32,1) .15s both;}
+.hero-stats{animation:fadeUp .9s cubic-bezier(.23,1,.32,1) .4s both;}
+.hs .n{animation:scaleIn .5s cubic-bezier(.23,1,.32,1) .6s both;}
+.speech{transition:transform .25s cubic-bezier(.23,1,.32,1),box-shadow .25s;}
+.speech:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.1);}
+.card{transition:transform .25s cubic-bezier(.23,1,.32,1),box-shadow .25s;}
+.card:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(0,0,0,.08);}
+.chart-box{transition:transform .3s cubic-bezier(.23,1,.32,1),box-shadow .3s;}
+.chart-box:hover{transform:scale(1.015);box-shadow:0 4px 20px rgba(0,0,0,.06);}
+.tp-btn{transition:all .25s cubic-bezier(.23,1,.32,1);}
+.tp-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08);}
+.tp-btn.active{transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,.12);}
+.sb nav a{transition:all .2s cubic-bezier(.23,1,.32,1);}
+.pg-img{transition:transform .3s cubic-bezier(.23,1,.32,1) !important;}
+.pg-img:hover{transform:scale(1.04) !important;}
+.tl-ev{transition:background .2s;}
+.tl-ev:hover{background:rgba(0,0,0,.02);border-radius:4px;}
+.viz-cat{animation:slideIn .6s cubic-bezier(.23,1,.32,1) both;}
 
 .viz-sec{display:none;}
 .viz-sec.viz-show{display:block;}
@@ -875,17 +885,17 @@ Ash, Chen &amp; Naidu (2025). &ldquo;Ideas Have Consequences.&rdquo; <em>QJE</em
 
 <script>
 const PW='discorsi1900';
-function go(){if(document.getElementById('pw').value===PW){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');sessionStorage.setItem('a','1');}else{document.getElementById('err').textContent='Wrong password';}}
+function go(){if(document.getElementById('pw').value===PW){document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');sessionStorage.setItem('a','1');var h=window.location.hash.replace('#','')||'overview';if(document.getElementById('p-'+h)){show(h);}else{show('overview');}}else{document.getElementById('err').textContent='Wrong password';}}
 if(sessionStorage.getItem('a')==='1'){
   document.getElementById('gate').classList.add('hidden');
   document.getElementById('content').classList.remove('hidden');
-  var _initPage=window.location.hash.replace('#','')||'overview';
-  if(!document.getElementById('p-'+_initPage))_initPage='overview';
-  document.getElementById('p-'+_initPage).classList.add('on');
-  var _initNav=document.getElementById('n-'+_initPage);
-  if(_initNav)_initNav.classList.add('on');
-  if(_initPage==='overview')document.getElementById('hero').style.display='';
-  else document.getElementById('hero').style.display='none';
+  var _ip=window.location.hash.replace('#','')||'overview';
+  if(!document.getElementById('p-'+_ip))_ip='overview';
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.sb nav a').forEach(function(a){a.classList.remove('on');});
+  document.getElementById('p-'+_ip).classList.add('on');
+  var _in=document.getElementById('n-'+_ip);if(_in)_in.classList.add('on');
+  document.getElementById('hero').style.display=_ip==='overview'?'':'none';
 }
 function showVizCat(cat,btn){
   document.querySelectorAll('#p-visualize .tp-btn').forEach(function(b){b.classList.remove('active');});
