@@ -1,1 +1,140 @@
-{"1848: Kingdom of Sardinia": ["Piemonte", "Valle d'Aosta/Vall\u00e9e d'Aoste", "Liguria", "Sardegna"], "1859: After Franco-Austrian War": ["Piemonte", "Valle d'Aosta/Vall\u00e9e d'Aoste", "Liguria", "Sardegna", "Lombardia"], "1860: After Garibaldi + Central Italy": ["Piemonte", "Valle d'Aosta/Vall\u00e9e d'Aoste", "Liguria", "Sardegna", "Lombardia", "Emilia-Romagna", "Toscana", "Umbria", "Marche", "Campania", "Puglia", "Calabria", "Basilicata", "Molise", "Abruzzo", "Sicilia"], "1861: Kingdom of Italy proclaimed": ["Piemonte", "Valle d'Aosta/Vall\u00e9e d'Aoste", "Liguria", "Sardegna", "Lombardia", "Emilia-Romagna", "Toscana", "Umbria", "Marche", "Campania", "Puglia", "Calabria", "Basilicata", "Molise", "Abruzzo", "Sicilia"], "1866: Veneto annexed": ["Piemonte", "Valle d'Aosta/Vall\u00e9e d'Aoste", "Liguria", "Sardegna", "Lombardia", "Emilia-Romagna", "Toscana", "Umbria", "Marche", "Campania", "Puglia", "Calabria", "Basilicata", "Molise", "Abruzzo", "Sicilia", "Veneto", "Friuli-Venezia Giulia"], "1870: Rome captured \u2014 Unification complete": ["Piemonte", "Valle d'Aosta/Vall\u00e9e d'Aoste", "Liguria", "Sardegna", "Lombardia", "Emilia-Romagna", "Toscana", "Umbria", "Marche", "Campania", "Puglia", "Calabria", "Basilicata", "Molise", "Abruzzo", "Sicilia", "Veneto", "Friuli-Venezia Giulia", "Lazio", "Trentino-Alto Adige/S\u00fcdtirol"]}
+{
+  "1848: Kingdom of Sardinia": {
+    "regions": [
+      "Piemonte",
+      "Valle d'Aosta/Vall\u00e9e d'Aoste",
+      "Liguria",
+      "Sardegna"
+    ],
+    "color": "#2c5f3f",
+    "label": "Kingdom of Sardinia"
+  },
+  "1859: + Lombardy (from Austria)": {
+    "regions": [
+      "Piemonte",
+      "Valle d'Aosta/Vall\u00e9e d'Aoste",
+      "Liguria",
+      "Sardegna",
+      "Lombardia"
+    ],
+    "color": "#2c5f3f",
+    "new": [
+      "Lombardia"
+    ],
+    "label": "After Second War of Independence"
+  },
+  "1860: + Central Italy & South": {
+    "regions": [
+      "Piemonte",
+      "Valle d'Aosta/Vall\u00e9e d'Aoste",
+      "Liguria",
+      "Sardegna",
+      "Lombardia",
+      "Emilia-Romagna",
+      "Toscana",
+      "Umbria",
+      "Marche",
+      "Campania",
+      "Puglia",
+      "Calabria",
+      "Basilicata",
+      "Molise",
+      "Abruzzo",
+      "Sicilia"
+    ],
+    "color": "#2c5f3f",
+    "new": [
+      "Emilia-Romagna",
+      "Toscana",
+      "Umbria",
+      "Marche",
+      "Campania",
+      "Puglia",
+      "Calabria",
+      "Basilicata",
+      "Molise",
+      "Abruzzo",
+      "Sicilia"
+    ],
+    "label": "Garibaldi + plebiscites"
+  },
+  "1861: Kingdom of Italy proclaimed": {
+    "regions": [
+      "Piemonte",
+      "Valle d'Aosta/Vall\u00e9e d'Aoste",
+      "Liguria",
+      "Sardegna",
+      "Lombardia",
+      "Emilia-Romagna",
+      "Toscana",
+      "Umbria",
+      "Marche",
+      "Campania",
+      "Puglia",
+      "Calabria",
+      "Basilicata",
+      "Molise",
+      "Abruzzo",
+      "Sicilia"
+    ],
+    "color": "#2c5f3f",
+    "label": "17 March 1861"
+  },
+  "1866: + Veneto (from Austria)": {
+    "regions": [
+      "Piemonte",
+      "Valle d'Aosta/Vall\u00e9e d'Aoste",
+      "Liguria",
+      "Sardegna",
+      "Lombardia",
+      "Emilia-Romagna",
+      "Toscana",
+      "Umbria",
+      "Marche",
+      "Campania",
+      "Puglia",
+      "Calabria",
+      "Basilicata",
+      "Molise",
+      "Abruzzo",
+      "Sicilia",
+      "Veneto",
+      "Friuli-Venezia Giulia"
+    ],
+    "color": "#2c5f3f",
+    "new": [
+      "Veneto",
+      "Friuli-Venezia Giulia"
+    ],
+    "label": "Third War of Independence"
+  },
+  "1870: + Rome (from Papal States)": {
+    "regions": [
+      "Piemonte",
+      "Valle d'Aosta/Vall\u00e9e d'Aoste",
+      "Liguria",
+      "Sardegna",
+      "Lombardia",
+      "Emilia-Romagna",
+      "Toscana",
+      "Umbria",
+      "Marche",
+      "Campania",
+      "Puglia",
+      "Calabria",
+      "Basilicata",
+      "Molise",
+      "Abruzzo",
+      "Sicilia",
+      "Veneto",
+      "Friuli-Venezia Giulia",
+      "Lazio"
+    ],
+    "excluded_note": "Trentino-Alto Adige remained Austrian until 1919",
+    "color": "#2c5f3f",
+    "new": [
+      "Lazio"
+    ],
+    "label": "Breccia di Porta Pia \u2014 unification complete (except Trentino)"
+  }
+}

@@ -303,7 +303,7 @@ code{font-family:'DM Sans',monospace;}
 <a href="javascript:void(0)" onclick="show('research')" id="n-research">The Research</a>
 <div class="sep"></div>
 <a href="javascript:void(0)" onclick="show('pipeline')" id="n-pipeline">How It Was Built</a>
-<a href="javascript:void(0)" onclick="show('accuracy')" id="n-accuracy">Quality, Accuracy &amp; Sources</a>
+<a href="javascript:void(0)" onclick="show('accuracy')" id="n-accuracy">Quality &amp; Accuracy</a>
 <div class="sep"></div>
 <a href="javascript:void(0)" onclick="show('contact')" id="n-contact">Contact</a>
 </nav>
@@ -393,7 +393,7 @@ code{font-family:'DM Sans',monospace;}
 <p class="lead">The speeches span an era of profound transformation &mdash; from restricted suffrage through world war to the collapse of democracy.</p>
 
 <h3>How Italy was built</h3>
-<p>Drag the slider to see how the Italian state expanded from the small Kingdom of Sardinia to the unified nation. The regions that were incorporated last &mdash; often through military force &mdash; are where many of our deputies grew up.</p>
+<p>Drag the slider to see how the Italian state expanded from the small Kingdom of Sardinia to the unified nation. <span style="color:var(--sage)">Green</span> = already part of Italy. <span style="color:var(--terra)">Red</span> = newly annexed in that step. <span style="color:var(--muted)">Grey</span> = not yet Italian (Trentino remained Austrian until 1919). Note: boundaries shown follow modern regional borders as an approximation of the historical ones.</p>
 <div style="background:var(--card);border-radius:var(--r);padding:28px;border:1px solid rgba(0,0,0,.05);margin:20px 0;">
 <div style="text-align:center;margin-bottom:16px;">
 <strong id="stage-label" style="font-size:1.1rem;color:var(--navy);font-family:'DM Serif Display',serif;">1848: Kingdom of Sardinia</strong>
@@ -759,10 +759,27 @@ Ash, Chen &amp; Naidu (2025). &ldquo;Ideas Have Consequences.&rdquo; <em>QJE</em
 <!-- ═══════════════ MATCHING ═══════════════ -->
 <div class="pg" id="p-matching" style="display:none !important"></div>
 <div class="pg" id="p-accuracy"><div class="wrap">
-<h2>Quality, Accuracy &amp; Sources</h2>
-<p class="lead">How we ensured the data is reliable: linking speeches to people, verifying accuracy, and documenting sources.</p>
+<h2>Quality &amp; Accuracy</h2>
+<p class="lead">How we ensured the data is reliable.</p>
 
-<div class="viz-cat">Linking Speeches to People</div>
+<div class="viz-cat">Accuracy Verification</div>
+<p class="viz-cat-desc">Human annotators verified a random sample of sessions against the original printed documents, checking six dimensions of quality.</p>
+
+<div class="sr">
+<div class="sb2"><div class="n">129 <span style="font-size:1rem;color:var(--muted);font-family:'DM Sans',sans-serif">/ 2,559</span></div><div class="l">Sessions verified (5.0%)</div></div>
+<div class="sb2"><div class="n">2,767 <span style="font-size:1rem;color:var(--muted);font-family:'DM Sans',sans-serif">/ 462,555</span></div><div class="l">Speeches checked (0.6%)</div></div>
+</div>
+
+<div class="ag">
+<div class="ac"><h4>Present in PDF</h4><div class="val" style="color:var(--sage)">100%</div><div class="sub">Every sampled speech found in the source</div><div class="ab"><div style="width:100%;background:var(--sage)"></div></div></div>
+<div class="ac"><h4>Correct speaker</h4><div class="val" style="color:var(--navy)">95.9%</div><div class="sub">Right person identified as speaker</div><div class="ab"><div style="width:95.9%;background:var(--navy)"></div></div><div class="det">L22: 97.9% &middot; L23: 95.0% &middot; L25: 98.7% &middot; L26: 92.3%</div></div>
+<div class="ac"><h4>Exact text match</h4><div class="val" style="color:var(--terra)">94.5%</div><div class="sub">Text matches original word for word</div><div class="ab"><div style="width:94.5%;background:var(--terra)"></div></div><div class="det">L22: 98.8% &middot; L23: 95.3% &middot; L25: 91.9% &middot; L26: 92.2%</div></div>
+<div class="ac"><h4>Text completeness</h4><div class="val" style="color:var(--gold)">91.2%</div><div class="sub">Full speech captured, not truncated</div><div class="ab"><div style="width:91.2%;background:var(--gold)"></div></div><div class="det">L22: 93.5% &middot; L23: 89.1% &middot; L25: 90.0% &middot; L26: 92.4%</div></div>
+<div class="ac"><h4>Signature present</h4><div class="val" style="color:var(--republic)">86.9%</div><div class="sub">Written responses retain signatory</div><div class="ab"><div style="width:86.9%;background:var(--republic)"></div></div></div>
+<div class="ac"><h4>Missing rate</h4><div class="val" style="color:var(--terra)">5.3%</div><div class="sub">Speeches in PDF but absent digitally</div><div class="ab"><div style="width:5.3%;background:var(--terra)"></div></div><div class="det">L22: 4.2% &middot; L23: 7.0% &middot; L25: 7.3% &middot; L26: 4.2%</div></div>
+</div>
+
+<div class="viz-cat" style="margin-top:56px;">Linking Speeches to People</div>
 <p class="viz-cat-desc">Names can be misspelled by OCR, some deputies share the same surname, and some speakers aren&rsquo;t even deputies. Four steps handle this, and if any step is ambiguous, the speech stays unmatched &mdash; never assigned to the wrong person.</p>
 
 <div class="ms">
@@ -808,22 +825,6 @@ Ash, Chen &amp; Naidu (2025). &ldquo;Ideas Have Consequences.&rdquo; <em>QJE</em
 <div class="row"><div class="dot" style="background:var(--republic)"></div><span class="pct">7%</span>Ambiguous shared surname</div>
 <div class="row"><div class="dot" style="background:var(--clay)"></div><span class="pct">6%</span>Other</div>
 </div>
-</div>
-<div class="viz-cat" style="margin-top:56px;">Accuracy Verification</div>
-<p class="viz-cat-desc">Human annotators verified a random sample of sessions against the original printed documents, checking six dimensions of quality.</p>
-
-<div class="sr">
-<div class="sb2"><div class="n">129 <span style="font-size:1rem;color:var(--muted);font-family:'DM Sans',sans-serif">/ 2,559</span></div><div class="l">Sessions verified (5.0%)</div></div>
-<div class="sb2"><div class="n">2,767 <span style="font-size:1rem;color:var(--muted);font-family:'DM Sans',sans-serif">/ 462,555</span></div><div class="l">Speeches checked (0.6%)</div></div>
-</div>
-
-<div class="ag">
-<div class="ac"><h4>Present in PDF</h4><div class="val" style="color:var(--sage)">100%</div><div class="sub">Every sampled speech found in the source</div><div class="ab"><div style="width:100%;background:var(--sage)"></div></div></div>
-<div class="ac"><h4>Correct speaker</h4><div class="val" style="color:var(--navy)">95.9%</div><div class="sub">Right person identified as speaker</div><div class="ab"><div style="width:95.9%;background:var(--navy)"></div></div><div class="det">L22: 97.9% &middot; L23: 95.0% &middot; L25: 98.7% &middot; L26: 92.3%</div></div>
-<div class="ac"><h4>Exact text match</h4><div class="val" style="color:var(--terra)">94.5%</div><div class="sub">Text matches original word for word</div><div class="ab"><div style="width:94.5%;background:var(--terra)"></div></div><div class="det">L22: 98.8% &middot; L23: 95.3% &middot; L25: 91.9% &middot; L26: 92.2%</div></div>
-<div class="ac"><h4>Text completeness</h4><div class="val" style="color:var(--gold)">91.2%</div><div class="sub">Full speech captured, not truncated</div><div class="ab"><div style="width:91.2%;background:var(--gold)"></div></div><div class="det">L22: 93.5% &middot; L23: 89.1% &middot; L25: 90.0% &middot; L26: 92.4%</div></div>
-<div class="ac"><h4>Signature present</h4><div class="val" style="color:var(--republic)">86.9%</div><div class="sub">Written responses retain signatory</div><div class="ab"><div style="width:86.9%;background:var(--republic)"></div></div></div>
-<div class="ac"><h4>Missing rate</h4><div class="val" style="color:var(--terra)">5.3%</div><div class="sub">Speeches in PDF but absent digitally</div><div class="ab"><div style="width:5.3%;background:var(--terra)"></div></div><div class="det">L22: 4.2% &middot; L23: 7.0% &middot; L25: 7.3% &middot; L26: 4.2%</div></div>
 </div>
 <div class="viz-cat" style="margin-top:56px;">Data Sources</div>
 <p class="viz-cat-desc">Where the data comes from.</p>
@@ -989,10 +990,22 @@ Promise.all([fetch('italy_regions.json').then(r=>r.json()),fetch('unification_st
   });
   function updateStage(idx){
     var key=stageKeys[idx];
-    var included=stages[key];
+    var stage=stages[key];
+    var included=stage.regions||[];
+    var isNew=stage['new']||[];
+    var label=key;
+    if(stage.excluded_note)label+=' — '+stage.excluded_note;
     document.getElementById('stage-label').textContent=key;
     Object.entries(regionEls).forEach(function(e){
-      e[1].setAttribute('fill',included.includes(e[0])?'rgba(146,43,43,.7)':'#e0d8ca');
+      var name=e[0];
+      if(included.indexOf(name)>=0){
+        if(isNew.indexOf(name)>=0){e[1].setAttribute('fill','rgba(180,60,40,.75)');}
+        else{e[1].setAttribute('fill','rgba(90,130,80,.6)');}
+      } else if(name==='Trentino-Alto Adige/S\u00fcdtirol'){
+        e[1].setAttribute('fill','rgba(100,100,120,.25)');
+      } else {
+        e[1].setAttribute('fill','#e0d8ca');
+      }
     });
   }
   updateStage(0);
