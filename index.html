@@ -607,12 +607,12 @@ code{font-family:'DM Sans',monospace;}
 <h3>What parliament debated</h3>
 <p>The share of speeches mentioning key topics, year by year. The lines trace the defining issues of the period: <strong>war</strong> swallows everything from 1915 to 1918, <strong>fascism</strong> appears from nothing in 1920, <strong>suffrage</strong> spikes in 1912 and 1919.</p>
 <div class="chart-box"><canvas id="chart-topics"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Topic Prevalence&#39;,&#39;Each line shows the percentage of speeches per year containing at least one keyword from a predefined topic dictionary. Keywords were selected manually based on domain knowledge (e.g., "guerra", "militare", "esercito", "soldati" for War). A speech is counted once per topic regardless of how many times the keywords appear. Denominator: total speeches in that year.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Topic Prevalence" data-text="Each line shows the percentage of speeches per year containing at least one keyword from a predefined topic dictionary. Keywords were selected manually based on domain knowledge (e.g., guerra, militare, esercito, soldati for War). A speech is counted once per topic regardless of how many times the keywords appear. Denominator: total speeches in that year." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 <h3>The rise and fall of &ldquo;patria&rdquo;</h3>
 <p>How often do deputies invoke <em>patria</em> (fatherland), <em>libert&agrave;</em> (liberty), <em>nazione</em> (nation), or <em>popolo</em> (the people)? The language of national identity <strong>triples</strong> during WWI, then collapses. &ldquo;Libert&agrave;&rdquo; surges in 1919 as democracy expands &mdash; and again in 1923, this time in desperation.</p>
 <div class="chart-box"><canvas id="chart-identity"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Identity Language&#39;,&#39;Tracks the share of speeches containing specific Italian words associated with national identity: <em>patria</em> (fatherland), <em>libert&agrave;</em> (liberty), <em>nazione</em> (nation), <em>popolo</em> (the people). Simple keyword matching on the full speech text, case-insensitive. One count per speech per word.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Identity Language" data-text="Tracks the share of speeches containing specific Italian words associated with national identity: patria (fatherland), libertà (liberty), nazione (nation), popolo (the people). Simple keyword matching on the full speech text, case-insensitive. One count per speech per word." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 </div>
 <div class="viz-sec" data-cat="how">
@@ -622,12 +622,12 @@ code{font-family:'DM Sans',monospace;}
 <h3>The emotional temperature</h3>
 <p>The stenographers wrote down every audience reaction: <em>(Applausi)</em>, <em>(Interruzioni)</em>, <em>(Rumori)</em>, <em>(Si ride)</em>. Applause <strong>surges tenfold</strong> after 1918. Interruptions peak during the Biennio Rosso (1919&ndash;20). Parliament becomes a stage, then a battlefield.</p>
 <div class="chart-box"><canvas id="chart-reactions"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Parliamentary Reactions&#39;,&#39;The official stenographic record includes audience reactions in parentheses, e.g. <em>(Applausi)</em>, <em>(Interruzioni)</em>, <em>(Rumori)</em>, <em>(Si ride)</em>. We extracted these using regular expressions matching the Italian patterns. Each speech is flagged if it contains at least one instance of each reaction type. Shown as percentage of all speeches per year.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Parliamentary Reactions" data-text="The official stenographic record includes audience reactions in parentheses, e.g. (Applausi), (Interruzioni), (Rumori), (Si ride). We extracted these using regular expressions. Each speech is flagged if it contains at least one instance of each reaction type. Shown as percentage of all speeches per year." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 <h3>The mood of parliament</h3>
 <p>We track three emotional registers across all speeches: <strong>anger</strong> (vergogna, scandalo, violenza, menzogna...), <strong>hope</strong> (progresso, giustizia, riforma, civiltà...), and <strong>fear</strong> (pericolo, minaccia, anarchia, rivoluzione...). Fear overtakes hope after 1919.</p>
 <div class="chart-box"><canvas id="chart-sentiment"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Mood of Parliament&#39;,&#39;Three emotional registers tracked via keyword dictionaries. <strong>Anger</strong>: vergogna, scandalo, violenza, menzogna, infame, assassino, delinquente, traditore. <strong>Hope</strong>: progresso, speranza, giustizia, riforma, civilt&agrave;, fratellanza, uguaglianza, democrazia. <strong>Fear</strong>: pericolo, minaccia, paura, terrore, anarchia, rivoluzione, disordine, caos. Percentage of speeches containing at least one word from each dictionary.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Mood of Parliament" data-text="Three emotional registers tracked via keyword dictionaries. Anger: vergogna, scandalo, violenza, menzogna, infame, assassino, delinquente, traditore. Hope: progresso, speranza, giustizia, riforma, civiltà, fratellanza, uguaglianza, democrazia. Fear: pericolo, minaccia, paura, terrore, anarchia, rivoluzione, disordine, caos. Percentage of speeches containing at least one word from each dictionary." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 </div>
 <div class="viz-sec" data-cat="who">
@@ -637,12 +637,12 @@ code{font-family:'DM Sans',monospace;}
 <h3>A generation takes over</h3>
 <p>The average age of speakers drops <strong>13 years</strong> between 1918 and 1923. After WWI, young veterans flood the Chamber with radicalism and impatience. Mussolini is 38 when he becomes Prime Minister.</p>
 <div class="chart-box"><canvas id="chart-age"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Speaker Age&#39;,&#39;Average age of deputies speaking in each year, calculated as (year of speech) minus (year of birth). Only speeches matched to a deputy with a known date of birth are included. The drop after 1919 reflects the entry of younger post-war deputies.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Speaker Age" data-text="Average age of deputies speaking in each year, calculated as (year of speech) minus (year of birth). Only speeches matched to a deputy with a known date of birth are included." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 <h3>The death of debate</h3>
 <p>Average unique speakers per session. Democracy means many voices. The number peaks during the war (95 speakers/session), then collapses after 1922 &mdash; fewer people dare to speak.</p>
 <div class="chart-box"><canvas id="chart-speakers"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Speakers per Session&#39;,&#39;Average number of unique <em>nome_parlamentare</em> values per parliamentary session (<em>numero_seduta</em>) in each year. Measures the breadth of participation in debate.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Speakers per Session" data-text="Average number of unique speakers per parliamentary session in each year. Measures the breadth of participation in debate." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 <h3>Where did speakers come from?</h3>
 <p>Regions colored by total deputies born there. Circles show provinces &mdash; bigger = more deputies. Hover for details.</p>
@@ -667,22 +667,22 @@ code{font-family:'DM Sans',monospace;}
 <h3>Who was angrier?</h3>
 <p>Anger words (vergogna, scandalo, violenza, menzogna...) by political alignment. The <strong>left is consistently angrier</strong>. But watch the right after 1920: Fascism&rsquo;s anger catches up.</p>
 <div class="chart-box"><canvas id="chart-lr-anger"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Left vs Right Anger&#39;,&#39;Percentage of speeches containing anger keywords (vergogna, scandalo, violenza, menzogna, assassino...) by political alignment. Left includes: Partito Socialista Italiano, Socialista ufficiale, Socialista, Socialisti Riformisti, Estrema sinistra. Right includes: Destra, Destra storica, Nazionalista, Fascista, PNF. Only years with at least 10 speeches per group are shown.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Left vs Right Anger" data-text="Percentage of speeches containing anger keywords by political alignment. Left: PSI, Socialista ufficiale, Socialista, Socialisti Riformisti, Estrema sinistra. Right: Destra, Destra storica, Nazionalista, Fascista, PNF. Only years with 10+ speeches per group shown." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 <h3>What did the South talk about?</h3>
 <p>South vs North deputies on key topics. The South talks about the &ldquo;questione meridionale&rdquo; <strong>three times more</strong>. On war and labour, surprisingly similar.</p>
 <div class="chart-box"><canvas id="chart-sn-topics"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;South vs North Topics&#39;,&#39;Compares topic prevalence between deputies born in Southern regions (Campania, Sicilia, Puglia, Calabria, Basilicata, Molise, Abruzzo, Sardegna) and all other regions. Uses the same keyword dictionaries as the topic prevalence chart. Shown as percentage of each group&rsquo;s total speeches.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="South vs North Topics" data-text="Compares topic prevalence between deputies born in Southern regions (Campania, Sicilia, Puglia, Calabria, Basilicata, Molise, Abruzzo, Sardegna) and all other regions. Same keyword dictionaries as the topic chart." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 <h3>The angriest deputies</h3>
 <p>Anger words per 100 speeches (min 100 speeches). Socialists dominate.</p>
 <div class="chart-box"><canvas id="chart-angriest"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Angriest Deputies&#39;,&#39;Anger words per 100 speeches, normalized by each deputy&rsquo;s total number of speeches. Only deputies with at least 100 speeches included to avoid small-sample noise. Anger dictionary: vergogna, scandalo, infame, menzogna, violenza, assassino, delinquente, traditore, canaglia, vigliacco.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Angriest Deputies" data-text="Anger words per 100 speeches, normalized by each deputy total speeches. Only deputies with 100+ speeches. Dictionary: vergogna, scandalo, infame, menzogna, violenza, assassino, delinquente, traditore, canaglia, vigliacco." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 <h3>The most interrupted</h3>
 <p>Interruption rate per 100 speeches (min 50). The provocateurs were not the most famous.</p>
 <div class="chart-box"><canvas id="chart-interrupted"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Most Interrupted&#39;,&#39;Interruption rate = (speeches containing "(Interruzioni)", "(Rumori)", or "(Proteste)") / (total speeches) &times; 100. Only deputies with at least 50 speeches shown.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Most Interrupted" data-text="Interruption rate = speeches containing (Interruzioni), (Rumori), or (Proteste) divided by total speeches times 100. Only deputies with 50+ speeches." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 </div>
 <div class="viz-sec" data-cat="women">
@@ -692,12 +692,12 @@ code{font-family:'DM Sans',monospace;}
 <h3>When they talked about women</h3>
 <p>Share of speeches mentioning women. Peaks in <strong>1912</strong> (excluded from universal suffrage) and <strong>1919&ndash;20</strong> (after wartime factory work). Then silence.</p>
 <div class="chart-box"><canvas id="chart-women"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Women in Parliamentary Speech&#39;,&#39;Share of speeches containing at least one of: donna, donne, femminile, femminili, maternit&agrave;. Case-insensitive keyword matching on full speech text.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Women in Parliamentary Speech" data-text="Share of speeches containing at least one of: donna, donne, femminile, femminili, maternità. Case-insensitive keyword matching." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 <h3>The suffrage debate that never happened</h3>
 <p>Speeches mentioning women&rsquo;s right to vote. At most 51 in a single year. The left discussed women <strong>twice as much</strong> as the right.</p>
 <div class="chart-box"><canvas id="chart-women-vote"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Women&rsquo;s Suffrage Debate&#39;,&#39;Count of speeches containing: "suffragio femminile", "voto alle donne", "voto alla donna", "diritto delle donne", or "diritti delle donne". Absolute numbers, not percentages.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Womens Suffrage Debate" data-text="Count of speeches containing: suffragio femminile, voto alle donne, voto alla donna, diritto delle donne, diritti delle donne. Absolute numbers." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 </div>
 <div class="viz-sec" data-cat="curiosities">
@@ -724,12 +724,12 @@ code{font-family:'DM Sans',monospace;}
 <h3>Who spoke the most words?</h3>
 <p>Excluding the Chamber president (who speaks procedurally), <strong>Filippo Turati</strong> spoke nearly <strong>one million words</strong> in parliament &mdash; the equivalent of 10 novels. Giolitti: 700,000. Nitti: 480,000.</p>
 <div class="chart-box"><canvas id="chart-wordcount"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Total Words Spoken&#39;,&#39;Sum of word counts across all speeches by each deputy. Word count = number of whitespace-separated tokens in the speech text. Chamber presidents (Marcora, Biancheri, De Nicola) excluded as their high counts reflect procedural speech.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Total Words Spoken" data-text="Sum of word counts across all speeches by each deputy. Word count = whitespace-separated tokens. Chamber presidents excluded as their high counts reflect procedural speech." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 <h3>Who gets mentioned most?</h3>
 <p>Not who speaks, but who gets <em>talked about</em>. Turati is mentioned in 5,000 speeches by other deputies. Garibaldi &mdash; dead since 1882 &mdash; is still invoked 1,010 times. Even Bismarck shows up 161 times.</p>
 <div class="chart-box"><canvas id="chart-mentioned"></canvas></div>
-<span class="method-btn" onclick="showMethod(&#39;Most Mentioned Names&#39;,&#39;Count of speeches by <em>other</em> deputies that contain a given surname. Case-insensitive substring match. Historical figures (Garibaldi, Mazzini, Cavour, Napoleone, Bismarck) are shown separately as they were not sitting deputies.&#39;)">&#9432; Methodology</span>
+<span class="method-btn" data-title="Most Mentioned Names" data-text="Count of speeches by other deputies that contain a given surname. Case-insensitive substring match. Historical figures shown separately." onclick="showMethod(this.dataset.title,this.dataset.text)">&#9432; Methodology</span>
 
 <h3>The longest speech</h3>
 <p><strong>13,125 words</strong> by Ettore Reina (1 August 1920) &mdash; nearly a novella, in one session during the Biennio Rosso.</p>
